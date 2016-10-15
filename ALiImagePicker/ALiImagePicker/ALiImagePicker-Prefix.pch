@@ -1,0 +1,17 @@
+//
+//  ALiImagePicker-Prefix.pch
+//  ALiImagePicker
+//
+//  Created by LeeWong on 2016/10/15.
+//  Copyright © 2016年 LeeWong. All rights reserved.
+//
+
+#ifndef ALiImagePicker_Prefix_h
+#define ALiImagePicker_Prefix_h
+
+
+#import "UIView+ALi.h"
+
+#import <Photos/Photos.h>
+
+#endif /* ALiImagePicker_Prefix_h */

@@ -7,12 +7,27 @@
 //
 
 #import "ViewController.h"
+#import "ALiImagePickerController.h"
 
 @interface ViewController ()
 
 @end
 
 @implementation ViewController
+
+- (IBAction)openPhotoLibary:(UIButton *)sender {
+    ALiImagePickerController *imagePicker = [[ALiImagePickerController alloc] init];
+    UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:imagePicker];
+    [self.navigationController presentViewController:navi animated:YES completion:nil];
+    
+}
+
+- (IBAction)openVideoLibary:(UIButton *)sender {
+    ALiImagePickerController *imagePicker = [[ALiImagePickerController alloc] init];
+    UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:imagePicker];
+    [self.navigationController presentViewController:navi animated:YES completion:nil];
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];

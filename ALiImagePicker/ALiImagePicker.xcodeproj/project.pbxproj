@@ -15,6 +15,12 @@
 		EB3F5D151DB0B7BF0026673D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB3F5D131DB0B7BF0026673D /* LaunchScreen.storyboard */; };
 		EB3F5D201DB0B7BF0026673D /* ALiImagePickerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EB3F5D1F1DB0B7BF0026673D /* ALiImagePickerTests.m */; };
 		EB3F5D2B1DB0B7BF0026673D /* ALiImagePickerUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = EB3F5D2A1DB0B7BF0026673D /* ALiImagePickerUITests.m */; };
+		EBC815051DB20D7E0096BFFF /* ALiImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC815041DB20D7E0096BFFF /* ALiImagePickerController.m */; };
+		EBC815121DB214330096BFFF /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBC815111DB214330096BFFF /* Photos.framework */; };
+		EBC815171DB214400096BFFF /* ALiAssetGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC815141DB214400096BFFF /* ALiAssetGroupCell.m */; };
+		EBC815181DB214400096BFFF /* ALiAssetGroupsView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC815161DB214400096BFFF /* ALiAssetGroupsView.m */; };
+		EBC8151B1DB215840096BFFF /* UIView+ALi.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC8151A1DB215840096BFFF /* UIView+ALi.m */; };
+		EBC8151E1DB215ED0096BFFF /* ALiAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC8151D1DB215ED0096BFFF /* ALiAsset.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +57,18 @@
 		EB3F5D261DB0B7BF0026673D /* ALiImagePickerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ALiImagePickerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB3F5D2A1DB0B7BF0026673D /* ALiImagePickerUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ALiImagePickerUITests.m; sourceTree = "<group>"; };
 		EB3F5D2C1DB0B7BF0026673D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EBC815031DB20D7E0096BFFF /* ALiImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALiImagePickerController.h; sourceTree = "<group>"; };
+		EBC815041DB20D7E0096BFFF /* ALiImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALiImagePickerController.m; sourceTree = "<group>"; };
+		EBC815111DB214330096BFFF /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
+		EBC815131DB214400096BFFF /* ALiAssetGroupCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALiAssetGroupCell.h; sourceTree = "<group>"; };
+		EBC815141DB214400096BFFF /* ALiAssetGroupCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALiAssetGroupCell.m; sourceTree = "<group>"; };
+		EBC815151DB214400096BFFF /* ALiAssetGroupsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALiAssetGroupsView.h; sourceTree = "<group>"; };
+		EBC815161DB214400096BFFF /* ALiAssetGroupsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALiAssetGroupsView.m; sourceTree = "<group>"; };
+		EBC815191DB215840096BFFF /* UIView+ALi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+ALi.h"; sourceTree = "<group>"; };
+		EBC8151A1DB215840096BFFF /* UIView+ALi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ALi.m"; sourceTree = "<group>"; };
+		EBC8151C1DB215ED0096BFFF /* ALiAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALiAsset.h; sourceTree = "<group>"; };
+		EBC8151D1DB215ED0096BFFF /* ALiAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALiAsset.m; sourceTree = "<group>"; };
+		EBC8151F1DB217270096BFFF /* ALiImagePicker-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ALiImagePicker-Prefix.pch"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EBC815121DB214330096BFFF /* Photos.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,6 +104,7 @@
 				EB3F5D1E1DB0B7BF0026673D /* ALiImagePickerTests */,
 				EB3F5D291DB0B7BF0026673D /* ALiImagePickerUITests */,
 				EB3F5D031DB0B7BF0026673D /* Products */,
+				EBC815101DB214330096BFFF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -101,14 +121,11 @@
 		EB3F5D041DB0B7BF0026673D /* ALiImagePicker */ = {
 			isa = PBXGroup;
 			children = (
+				EBC815021DB20D7E0096BFFF /* ALiImagePicker */,
 				EB3F5D081DB0B7BF0026673D /* AppDelegate.h */,
 				EB3F5D091DB0B7BF0026673D /* AppDelegate.m */,
 				EB3F5D0B1DB0B7BF0026673D /* ViewController.h */,
 				EB3F5D0C1DB0B7BF0026673D /* ViewController.m */,
-				EB3F5D0E1DB0B7BF0026673D /* Main.storyboard */,
-				EB3F5D111DB0B7BF0026673D /* Assets.xcassets */,
-				EB3F5D131DB0B7BF0026673D /* LaunchScreen.storyboard */,
-				EB3F5D161DB0B7BF0026673D /* Info.plist */,
 				EB3F5D051DB0B7BF0026673D /* Supporting Files */,
 			);
 			path = ALiImagePicker;
@@ -117,7 +134,12 @@
 		EB3F5D051DB0B7BF0026673D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				EB3F5D0E1DB0B7BF0026673D /* Main.storyboard */,
+				EB3F5D111DB0B7BF0026673D /* Assets.xcassets */,
+				EB3F5D131DB0B7BF0026673D /* LaunchScreen.storyboard */,
+				EB3F5D161DB0B7BF0026673D /* Info.plist */,
 				EB3F5D061DB0B7BF0026673D /* main.m */,
+				EBC8151F1DB217270096BFFF /* ALiImagePicker-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -138,6 +160,31 @@
 				EB3F5D2C1DB0B7BF0026673D /* Info.plist */,
 			);
 			path = ALiImagePickerUITests;
+			sourceTree = "<group>";
+		};
+		EBC815021DB20D7E0096BFFF /* ALiImagePicker */ = {
+			isa = PBXGroup;
+			children = (
+				EBC815191DB215840096BFFF /* UIView+ALi.h */,
+				EBC8151A1DB215840096BFFF /* UIView+ALi.m */,
+				EBC815131DB214400096BFFF /* ALiAssetGroupCell.h */,
+				EBC815141DB214400096BFFF /* ALiAssetGroupCell.m */,
+				EBC815151DB214400096BFFF /* ALiAssetGroupsView.h */,
+				EBC815161DB214400096BFFF /* ALiAssetGroupsView.m */,
+				EBC815031DB20D7E0096BFFF /* ALiImagePickerController.h */,
+				EBC815041DB20D7E0096BFFF /* ALiImagePickerController.m */,
+				EBC8151C1DB215ED0096BFFF /* ALiAsset.h */,
+				EBC8151D1DB215ED0096BFFF /* ALiAsset.m */,
+			);
+			path = ALiImagePicker;
+			sourceTree = "<group>";
+		};
+		EBC815101DB214330096BFFF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EBC815111DB214330096BFFF /* Photos.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -276,7 +323,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EBC815171DB214400096BFFF /* ALiAssetGroupCell.m in Sources */,
+				EBC815051DB20D7E0096BFFF /* ALiImagePickerController.m in Sources */,
 				EB3F5D0D1DB0B7BF0026673D /* ViewController.m in Sources */,
+				EBC8151E1DB215ED0096BFFF /* ALiAsset.m in Sources */,
+				EBC815181DB214400096BFFF /* ALiAssetGroupsView.m in Sources */,
+				EBC8151B1DB215840096BFFF /* UIView+ALi.m in Sources */,
 				EB3F5D0A1DB0B7BF0026673D /* AppDelegate.m in Sources */,
 				EB3F5D071DB0B7BF0026673D /* main.m in Sources */,
 			);
@@ -426,6 +478,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = XWNPFKK4U5;
+				GCC_PREFIX_HEADER = "ALiImagePicker/ALiImagePicker-Prefix.pch";
 				INFOPLIST_FILE = ALiImagePicker/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.msb.ALiImagePicker;
@@ -438,6 +491,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = XWNPFKK4U5;
+				GCC_PREFIX_HEADER = "ALiImagePicker/ALiImagePicker-Prefix.pch";
 				INFOPLIST_FILE = ALiImagePicker/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.msb.ALiImagePicker;
@@ -514,6 +568,7 @@
 				EB3F5D311DB0B7BF0026673D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EB3F5D321DB0B7BF0026673D /* Build configuration list for PBXNativeTarget "ALiImagePickerTests" */ = {
 			isa = XCConfigurationList;
@@ -522,6 +577,7 @@
 				EB3F5D341DB0B7BF0026673D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EB3F5D351DB0B7BF0026673D /* Build configuration list for PBXNativeTarget "ALiImagePickerUITests" */ = {
 			isa = XCConfigurationList;
@@ -530,6 +586,7 @@
 				EB3F5D371DB0B7BF0026673D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
