@@ -14,9 +14,17 @@
 
 @implementation ALiImagePickerController
 
+#pragma mark - Custom Method
+
+#pragma mark - Load Data
+
+#pragma mark - Load View
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.view.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)didReceiveMemoryWarning {
