@@ -14,4 +14,9 @@
 
 #import <Photos/Photos.h>
 
+#define WEAKSELF(weakSelf)  __weak __typeof(&*self)weakSelf = self;
+
+#define SCREEN_W [UIScreen mainScreen].bounds.size.width
+#define SCREEN_H [UIScreen mainScreen].bounds.size.height
+
 #endif /* ALiImagePicker_Prefix_h */

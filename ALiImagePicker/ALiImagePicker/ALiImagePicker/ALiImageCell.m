@@ -7,6 +7,7 @@
 //
 
 #import "ALiImageCell.h"
+#import "ALiImagePickerService.h"
 #import "ALiAsset.h"
 
 @interface ALiImageCell ()
@@ -34,13 +35,15 @@
     self.imageView.frame = self.bounds;
     
     self.checkBtn.rightTop = self.imageView.rightTop;
-    self.checkBtn.size = CGSizeMake(20, 20);
 }
 
 
 - (void)configImageCell:(ALiAsset *)asset
 {
-    
+    WEAKSELF(weakSelf);
+    [[ALiImagePickerService shared] ali_fetchImageForAsset:asset completion:^(UIImage *image, NSDictionary *info) {
+        [weakSelf.imageView setImage:image];
+    }];
 }
 
 #pragma mark - Lazy Load
@@ -49,7 +52,8 @@
 {
     if (_imageView == nil) {
         _imageView = [[UIImageView alloc] init];
-        _imageView.contentMode = UIViewContentModeScaleAspectFit;
+        _imageView.contentMode = UIViewContentModeScaleAspectFill;
+        _imageView.clipsToBounds = YES;
         [self addSubview:_imageView];
     }
     return _imageView;
@@ -59,10 +63,11 @@
 {
     if (_checkBtn == nil) {
         _checkBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_checkBtn setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
-        [_checkBtn setImage:[UIImage imageNamed:@""] forState:UIControlStateSelected];
-        [self addSubview:_checkBtn];
-        [self bringSubviewToFront:_checkBtn];
+        [_checkBtn setImage:[UIImage imageNamed:@"imagepicker_photo_check_default"] forState:UIControlStateNormal];
+        [_checkBtn setImage:[UIImage imageNamed:@"imagepicker_photo_check_selected"] forState:UIControlStateSelected];
+        [self.imageView addSubview:_checkBtn];
+        _checkBtn.size = CGSizeMake(20, 20);
+        [_checkBtn setSelected:YES];
     }
     return _checkBtn;
 }

@@ -8,11 +8,12 @@
 
 #import "ALiImagePickerController.h"
 #import "ALiImagePickFooterView.h"
+#import "ALiImagePickerService.h"
 #import "ALiImageCell.h"
 
 static  NSString *kArtImagePickerCellIdentifier = @"ALiImageCell";
 static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
-
+#define kSizeThumbnailCollectionView  ([UIScreen mainScreen].bounds.size.width-10)/4
 @interface ALiImagePickerController () <UICollectionViewDelegate,UICollectionViewDataSource>
 
 //UI
@@ -20,7 +21,7 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
 @property (nonatomic, strong) UICollectionViewFlowLayout *layout;
 
 //Data
-@property (nonatomic, strong) NSMutableArray *assets;
+@property (nonatomic, strong) NSArray *assets;
 
 @end
 
@@ -28,7 +29,18 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
 
 #pragma mark - Custom Method
 
+- (void)buildUI
+{
+    self.collectionView.frame = self.view.bounds;
+}
+
 #pragma mark - Load Data
+
+- (void)fetchImagesInLibary
+{
+   self.assets = [[ALiImagePickerService shared] aliFectchAssetsWithMediaType:EALiPickerResourceTypeImage];
+    [self.collectionView reloadData];
+}
 
 #pragma mark - Load View
 
@@ -37,6 +49,8 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
+    [self buildUI];
+    [self fetchImagesInLibary];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -59,7 +73,6 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     ALiAsset *asset = self.assets[indexPath.item];
-    
     ALiImageCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kArtImagePickerCellIdentifier forIndexPath:indexPath];
     [cell configImageCell:asset];
     return cell;
@@ -96,6 +109,8 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
         _layout = [[UICollectionViewFlowLayout alloc] init];
         _layout.minimumLineSpacing = 2.0;
         _layout.minimumInteritemSpacing = 2.0;
+        _layout.itemSize = CGSizeMake(kSizeThumbnailCollectionView, kSizeThumbnailCollectionView);
+        _layout.sectionInset = UIEdgeInsetsMake(2, 2, 2, 2);
         _layout.scrollDirection = UICollectionViewScrollDirectionVertical;
     }
     return _layout;

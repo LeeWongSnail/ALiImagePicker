@@ -7,21 +7,32 @@
 //
 
 #import <Foundation/Foundation.h>
+@class ALiAsset;
+
+typedef NS_ENUM(NSInteger, EALiPickerResourceType){
+    EALiPickerResourceTypeUnknown = 0,
+    EALiPickerResourceTypeImage   = 1,
+    EALiPickerResourceTypeVideo   = 2,
+    EALiPickerResourceTypeAudio   = 3,
+};
+
+typedef NS_ENUM(NSInteger, EALiImageContentMode) {
+    EALiImageContentModeAspectFit = 0,
+    EALiImageContentModeAspectFill = 1,
+    EALiImageContentModeDefault = PHImageContentModeAspectFit
+};
 
 @interface ALiImagePickerService : NSObject
 
 + (instancetype)shared;
 
-//获取所有图片
+- (NSArray *)aliFectchAssetsWithMediaType:(EALiPickerResourceType)aType;
 
+- (NSArray *)ali_fetchAssetsWithMediaType:(EALiPickerResourceType)aType options:(PHFetchOptions *)aOptions;
 
-//根据分类获取图片
+- (void)ali_fetchImageForAsset:(ALiAsset *)asset completion:(void (^)(UIImage *image,NSDictionary *info))aCompletion;
 
-//获取图片分类
-
-
-
-//获取视频分类
+- (void)ali_fetchImageForAsset:(ALiAsset *)asset targetSize:(CGSize)aSize contentMode:(EALiImageContentMode)aType options:(PHImageRequestOptions *)options completion:(void (^)(UIImage *image,NSDictionary *info))aCompletion;
 
 
 
