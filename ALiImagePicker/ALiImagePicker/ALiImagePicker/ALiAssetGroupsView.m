@@ -13,7 +13,6 @@
 
 @property (nonatomic, strong) UITableView  *tableView;
 @property (nonatomic, strong) NSIndexPath  *selectedIndexPath;
-@property (nonatomic, strong) UIButton     *touchButton;
 
 @end
 
@@ -31,12 +30,7 @@ static CGFloat kHeightAssetsGroupCell = 70.0;
     return self;
 }
 
-- (void)cancelAssetsGroupSelect
-{
-    if ([_delegate respondsToSelector:@selector(assetsGroupsViewDidCancel:)]) {
-        [_delegate assetsGroupsViewDidCancel:self];
-    }
-}
+
 
 - (void)setAssetsGroups:(PHFetchResult *)assetsGroups
 {
@@ -79,9 +73,7 @@ static CGFloat kHeightAssetsGroupCell = 70.0;
     _selectedIndexPath = indexPath;
     [self.tableView reloadData];
     PHAssetCollection *collection = self.assetsGroups[indexPath.row];
-    if ([_delegate respondsToSelector:@selector(assetsGroupsView:didSelectAssetsGroup:)]) {
-        [_delegate assetsGroupsView:self didSelectAssetsGroup:collection];
-    }
+
 }
 
 
@@ -104,7 +96,7 @@ static CGFloat kHeightAssetsGroupCell = 70.0;
     if (!_touchButton) {
         _touchButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _touchButton.frame = CGRectMake(0, self.tableView.leftBottom.y, self.size.width, self.size.height -self.tableView.leftBottom.y);
-        [_touchButton addTarget:self action:@selector(cancelAssetsGroupSelect) forControlEvents:UIControlEventTouchUpInside];
+//        [_touchButton addTarget:self action:@selector(cancelAssetsGroupSelect) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_touchButton];
     }
     return _touchButton;

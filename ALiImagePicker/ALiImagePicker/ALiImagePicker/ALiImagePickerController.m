@@ -193,6 +193,7 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
     if (_assetGroupView == nil) {
         _assetGroupView = [[ALiAssetGroupsView alloc] initWithFrame:CGRectMake(0, -self.view.size.height, self.view.size.width, self.view.size.height)];
         _assetGroupView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+        [_assetGroupView.touchButton addTarget:self action:@selector(hideAssetsGroupView) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:_assetGroupView];
         
     }
@@ -204,6 +205,7 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
         _overlayView = [[UIView alloc] initWithFrame:self.view.bounds];
         _overlayView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.85f];
         [self.view insertSubview:_overlayView belowSubview:self.assetGroupView];
+        
     }
     return _overlayView;
 }
@@ -212,6 +214,7 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
     if (!_touchButton) {
         _touchButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _touchButton.frame = CGRectMake(0, 0, self.view.size.width, 64);
+        [_touchButton setBackgroundColor:[UIColor clearColor]];
         [_touchButton addTarget:self action:@selector(assetsGroupsDidDeselected) forControlEvents:UIControlEventTouchUpInside];
     }
     return _touchButton;

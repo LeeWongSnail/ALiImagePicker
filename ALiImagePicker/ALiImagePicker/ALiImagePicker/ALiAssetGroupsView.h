@@ -12,16 +12,9 @@
 
 @class ALiAssetGroupsView;
 
-@protocol ArtAssetGroupsViewDelegate <NSObject>
-@optional
-- (void)assetsGroupsViewDidCancel:(ALiAssetGroupsView *)groupsView;
-- (void)assetsGroupsView:(ALiAssetGroupsView *)groupsView didSelectAssetsGroup:(PHCollection *)assGroup;
-
-@end
-
 @interface ALiAssetGroupsView : UIView
 
-@property (nonatomic, weak) id<ArtAssetGroupsViewDelegate>  delegate;
+@property (nonatomic, strong) UIButton *touchButton;
 @property (nonatomic, assign) NSInteger indexAssetsGroup;
 @property (nonatomic, strong) PHFetchResult *assetsGroups;
 @property (nonatomic, strong) NSMutableDictionary *selectedAssetCount;
