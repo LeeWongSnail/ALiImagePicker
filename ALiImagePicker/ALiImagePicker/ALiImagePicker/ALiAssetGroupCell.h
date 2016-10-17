@@ -11,7 +11,7 @@
 
 @interface ALiAssetGroupCell : UITableViewCell
 
-@property (nonatomic, strong) PHCollection *assetsGroup;
+@property (nonatomic, strong) PHAssetCollection *assetsGroup;
 @property (nonatomic, assign) BOOL   isSelected;
 
 @end

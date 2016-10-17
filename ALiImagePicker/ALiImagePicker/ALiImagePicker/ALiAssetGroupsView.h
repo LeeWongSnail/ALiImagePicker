@@ -23,11 +23,10 @@
 
 @property (nonatomic, weak) id<ArtAssetGroupsViewDelegate>  delegate;
 @property (nonatomic, assign) NSInteger indexAssetsGroup;
-@property (nonatomic, strong) NSArray *assetsGroups;
+@property (nonatomic, strong) PHFetchResult *assetsGroups;
 @property (nonatomic, strong) NSMutableDictionary *selectedAssetCount;
 
-- (void)removeAssetSelected:(ALiAsset *)asset;
-- (void)addAssetSelected:(ALiAsset *)asset;
+
 
 @end
 

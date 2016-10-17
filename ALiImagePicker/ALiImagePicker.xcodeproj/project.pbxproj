@@ -10,6 +10,9 @@
 		EB34DA4D1DB469B20015F9C3 /* ALiImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34DA4C1DB469B20015F9C3 /* ALiImageCell.m */; };
 		EB34DA5A1DB46D300015F9C3 /* ALiImagePickFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34DA591DB46D300015F9C3 /* ALiImagePickFooterView.m */; };
 		EB34DA5D1DB46EE00015F9C3 /* ALiImagePickerService.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34DA5C1DB46EE00015F9C3 /* ALiImagePickerService.m */; };
+		EB34DA801DB4C1600015F9C3 /* ALiAssetGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34DA7D1DB4C1600015F9C3 /* ALiAssetGroupCell.m */; };
+		EB34DA811DB4C1600015F9C3 /* ALiAssetGroupsView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34DA7F1DB4C1600015F9C3 /* ALiAssetGroupsView.m */; };
+		EB34DA841DB4C3A30015F9C3 /* UIButton+ALi.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34DA831DB4C3A30015F9C3 /* UIButton+ALi.m */; };
 		EB3F5D071DB0B7BF0026673D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EB3F5D061DB0B7BF0026673D /* main.m */; };
 		EB3F5D0A1DB0B7BF0026673D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EB3F5D091DB0B7BF0026673D /* AppDelegate.m */; };
 		EB3F5D0D1DB0B7BF0026673D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB3F5D0C1DB0B7BF0026673D /* ViewController.m */; };
@@ -48,6 +51,12 @@
 		EB34DA591DB46D300015F9C3 /* ALiImagePickFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALiImagePickFooterView.m; sourceTree = "<group>"; };
 		EB34DA5B1DB46EE00015F9C3 /* ALiImagePickerService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALiImagePickerService.h; sourceTree = "<group>"; };
 		EB34DA5C1DB46EE00015F9C3 /* ALiImagePickerService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALiImagePickerService.m; sourceTree = "<group>"; };
+		EB34DA7C1DB4C1600015F9C3 /* ALiAssetGroupCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALiAssetGroupCell.h; sourceTree = "<group>"; };
+		EB34DA7D1DB4C1600015F9C3 /* ALiAssetGroupCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALiAssetGroupCell.m; sourceTree = "<group>"; };
+		EB34DA7E1DB4C1600015F9C3 /* ALiAssetGroupsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALiAssetGroupsView.h; sourceTree = "<group>"; };
+		EB34DA7F1DB4C1600015F9C3 /* ALiAssetGroupsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALiAssetGroupsView.m; sourceTree = "<group>"; };
+		EB34DA821DB4C3A30015F9C3 /* UIButton+ALi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIButton+ALi.h"; path = "../ALiImagePicker/UIButton+ALi.h"; sourceTree = "<group>"; };
+		EB34DA831DB4C3A30015F9C3 /* UIButton+ALi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIButton+ALi.m"; path = "../ALiImagePicker/UIButton+ALi.m"; sourceTree = "<group>"; };
 		EB3F5D021DB0B7BF0026673D /* ALiImagePicker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ALiImagePicker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB3F5D061DB0B7BF0026673D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		EB3F5D081DB0B7BF0026673D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -67,8 +76,8 @@
 		EBC815031DB20D7E0096BFFF /* ALiImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALiImagePickerController.h; sourceTree = "<group>"; };
 		EBC815041DB20D7E0096BFFF /* ALiImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALiImagePickerController.m; sourceTree = "<group>"; };
 		EBC815111DB214330096BFFF /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
-		EBC815191DB215840096BFFF /* UIView+ALi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+ALi.h"; sourceTree = "<group>"; };
-		EBC8151A1DB215840096BFFF /* UIView+ALi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ALi.m"; sourceTree = "<group>"; };
+		EBC815191DB215840096BFFF /* UIView+ALi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+ALi.h"; path = "../ALiImagePicker/UIView+ALi.h"; sourceTree = "<group>"; };
+		EBC8151A1DB215840096BFFF /* UIView+ALi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+ALi.m"; path = "../ALiImagePicker/UIView+ALi.m"; sourceTree = "<group>"; };
 		EBC8151C1DB215ED0096BFFF /* ALiAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALiAsset.h; sourceTree = "<group>"; };
 		EBC8151D1DB215ED0096BFFF /* ALiAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALiAsset.m; sourceTree = "<group>"; };
 		EBC8151F1DB217270096BFFF /* ALiImagePicker-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ALiImagePicker-Prefix.pch"; sourceTree = "<group>"; };
@@ -100,6 +109,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EB34DA851DB4C3F40015F9C3 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				EBC815191DB215840096BFFF /* UIView+ALi.h */,
+				EBC8151A1DB215840096BFFF /* UIView+ALi.m */,
+				EB34DA821DB4C3A30015F9C3 /* UIButton+ALi.h */,
+				EB34DA831DB4C3A30015F9C3 /* UIButton+ALi.m */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
 		EB3F5CF91DB0B7BF0026673D = {
 			isa = PBXGroup;
 			children = (
@@ -124,6 +144,7 @@
 		EB3F5D041DB0B7BF0026673D /* ALiImagePicker */ = {
 			isa = PBXGroup;
 			children = (
+				EB34DA851DB4C3F40015F9C3 /* Category */,
 				EBC815021DB20D7E0096BFFF /* ALiImagePicker */,
 				EB3F5D081DB0B7BF0026673D /* AppDelegate.h */,
 				EB3F5D091DB0B7BF0026673D /* AppDelegate.m */,
@@ -168,8 +189,10 @@
 		EBC815021DB20D7E0096BFFF /* ALiImagePicker */ = {
 			isa = PBXGroup;
 			children = (
-				EBC815191DB215840096BFFF /* UIView+ALi.h */,
-				EBC8151A1DB215840096BFFF /* UIView+ALi.m */,
+				EB34DA7C1DB4C1600015F9C3 /* ALiAssetGroupCell.h */,
+				EB34DA7D1DB4C1600015F9C3 /* ALiAssetGroupCell.m */,
+				EB34DA7E1DB4C1600015F9C3 /* ALiAssetGroupsView.h */,
+				EB34DA7F1DB4C1600015F9C3 /* ALiAssetGroupsView.m */,
 				EBC815031DB20D7E0096BFFF /* ALiImagePickerController.h */,
 				EBC815041DB20D7E0096BFFF /* ALiImagePickerController.m */,
 				EBC8151C1DB215ED0096BFFF /* ALiAsset.h */,
@@ -329,11 +352,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				EBC815051DB20D7E0096BFFF /* ALiImagePickerController.m in Sources */,
+				EB34DA801DB4C1600015F9C3 /* ALiAssetGroupCell.m in Sources */,
 				EB3F5D0D1DB0B7BF0026673D /* ViewController.m in Sources */,
 				EB34DA5D1DB46EE00015F9C3 /* ALiImagePickerService.m in Sources */,
 				EB34DA4D1DB469B20015F9C3 /* ALiImageCell.m in Sources */,
+				EB34DA811DB4C1600015F9C3 /* ALiAssetGroupsView.m in Sources */,
 				EBC8151E1DB215ED0096BFFF /* ALiAsset.m in Sources */,
 				EBC8151B1DB215840096BFFF /* UIView+ALi.m in Sources */,
+				EB34DA841DB4C3A30015F9C3 /* UIButton+ALi.m in Sources */,
 				EB34DA5A1DB46D300015F9C3 /* ALiImagePickFooterView.m in Sources */,
 				EB3F5D0A1DB0B7BF0026673D /* AppDelegate.m in Sources */,
 				EB3F5D071DB0B7BF0026673D /* main.m in Sources */,

@@ -41,12 +41,23 @@
 }
 
 
-- (NSArray *)aliFectchAssetsWithMediaType:(EALiPickerResourceType)aType
+- (void)ali_fetchImageGroupWithTypes:(NSArray *)aTypes completion:(void (^)(PHFetchResult *))aCompletion
+{
+    PHFetchOptions *option = [[PHFetchOptions alloc] init];
+    option.includeAssetSourceTypes = PHAssetSourceTypeUserLibrary;
+//    option.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
+    
+    PHFetchResult *result = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:PHAssetCollectionSubtypeAny options:option];
+    
+    if (aCompletion) {
+        aCompletion(result);
+    }
+}
+
+- (NSArray *)ali_fectchAssetsWithMediaType:(EALiPickerResourceType)aType
 {
    return [self ali_fetchAssetsWithMediaType:aType options:nil];
 }
-
-
 
 - (NSArray *)ali_fetchAssetsWithMediaType:(EALiPickerResourceType)aType options:(PHFetchOptions *)aOptions
 {

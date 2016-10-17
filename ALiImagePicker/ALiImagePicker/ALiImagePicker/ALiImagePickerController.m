@@ -9,6 +9,8 @@
 #import "ALiImagePickerController.h"
 #import "ALiImagePickFooterView.h"
 #import "ALiImagePickerService.h"
+#import "UIButton+ALi.h"
+#import "ALiAssetGroupsView.h"
 #import "ALiImageCell.h"
 
 static  NSString *kArtImagePickerCellIdentifier = @"ALiImageCell";
@@ -19,9 +21,14 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
 //UI
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) UICollectionViewFlowLayout *layout;
+@property (nonatomic, strong) ALiAssetGroupsView *assetGroupView;
+@property (nonatomic, strong) UIView *overlayView;
+@property (nonatomic, strong) UIButton *touchButton;
+@property (nonatomic, strong) UIButton *titleButton;
 
 //Data
 @property (nonatomic, strong) NSArray *assets;
+@property (nonatomic, strong) NSArray *groupTypes;
 
 @end
 
@@ -29,21 +36,87 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
 
 #pragma mark - Custom Method
 
-- (void)buildUI
+- (void)showAssetsGroupView
 {
-    self.collectionView.frame = self.view.bounds;
+    [[UIApplication sharedApplication].keyWindow addSubview:self.touchButton];
+    
+    self.overlayView.alpha = 0.0f;
+    [UIView animateWithDuration:0.3f
+                     animations:^{
+                         self.assetGroupView.originY = 0;
+                         self.overlayView.alpha = 0.85f;
+                     }completion:^(BOOL finished) {
+                         
+                     }];
+}
+
+- (void)hideAssetsGroupView
+{
+    [UIView animateWithDuration:0.3f
+                     animations:^{
+                         self.assetGroupView.originY = -self.assetGroupView.size.height;
+                         self.overlayView.alpha = 0.0f;
+                     }completion:^(BOOL finished) {
+                         [_touchButton removeFromSuperview];
+                         _touchButton = nil;
+                         
+                         [_overlayView removeFromSuperview];
+                         _overlayView = nil;
+                     }];
+    
+}
+
+- (void)assetsGroupsDidDeselected
+{
+    [self hideAssetsGroupView];
+}
+
+- (void)assetsGroupDidSelected
+{
+    [self showAssetsGroupView];
 }
 
 #pragma mark - Load Data
 
 - (void)fetchImagesInLibary
 {
-   self.assets = [[ALiImagePickerService shared] aliFectchAssetsWithMediaType:EALiPickerResourceTypeImage];
+   self.assets = [[ALiImagePickerService shared] ali_fectchAssetsWithMediaType:EALiPickerResourceTypeImage];
     [self.collectionView reloadData];
+}
+
+- (void)fetchPhotoLibaryCategory
+{
+    //获取某一组的内容
+    WEAKSELF(weakSelf);
+    [[ALiImagePickerService shared] ali_fetchImageGroupWithTypes:self.groupTypes completion:^(PHFetchResult *result) {
+        if (result.count > 0) {
+            weakSelf.assetGroupView.assetsGroups = result;
+            weakSelf.titleButton.enabled = YES;
+        } else {
+            weakSelf.titleButton.enabled = NO;
+        }
+    }];
 }
 
 #pragma mark - Load View
 
+- (void)buildUI
+{
+    self.collectionView.frame = self.view.bounds;
+    [self setUpProperties];
+}
+
+
+- (void)setUpProperties
+{
+    self.groupTypes = @[@(PHAssetCollectionSubtypeSmartAlbumUserLibrary),  //相机胶卷
+                        @(PHAssetCollectionSubtypeAlbumImported),      //照片图库
+                        @(PHAssetCollectionSubtypeAlbumMyPhotoStream),  //我的照片流
+                        @(PHAssetCollectionSubtypeAlbumRegular)];       //自建相册
+    self.navigationItem.titleView = self.titleButton;
+}
+
+#pragma mark - Life Cycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -51,6 +124,7 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
     self.view.backgroundColor = [UIColor whiteColor];
     [self buildUI];
     [self fetchImagesInLibary];
+    [self fetchPhotoLibaryCategory];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -77,8 +151,6 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
     [cell configImageCell:asset];
     return cell;
 }
-
-
 
 
 #pragma mark - Lazy Load
@@ -114,6 +186,49 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
         _layout.scrollDirection = UICollectionViewScrollDirectionVertical;
     }
     return _layout;
+}
+
+- (ALiAssetGroupsView *)assetGroupView
+{
+    if (_assetGroupView == nil) {
+        _assetGroupView = [[ALiAssetGroupsView alloc] initWithFrame:CGRectMake(0, -self.view.size.height, self.view.size.width, self.view.size.height)];
+        _assetGroupView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+        [self.view addSubview:_assetGroupView];
+        
+    }
+    return _assetGroupView;
+}
+
+- (UIView *)overlayView{
+    if (!_overlayView) {
+        _overlayView = [[UIView alloc] initWithFrame:self.view.bounds];
+        _overlayView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.85f];
+        [self.view insertSubview:_overlayView belowSubview:self.assetGroupView];
+    }
+    return _overlayView;
+}
+
+- (UIButton *)touchButton{
+    if (!_touchButton) {
+        _touchButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _touchButton.frame = CGRectMake(0, 0, self.view.size.width, 64);
+        [_touchButton addTarget:self action:@selector(assetsGroupsDidDeselected) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _touchButton;
+}
+
+- (UIButton *)titleButton{
+    if (!_titleButton) {
+        _titleButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _titleButton.frame = CGRectMake(0, 0, 120, 30);
+        [_titleButton setImage:[UIImage imageNamed:@"imagepicker_navigationbar_arrow_down"] forState:UIControlStateNormal];
+        [_titleButton setImage:[UIImage imageNamed:@"imagepicker_navigationbar_arrow_up"] forState:UIControlStateSelected];
+        [_titleButton setTitle:@"所有照片" forState:UIControlStateNormal];
+        [_titleButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [_titleButton adjustImagePosition:EArtButtonImagePositionRight spacing:5];
+        [_titleButton addTarget:self action:@selector(assetsGroupDidSelected) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _titleButton;
 }
 
 @end

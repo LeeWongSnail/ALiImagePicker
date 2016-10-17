@@ -17,7 +17,7 @@
 
 @end
 
-static CGFloat kHeightAssetsGroupCell = 86.0;
+static CGFloat kHeightAssetsGroupCell = 60.0;
 
 @implementation ALiAssetGroupsView
 
@@ -38,6 +38,18 @@ static CGFloat kHeightAssetsGroupCell = 86.0;
     }
 }
 
+- (void)setAssetsGroups:(PHFetchResult *)assetsGroups
+{
+    NSMutableArray *arrM = [NSMutableArray array];
+    [assetsGroups enumerateObjectsUsingBlock:^(PHAssetCollection *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        PHFetchResult<PHAsset *> *assets = [PHAsset fetchAssetsInAssetCollection:obj options:nil];
+        if (assets.count > 0) {
+            [arrM addObject:obj];
+        }
+    }];
+    _assetsGroups = [arrM copy];
+    [self.tableView reloadData];
+}
 
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -47,19 +59,10 @@ static CGFloat kHeightAssetsGroupCell = 86.0;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *AssetsGroupCell = @"AssetsGroupCell";
-    ALiAssetGroupCell *cell = (ALiAssetGroupCell *)[tableView dequeueReusableCellWithIdentifier:AssetsGroupCell];
-    if (cell == nil) {
-        cell = [[ALiAssetGroupCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:AssetsGroupCell];
-    }
-    ALAssetsGroup *assetsGroup = self.assetsGroups[indexPath.row];
+
+    ALiAssetGroupCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ALiAssetGroupCell"];
+    PHAssetCollection *assetsGroup = self.assetsGroups[indexPath.row];
     cell.assetsGroup = assetsGroup;
-    cell.isSelected = [self selectAssetsGroup:assetsGroup];
-    if (_selectedIndexPath.row == indexPath.row) {
-        cell.selectionStyle = UITableViewCellSelectionStyleBlue;
-    } else {
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    }
     return cell;
 }
 
@@ -75,73 +78,23 @@ static CGFloat kHeightAssetsGroupCell = 86.0;
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     _selectedIndexPath = indexPath;
     [self.tableView reloadData];
-    ALAssetsGroup *assetsGroup = self.assetsGroups[indexPath.row];
+    PHAssetCollection *collection = self.assetsGroups[indexPath.row];
     if ([_delegate respondsToSelector:@selector(assetsGroupsView:didSelectAssetsGroup:)]) {
-        [_delegate assetsGroupsView:self didSelectAssetsGroup:assetsGroup];
+        [_delegate assetsGroupsView:self didSelectAssetsGroup:collection];
     }
 }
 
-- (BOOL)selectAssetsGroup:(ALAssetsGroup *)assetsGroup
-{
-    NSString *groupID = [assetsGroup valueForProperty:ALAssetsGroupPropertyPersistentID];
-    NSInteger count = [[self.selectedAssetCount objectForKey:groupID] integerValue];
-    return count>0;
-}
-
-- (void)removeAssetSelected:(ALiAsset *)asset
-{
-//    NSInteger count = [[self.selectedAssetCount objectForKey:asset.groupPropertyID] integerValue];
-//    if (count<=1) {
-//        [self.selectedAssetCount removeObjectForKey:asset.groupPropertyID];
-//    }else{
-//        [self.selectedAssetCount setObject:[NSNumber numberWithInteger:count-1]
-//                                    forKey:asset.groupPropertyID];
-//    }
-    [self.tableView reloadData];
-}
-
-- (void)addAssetSelected:(ALiAsset *)asset
-{
-//    NSInteger count = [[self.selectedAssetCount objectForKey:asset.groupPropertyID] integerValue];
-//    [self.selectedAssetCount setObject:[NSNumber numberWithInteger:count+1]
-//                                forKey:asset.groupPropertyID];
-    [self.tableView reloadData];
-}
-
-#pragma mark - setter
-- (void)setSelectedAssetCount:(NSMutableDictionary *)selectedAssetCount{
-    if (_selectedAssetCount != selectedAssetCount) {
-        _selectedAssetCount = selectedAssetCount;
-        [self.tableView reloadData];
-    }
-}
-
-- (void)setAssetsGroups:(NSArray *)assetsGroups{
-    if (_assetsGroups != assetsGroups) {
-        _assetsGroups = assetsGroups;
-        
-        NSInteger  rowCount = 0;
-        if ([_assetsGroups count]>4) {
-            rowCount = 4;
-        }else{
-            rowCount = [_assetsGroups count];
-        }
-        _selectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-        self.tableView.size = CGSizeMake(self.tableView.size.width, rowCount*kHeightAssetsGroupCell);
-        self.touchButton.originY = self.tableView.leftBottom.y;
-        self.touchButton.size = CGSizeMake(self.touchButton.size.width, self.size.height - self.tableView.leftBottom.y);
-        [self.tableView reloadData];
-    }
-}
 
 #pragma mark - getter
 - (UITableView *)tableView{
     if (!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.size.width, 4*kHeightAssetsGroupCell) style:UITableViewStylePlain];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, self.size.width, 4*kHeightAssetsGroupCell) style:UITableViewStylePlain];
+        [_tableView registerClass:[ALiAssetGroupCell class] forCellReuseIdentifier:@"ALiAssetGroupCell"];
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.showsHorizontalScrollIndicator = NO;
         _tableView.showsVerticalScrollIndicator = NO;
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         [self addSubview:_tableView];
     }
     return _tableView;

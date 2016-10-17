@@ -25,9 +25,24 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.accessoryType = UITableViewCellAccessoryNone;
-        [self thumbnailView];
+        self.backgroundColor = [UIColor redColor];
+        [self buildUI];
     }
     return self;
+}
+
+- (void)buildUI
+{
+    self.thumbnailView.frame = CGRectMake(8, 4, 50, 50);
+    CGFloat nameY = self.thumbnailView.originY;
+    CGFloat nameX = CGRectGetMaxX(self.thumbnailView.frame) + 10;
+    self.assetsNameLabel.frame = CGRectMake(nameX, nameY, 50, 20);
+    [self.assetsNameLabel sizeToFit];
+    
+    CGFloat countY = CGRectGetMaxY(self.assetsCountLabel.frame) + 10;
+    
+    self.assetsCountLabel.frame = CGRectMake(nameX, countY, 50, 20);
+    [self.assetsCountLabel sizeToFit];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -38,26 +53,25 @@
 
 #pragma makr - setter
 
-//- (void)setAssetsGroup:(ALAssetsGroup *)assetsGroup{
-//    if (_assetsGroup != assetsGroup) {
-//        _assetsGroup = assetsGroup;
-//        self.thumbnailView.assetsGroup = _assetsGroup;
-//        self.assetsNameLabel.text = [_assetsGroup valueForProperty:ALAssetsGroupPropertyName];
-//        [self.assetsNameLabel sizeToFit];
-//        self.assetsNameLabel.originX = self.thumbnailView.rightTop.x + 18;
-//        self.assetsNameLabel.leftBottom = CGPointMake(self.assetsNameLabel.leftBottom.x, self.thumbnailView.center.y - 2);
-//        
-//        self.assetsCountLabel.text = [NSString stringWithFormat:@"%ld", (long)[_assetsGroup numberOfAssets]];
-//        [self.assetsCountLabel sizeToFit];
-//        self.assetsCountLabel.originX =self.assetsNameLabel.leftTop.x;
-//        self.assetsCountLabel.originY = self.assetsNameLabel.leftBottom.y + 4;
-//    }
-//}
-//
-//- (void)setIsSelected:(BOOL)isSelected{
-//    _isSelected = isSelected;
-//    self.checkImageView.hidden = !isSelected;
-//}
+- (void)setAssetsGroup:(PHAssetCollection *)assetsGroup
+{
+    _assetsGroup = assetsGroup;
+    
+    PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
+    // 同步获得图片, 只会返回1张图片
+    options.synchronous = YES;
+    
+    // 获得某个相簿中的所有PHAsset对象
+    PHFetchResult<PHAsset *> *assets = [PHAsset fetchAssetsInAssetCollection:assetsGroup options:nil];
+    
+    [[PHImageManager defaultManager] requestImageForAsset:assets.firstObject targetSize:CGSizeMake(70, 74) contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+        [self.imageView setImage:result];
+    }];
+    
+    self.assetsNameLabel.text = assetsGroup.localizedTitle;
+    self.assetsCountLabel.text = [NSString stringWithFormat:@"%tu",assets.count];
+}
+
 
 #pragma makr - getter
 - (UIImageView *)thumbnailView{
@@ -65,6 +79,8 @@
         _thumbnailView = [[UIImageView alloc] initWithFrame:CGRectMake(8, 4, 70, 74)];
         _thumbnailView.backgroundColor = [UIColor clearColor];
         _thumbnailView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
+        _thumbnailView.contentMode = UIViewContentModeScaleAspectFill;
+        _thumbnailView.clipsToBounds = YES;
         [self.contentView addSubview:_thumbnailView];
     }
     return _thumbnailView;

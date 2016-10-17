@@ -26,7 +26,7 @@ typedef NS_ENUM(NSInteger, EALiImageContentMode) {
 
 + (instancetype)shared;
 
-- (NSArray *)aliFectchAssetsWithMediaType:(EALiPickerResourceType)aType;
+- (NSArray *)ali_fectchAssetsWithMediaType:(EALiPickerResourceType)aType;
 
 - (NSArray *)ali_fetchAssetsWithMediaType:(EALiPickerResourceType)aType options:(PHFetchOptions *)aOptions;
 
@@ -34,6 +34,5 @@ typedef NS_ENUM(NSInteger, EALiImageContentMode) {
 
 - (void)ali_fetchImageForAsset:(ALiAsset *)asset targetSize:(CGSize)aSize contentMode:(EALiImageContentMode)aType options:(PHImageRequestOptions *)options completion:(void (^)(UIImage *image,NSDictionary *info))aCompletion;
 
-
-
+- (void)ali_fetchImageGroupWithTypes:(NSArray *)aTypes completion:(void (^)(PHFetchResult *result))aCompletion;
 @end
