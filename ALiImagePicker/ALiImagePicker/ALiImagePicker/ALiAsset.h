@@ -10,4 +10,6 @@
 
 @interface ALiAsset : NSObject
 
+@property (nonatomic, strong) PHAsset *asset;
+
 @end

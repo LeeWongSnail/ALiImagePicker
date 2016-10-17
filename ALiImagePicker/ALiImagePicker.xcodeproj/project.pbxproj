@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EB34DA4D1DB469B20015F9C3 /* ALiImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34DA4C1DB469B20015F9C3 /* ALiImageCell.m */; };
+		EB34DA5A1DB46D300015F9C3 /* ALiImagePickFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34DA591DB46D300015F9C3 /* ALiImagePickFooterView.m */; };
+		EB34DA5D1DB46EE00015F9C3 /* ALiImagePickerService.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34DA5C1DB46EE00015F9C3 /* ALiImagePickerService.m */; };
 		EB3F5D071DB0B7BF0026673D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EB3F5D061DB0B7BF0026673D /* main.m */; };
 		EB3F5D0A1DB0B7BF0026673D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EB3F5D091DB0B7BF0026673D /* AppDelegate.m */; };
 		EB3F5D0D1DB0B7BF0026673D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB3F5D0C1DB0B7BF0026673D /* ViewController.m */; };
@@ -39,6 +42,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EB34DA4B1DB469B20015F9C3 /* ALiImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALiImageCell.h; sourceTree = "<group>"; };
+		EB34DA4C1DB469B20015F9C3 /* ALiImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALiImageCell.m; sourceTree = "<group>"; };
+		EB34DA581DB46D300015F9C3 /* ALiImagePickFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALiImagePickFooterView.h; sourceTree = "<group>"; };
+		EB34DA591DB46D300015F9C3 /* ALiImagePickFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALiImagePickFooterView.m; sourceTree = "<group>"; };
+		EB34DA5B1DB46EE00015F9C3 /* ALiImagePickerService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALiImagePickerService.h; sourceTree = "<group>"; };
+		EB34DA5C1DB46EE00015F9C3 /* ALiImagePickerService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALiImagePickerService.m; sourceTree = "<group>"; };
 		EB3F5D021DB0B7BF0026673D /* ALiImagePicker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ALiImagePicker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB3F5D061DB0B7BF0026673D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		EB3F5D081DB0B7BF0026673D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -165,6 +174,12 @@
 				EBC815041DB20D7E0096BFFF /* ALiImagePickerController.m */,
 				EBC8151C1DB215ED0096BFFF /* ALiAsset.h */,
 				EBC8151D1DB215ED0096BFFF /* ALiAsset.m */,
+				EB34DA4B1DB469B20015F9C3 /* ALiImageCell.h */,
+				EB34DA4C1DB469B20015F9C3 /* ALiImageCell.m */,
+				EB34DA581DB46D300015F9C3 /* ALiImagePickFooterView.h */,
+				EB34DA591DB46D300015F9C3 /* ALiImagePickFooterView.m */,
+				EB34DA5B1DB46EE00015F9C3 /* ALiImagePickerService.h */,
+				EB34DA5C1DB46EE00015F9C3 /* ALiImagePickerService.m */,
 			);
 			path = ALiImagePicker;
 			sourceTree = "<group>";
@@ -315,8 +330,11 @@
 			files = (
 				EBC815051DB20D7E0096BFFF /* ALiImagePickerController.m in Sources */,
 				EB3F5D0D1DB0B7BF0026673D /* ViewController.m in Sources */,
+				EB34DA5D1DB46EE00015F9C3 /* ALiImagePickerService.m in Sources */,
+				EB34DA4D1DB469B20015F9C3 /* ALiImageCell.m in Sources */,
 				EBC8151E1DB215ED0096BFFF /* ALiAsset.m in Sources */,
 				EBC8151B1DB215840096BFFF /* UIView+ALi.m in Sources */,
+				EB34DA5A1DB46D300015F9C3 /* ALiImagePickFooterView.m in Sources */,
 				EB3F5D0A1DB0B7BF0026673D /* AppDelegate.m in Sources */,
 				EB3F5D071DB0B7BF0026673D /* main.m in Sources */,
 			);
