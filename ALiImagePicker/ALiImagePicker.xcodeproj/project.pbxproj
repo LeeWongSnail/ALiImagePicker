@@ -17,8 +17,6 @@
 		EB3F5D2B1DB0B7BF0026673D /* ALiImagePickerUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = EB3F5D2A1DB0B7BF0026673D /* ALiImagePickerUITests.m */; };
 		EBC815051DB20D7E0096BFFF /* ALiImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC815041DB20D7E0096BFFF /* ALiImagePickerController.m */; };
 		EBC815121DB214330096BFFF /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBC815111DB214330096BFFF /* Photos.framework */; };
-		EBC815171DB214400096BFFF /* ALiAssetGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC815141DB214400096BFFF /* ALiAssetGroupCell.m */; };
-		EBC815181DB214400096BFFF /* ALiAssetGroupsView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC815161DB214400096BFFF /* ALiAssetGroupsView.m */; };
 		EBC8151B1DB215840096BFFF /* UIView+ALi.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC8151A1DB215840096BFFF /* UIView+ALi.m */; };
 		EBC8151E1DB215ED0096BFFF /* ALiAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC8151D1DB215ED0096BFFF /* ALiAsset.m */; };
 /* End PBXBuildFile section */
@@ -60,10 +58,6 @@
 		EBC815031DB20D7E0096BFFF /* ALiImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALiImagePickerController.h; sourceTree = "<group>"; };
 		EBC815041DB20D7E0096BFFF /* ALiImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALiImagePickerController.m; sourceTree = "<group>"; };
 		EBC815111DB214330096BFFF /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
-		EBC815131DB214400096BFFF /* ALiAssetGroupCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALiAssetGroupCell.h; sourceTree = "<group>"; };
-		EBC815141DB214400096BFFF /* ALiAssetGroupCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALiAssetGroupCell.m; sourceTree = "<group>"; };
-		EBC815151DB214400096BFFF /* ALiAssetGroupsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALiAssetGroupsView.h; sourceTree = "<group>"; };
-		EBC815161DB214400096BFFF /* ALiAssetGroupsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALiAssetGroupsView.m; sourceTree = "<group>"; };
 		EBC815191DB215840096BFFF /* UIView+ALi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+ALi.h"; sourceTree = "<group>"; };
 		EBC8151A1DB215840096BFFF /* UIView+ALi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ALi.m"; sourceTree = "<group>"; };
 		EBC8151C1DB215ED0096BFFF /* ALiAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALiAsset.h; sourceTree = "<group>"; };
@@ -167,10 +161,6 @@
 			children = (
 				EBC815191DB215840096BFFF /* UIView+ALi.h */,
 				EBC8151A1DB215840096BFFF /* UIView+ALi.m */,
-				EBC815131DB214400096BFFF /* ALiAssetGroupCell.h */,
-				EBC815141DB214400096BFFF /* ALiAssetGroupCell.m */,
-				EBC815151DB214400096BFFF /* ALiAssetGroupsView.h */,
-				EBC815161DB214400096BFFF /* ALiAssetGroupsView.m */,
 				EBC815031DB20D7E0096BFFF /* ALiImagePickerController.h */,
 				EBC815041DB20D7E0096BFFF /* ALiImagePickerController.m */,
 				EBC8151C1DB215ED0096BFFF /* ALiAsset.h */,
@@ -323,11 +313,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EBC815171DB214400096BFFF /* ALiAssetGroupCell.m in Sources */,
 				EBC815051DB20D7E0096BFFF /* ALiImagePickerController.m in Sources */,
 				EB3F5D0D1DB0B7BF0026673D /* ViewController.m in Sources */,
 				EBC8151E1DB215ED0096BFFF /* ALiAsset.m in Sources */,
-				EBC815181DB214400096BFFF /* ALiAssetGroupsView.m in Sources */,
 				EBC8151B1DB215840096BFFF /* UIView+ALi.m in Sources */,
 				EB3F5D0A1DB0B7BF0026673D /* AppDelegate.m in Sources */,
 				EB3F5D071DB0B7BF0026673D /* main.m in Sources */,
