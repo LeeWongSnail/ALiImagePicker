@@ -25,7 +25,6 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.accessoryType = UITableViewCellAccessoryNone;
-        self.backgroundColor = [UIColor redColor];
         [self buildUI];
     }
     return self;
@@ -33,16 +32,14 @@
 
 - (void)buildUI
 {
-    self.thumbnailView.frame = CGRectMake(8, 4, 50, 50);
+    self.thumbnailView.frame = CGRectMake(8, 4, 60, 60);
     CGFloat nameY = self.thumbnailView.originY;
     CGFloat nameX = CGRectGetMaxX(self.thumbnailView.frame) + 10;
-    self.assetsNameLabel.frame = CGRectMake(nameX, nameY, 50, 20);
-    [self.assetsNameLabel sizeToFit];
+    self.assetsNameLabel.frame = CGRectMake(nameX, nameY, 200, 20);
     
-    CGFloat countY = CGRectGetMaxY(self.assetsCountLabel.frame) + 10;
+    CGFloat countY = CGRectGetMaxY(self.assetsNameLabel.frame) + 10;
     
-    self.assetsCountLabel.frame = CGRectMake(nameX, countY, 50, 20);
-    [self.assetsCountLabel sizeToFit];
+    self.assetsCountLabel.frame = CGRectMake(nameX, countY, 100, 20);
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -76,7 +73,7 @@
 #pragma makr - getter
 - (UIImageView *)thumbnailView{
     if (!_thumbnailView) {
-        _thumbnailView = [[UIImageView alloc] initWithFrame:CGRectMake(8, 4, 70, 74)];
+        _thumbnailView = [[UIImageView alloc] initWithFrame:CGRectMake(8, 4, 60, 60)];
         _thumbnailView.backgroundColor = [UIColor clearColor];
         _thumbnailView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
         _thumbnailView.contentMode = UIViewContentModeScaleAspectFill;

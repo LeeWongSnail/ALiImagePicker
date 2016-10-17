@@ -17,7 +17,7 @@
 
 @end
 
-static CGFloat kHeightAssetsGroupCell = 60.0;
+static CGFloat kHeightAssetsGroupCell = 70.0;
 
 @implementation ALiAssetGroupsView
 
