@@ -11,7 +11,7 @@
 
 
 #import "UIView+ALi.h"
-
+#import "UIButton+ALi.h"
 #import <Photos/Photos.h>
 
 #define WEAKSELF(weakSelf)  __weak __typeof(&*self)weakSelf = self;

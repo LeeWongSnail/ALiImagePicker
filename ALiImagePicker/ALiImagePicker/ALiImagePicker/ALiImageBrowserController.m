@@ -70,7 +70,7 @@
 - (void)buildUI
 {
     self.scrollView.frame = self.view.bounds;
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [UIColor blackColor];
     [self.view addGestureRecognizer:self.singleTap];
 }
 

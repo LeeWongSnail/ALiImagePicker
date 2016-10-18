@@ -14,6 +14,8 @@
 		EB34DA811DB4C1600015F9C3 /* ALiAssetGroupsView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34DA7F1DB4C1600015F9C3 /* ALiAssetGroupsView.m */; };
 		EB34DA841DB4C3A30015F9C3 /* UIButton+ALi.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34DA831DB4C3A30015F9C3 /* UIButton+ALi.m */; };
 		EB34DA881DB5CF560015F9C3 /* ALiImageBrowserController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34DA871DB5CF560015F9C3 /* ALiImageBrowserController.m */; };
+		EB34DA8B1DB5D75B0015F9C3 /* ALiImageBrowserTopToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34DA8A1DB5D75B0015F9C3 /* ALiImageBrowserTopToolBar.m */; };
+		EB34DA8E1DB5F8160015F9C3 /* ALiImageBrowserBottomToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34DA8D1DB5F8160015F9C3 /* ALiImageBrowserBottomToolBar.m */; };
 		EB3F5D071DB0B7BF0026673D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EB3F5D061DB0B7BF0026673D /* main.m */; };
 		EB3F5D0A1DB0B7BF0026673D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EB3F5D091DB0B7BF0026673D /* AppDelegate.m */; };
 		EB3F5D0D1DB0B7BF0026673D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB3F5D0C1DB0B7BF0026673D /* ViewController.m */; };
@@ -60,6 +62,10 @@
 		EB34DA831DB4C3A30015F9C3 /* UIButton+ALi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIButton+ALi.m"; path = "../ALiImagePicker/UIButton+ALi.m"; sourceTree = "<group>"; };
 		EB34DA861DB5CF560015F9C3 /* ALiImageBrowserController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALiImageBrowserController.h; sourceTree = "<group>"; };
 		EB34DA871DB5CF560015F9C3 /* ALiImageBrowserController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALiImageBrowserController.m; sourceTree = "<group>"; };
+		EB34DA891DB5D75B0015F9C3 /* ALiImageBrowserTopToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALiImageBrowserTopToolBar.h; sourceTree = "<group>"; };
+		EB34DA8A1DB5D75B0015F9C3 /* ALiImageBrowserTopToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALiImageBrowserTopToolBar.m; sourceTree = "<group>"; };
+		EB34DA8C1DB5F8160015F9C3 /* ALiImageBrowserBottomToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALiImageBrowserBottomToolBar.h; sourceTree = "<group>"; };
+		EB34DA8D1DB5F8160015F9C3 /* ALiImageBrowserBottomToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALiImageBrowserBottomToolBar.m; sourceTree = "<group>"; };
 		EB3F5D021DB0B7BF0026673D /* ALiImagePicker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ALiImagePicker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB3F5D061DB0B7BF0026673D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		EB3F5D081DB0B7BF0026673D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -208,6 +214,10 @@
 				EB34DA5C1DB46EE00015F9C3 /* ALiImagePickerService.m */,
 				EB34DA861DB5CF560015F9C3 /* ALiImageBrowserController.h */,
 				EB34DA871DB5CF560015F9C3 /* ALiImageBrowserController.m */,
+				EB34DA891DB5D75B0015F9C3 /* ALiImageBrowserTopToolBar.h */,
+				EB34DA8A1DB5D75B0015F9C3 /* ALiImageBrowserTopToolBar.m */,
+				EB34DA8C1DB5F8160015F9C3 /* ALiImageBrowserBottomToolBar.h */,
+				EB34DA8D1DB5F8160015F9C3 /* ALiImageBrowserBottomToolBar.m */,
 			);
 			path = ALiImagePicker;
 			sourceTree = "<group>";
@@ -357,10 +367,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				EB34DA881DB5CF560015F9C3 /* ALiImageBrowserController.m in Sources */,
+				EB34DA8B1DB5D75B0015F9C3 /* ALiImageBrowserTopToolBar.m in Sources */,
 				EBC815051DB20D7E0096BFFF /* ALiImagePickerController.m in Sources */,
 				EB34DA801DB4C1600015F9C3 /* ALiAssetGroupCell.m in Sources */,
 				EB3F5D0D1DB0B7BF0026673D /* ViewController.m in Sources */,
 				EB34DA5D1DB46EE00015F9C3 /* ALiImagePickerService.m in Sources */,
+				EB34DA8E1DB5F8160015F9C3 /* ALiImageBrowserBottomToolBar.m in Sources */,
 				EB34DA4D1DB469B20015F9C3 /* ALiImageCell.m in Sources */,
 				EB34DA811DB4C1600015F9C3 /* ALiAssetGroupsView.m in Sources */,
 				EBC8151E1DB215ED0096BFFF /* ALiAsset.m in Sources */,
@@ -518,6 +530,7 @@
 				DEVELOPMENT_TEAM = XWNPFKK4U5;
 				GCC_PREFIX_HEADER = "ALiImagePicker/ALiImagePicker-Prefix.pch";
 				INFOPLIST_FILE = ALiImagePicker/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.msb.ALiImagePicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -531,6 +544,7 @@
 				DEVELOPMENT_TEAM = XWNPFKK4U5;
 				GCC_PREFIX_HEADER = "ALiImagePicker/ALiImagePicker-Prefix.pch";
 				INFOPLIST_FILE = ALiImagePicker/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.msb.ALiImagePicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
