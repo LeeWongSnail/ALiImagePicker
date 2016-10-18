@@ -76,6 +76,26 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
     [self showAssetsGroupView];
 }
 
+- (void)groupViewDidSelected:(PHAssetCollection *)collection
+{
+    // 获得某个相簿中的所有PHAsset对象
+    PHFetchResult<PHAsset *> *assets = [PHAsset fetchAssetsInAssetCollection:collection options:nil];
+    NSMutableArray *arrM = [NSMutableArray arrayWithCapacity:assets.count];
+    [assets enumerateObjectsUsingBlock:^(PHAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        ALiAsset *asset = [[ALiAsset alloc] init];
+        asset.asset = obj;
+        [arrM addObject:asset];
+    }];
+    self.assets = [arrM copy];
+    //先收起
+    [self hideAssetsGroupView];
+    //在更新数据
+    [self.collectionView reloadData];
+    
+    //更新标题
+    [self.titleButton setTitle:collection.localizedTitle forState:UIControlStateNormal];
+}
+
 #pragma mark - Load Data
 
 - (void)fetchImagesInLibary
@@ -149,6 +169,7 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
     ALiAsset *asset = self.assets[indexPath.item];
     ALiImageCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kArtImagePickerCellIdentifier forIndexPath:indexPath];
     [cell configImageCell:asset];
+    
     return cell;
 }
 
@@ -194,6 +215,10 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
         _assetGroupView = [[ALiAssetGroupsView alloc] initWithFrame:CGRectMake(0, -self.view.size.height, self.view.size.width, self.view.size.height)];
         _assetGroupView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         [_assetGroupView.touchButton addTarget:self action:@selector(hideAssetsGroupView) forControlEvents:UIControlEventTouchUpInside];
+        WEAKSELF(weakSelf);
+        _assetGroupView.groupSelectedBlock = ^(PHAssetCollection *collection){
+            [weakSelf groupViewDidSelected:collection];
+        };
         [self.view addSubview:_assetGroupView];
         
     }

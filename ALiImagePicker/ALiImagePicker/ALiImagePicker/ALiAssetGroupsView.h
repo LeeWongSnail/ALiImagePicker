@@ -19,7 +19,7 @@
 @property (nonatomic, strong) PHFetchResult *assetsGroups;
 @property (nonatomic, strong) NSMutableDictionary *selectedAssetCount;
 
-
+@property (nonatomic, copy) void (^groupSelectedBlock)(PHAssetCollection *collection);
 
 @end
 

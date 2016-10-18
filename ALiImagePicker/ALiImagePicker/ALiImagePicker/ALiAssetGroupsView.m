@@ -73,7 +73,9 @@ static CGFloat kHeightAssetsGroupCell = 70.0;
     _selectedIndexPath = indexPath;
     [self.tableView reloadData];
     PHAssetCollection *collection = self.assetsGroups[indexPath.row];
-
+    if (self.groupSelectedBlock) {
+        self.groupSelectedBlock(collection);
+    }
 }
 
 
@@ -96,7 +98,6 @@ static CGFloat kHeightAssetsGroupCell = 70.0;
     if (!_touchButton) {
         _touchButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _touchButton.frame = CGRectMake(0, self.tableView.leftBottom.y, self.size.width, self.size.height -self.tableView.leftBottom.y);
-//        [_touchButton addTarget:self action:@selector(cancelAssetsGroupSelect) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_touchButton];
     }
     return _touchButton;
