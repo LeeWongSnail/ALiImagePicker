@@ -10,4 +10,6 @@
 
 @interface ALiImagePickerController : UIViewController
 
+@property (nonatomic, strong, readonly) NSMutableArray *selectAssets;
+
 @end

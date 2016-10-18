@@ -7,16 +7,17 @@
 //
 
 #import "ALiImagePickerController.h"
+#import "ALiImageBrowserController.h"
 #import "ALiImagePickFooterView.h"
 #import "ALiImagePickerService.h"
-#import "UIButton+ALi.h"
 #import "ALiAssetGroupsView.h"
+#import "UIButton+ALi.h"
 #import "ALiImageCell.h"
 
 static  NSString *kArtImagePickerCellIdentifier = @"ALiImageCell";
 static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
 #define kSizeThumbnailCollectionView  ([UIScreen mainScreen].bounds.size.width-10)/4
-@interface ALiImagePickerController () <UICollectionViewDelegate,UICollectionViewDataSource>
+@interface ALiImagePickerController () <UICollectionViewDelegate,UICollectionViewDataSource,ALiImageCellDelegate>
 
 //UI
 @property (nonatomic, strong) UICollectionView *collectionView;
@@ -29,6 +30,9 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
 //Data
 @property (nonatomic, strong) NSArray *assets;
 @property (nonatomic, strong) NSArray *groupTypes;
+
+@property (nonatomic, strong) NSMutableArray *selectAssets;
+
 
 @end
 
@@ -168,11 +172,32 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
 {
     ALiAsset *asset = self.assets[indexPath.item];
     ALiImageCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kArtImagePickerCellIdentifier forIndexPath:indexPath];
+    cell.delegate = self;
     [cell configImageCell:asset];
     
     return cell;
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    //看大图
+    ALiAsset *asset = self.assets[indexPath.item];
+    
+    ALiImageBrowserController *browserVc = [[ALiImageBrowserController alloc] init];
+    browserVc.asset = asset;
+    [self.navigationController pushViewController:browserVc animated:YES];
+}
+
+#pragma mark - ALiImageCellDelegate
+
+- (void)imageDidSelect:(ALiAsset *)asset select:(BOOL)isSelect
+{
+    if (isSelect) {
+        [self.selectAssets addObject:asset];
+    } else {
+        [self.selectAssets removeObject:asset];
+    }
+}
 
 #pragma mark - Lazy Load
 
