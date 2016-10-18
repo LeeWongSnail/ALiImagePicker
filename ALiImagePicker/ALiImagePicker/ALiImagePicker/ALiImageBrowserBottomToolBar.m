@@ -10,11 +10,7 @@
 
 @interface ALiImageBrowserBottomToolBar ()
 
-@property (nonatomic, strong) UIButton *fullImageBtn;
-
-@property (nonatomic, strong) UIButton *selectedCountBtn;
-
-@property (nonatomic, strong) UIButton *sendBtn;
+@property (nonatomic, strong) UIVisualEffectView *effectView;
 
 @end
 
@@ -24,20 +20,24 @@
 {
     if (self = [super initWithFrame:frame]) {
         [self buildUI];
+        self.backgroundColor = [UIColor redColor];
     }
     return self;
 }
 
 - (void)buildUI
 {
-    self.fullImageBtn.size = CGSizeMake(80, 30);
+    self.effectView.frame = self.bounds;
+    
+    self.fullImageBtn.size = CGSizeMake(120, 32);
+    [self.fullImageBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 15, 0, 0)];
     self.fullImageBtn.originX = 15;
-    self.fullImageBtn.originY = self.center.y - 15 - 10;
+    self.fullImageBtn.originY = 15;
     
     self.sendBtn.size = CGSizeMake(50, 30);
     self.sendBtn.originY = self.fullImageBtn.originY;
-    self.sendBtn.originX = self.size.width - 15 - 25;
-    
+    self.sendBtn.originX = SCREEN_W - 15 - 50;
+
     self.selectedCountBtn.size = CGSizeMake(30, 30);
     self.selectedCountBtn.originY = self.sendBtn.originY;
     self.selectedCountBtn.originX = self.sendBtn.originX - 5 - 30;
@@ -49,12 +49,13 @@
 {
     if (_fullImageBtn == nil) {
         _fullImageBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_fullImageBtn setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
-        [_fullImageBtn setImage:[UIImage imageNamed:@""] forState:UIControlStateSelected];
+        [_fullImageBtn setImage:[UIImage imageNamed:@"fullimage_normal"] forState:UIControlStateNormal];
+        [_fullImageBtn setImage:[UIImage imageNamed:@"fullimage_selected"] forState:UIControlStateSelected];
         [_fullImageBtn setTitle:@"fullImage" forState:UIControlStateNormal];
         [_fullImageBtn setTitleColor:[UIColor greenColor] forState:UIControlStateSelected];
         [_fullImageBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        [self addSubview:_fullImageBtn];
+        _fullImageBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+        [self.effectView addSubview:_fullImageBtn];
     }
     return _fullImageBtn;
 }
@@ -64,12 +65,10 @@
 {
     if (_selectedCountBtn == nil) {
         _selectedCountBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_selectedCountBtn setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
-        [_selectedCountBtn setImage:[UIImage imageNamed:@""] forState:UIControlStateSelected];
-        [_selectedCountBtn setTitle:@"fullImage" forState:UIControlStateNormal];
-        [_selectedCountBtn setTitleColor:[UIColor greenColor] forState:UIControlStateSelected];
-        [_selectedCountBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        [self addSubview:_selectedCountBtn];
+        [_selectedCountBtn setImage:[UIImage imageNamed:@"sendcount"] forState:UIControlStateSelected];
+        [_selectedCountBtn setTitle:@"" forState:UIControlStateNormal];
+        [_selectedCountBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [self.effectView addSubview:_selectedCountBtn];
     }
     return _selectedCountBtn;
 }
@@ -81,12 +80,23 @@
         _sendBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_sendBtn setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
         [_sendBtn setImage:[UIImage imageNamed:@""] forState:UIControlStateSelected];
-        [_sendBtn setTitle:@"fullImage" forState:UIControlStateNormal];
+        [_sendBtn setTitle:@"Send" forState:UIControlStateNormal];
         [_sendBtn setTitleColor:[UIColor greenColor] forState:UIControlStateSelected];
-        [_sendBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        [self addSubview:_sendBtn];
+        [_sendBtn setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
+        [self.effectView addSubview:_sendBtn];
     }
     return _sendBtn;
+}
+
+- (UIVisualEffectView *)effectView
+{
+    if (_effectView == nil) {
+        UIBlurEffect *effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight];
+        _effectView = [[UIVisualEffectView alloc] initWithEffect:effect];
+        [self addSubview:_effectView];
+        
+    }
+    return _effectView;
 }
 
 @end

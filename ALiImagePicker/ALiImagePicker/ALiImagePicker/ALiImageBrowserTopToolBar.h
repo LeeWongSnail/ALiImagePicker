@@ -10,4 +10,8 @@
 
 @interface ALiImageBrowserTopToolBar : UIView
 
+@property (nonatomic, strong) UIButton *backBtn;
+
+@property (nonatomic, strong) UIButton *selectBtn;
+
 @end

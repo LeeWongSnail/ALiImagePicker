@@ -10,4 +10,10 @@
 
 @interface ALiImageBrowserBottomToolBar : UIView
 
+@property (nonatomic, strong) UIButton *fullImageBtn;
+
+@property (nonatomic, strong) UIButton *selectedCountBtn;
+
+@property (nonatomic, strong) UIButton *sendBtn;
+
 @end

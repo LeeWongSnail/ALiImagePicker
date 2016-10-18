@@ -7,6 +7,8 @@
 //
 
 #import "ALiImageBrowserController.h"
+#import "ALiImageBrowserTopToolBar.h"
+#import "ALiImageBrowserBottomToolBar.h"
 #import "ALiAsset.h"
 
 @interface ALiImageBrowserController () <UIScrollViewDelegate>
@@ -16,9 +18,9 @@
 
 @property (nonatomic,strong) UITapGestureRecognizer *singleTap;
 
-@property (nonatomic, strong) UIView *topToolBar;
+@property (nonatomic, strong) ALiImageBrowserTopToolBar *topToolBar;
 
-@property (nonatomic, strong) UIView *bottomToolBar;
+@property (nonatomic, strong) ALiImageBrowserBottomToolBar *bottomToolBar;
 
 @end
 
@@ -39,6 +41,53 @@
         self.imageView.size = CGSizeMake(asset.asset.pixelWidth, asset.asset.pixelHeight);
         [self setCenterImage:result];
     }];
+}
+
+//点击选中图片
+- (void)selectImageAction:(UIButton *)button
+{
+
+}
+
+//点击原图
+- (void)fullImageBtnAction:(UIButton *)button
+{
+
+}
+
+//点击发送
+- (void)sendImage:(UIButton *)button
+{
+    
+}
+
+
+- (void)configToolBarEventHandler
+{
+    [self.topToolBar.backBtn addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.topToolBar.selectBtn addTarget:self action:@selector(selectImageAction:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.bottomToolBar.fullImageBtn addTarget:self action:@selector(fullImageBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.bottomToolBar.sendBtn addTarget:self action:@selector(sendImage:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.bottomToolBar.selectedCountBtn addTarget:self action:@selector(sendImage:) forControlEvents:UIControlEventTouchUpInside];
+}
+
+#pragma mark - Load View
+
+- (void)buildUI
+{
+    self.scrollView.frame = self.view.bounds;
+    self.view.backgroundColor = [UIColor blackColor];
+    [self.view addGestureRecognizer:self.singleTap];
+    
+    self.topToolBar.frame = CGRectMake(0, 0, SCREEN_W, 64);
+    
+    self.bottomToolBar.frame = CGRectMake(0, SCREEN_H-64, SCREEN_W, 64);
+    
+    [self configToolBarEventHandler];
 }
 
 
@@ -65,13 +114,6 @@
 - (BOOL)prefersStatusBarHidden
 {
     return YES;
-}
-
-- (void)buildUI
-{
-    self.scrollView.frame = self.view.bounds;
-    self.view.backgroundColor = [UIColor blackColor];
-    [self.view addGestureRecognizer:self.singleTap];
 }
 
 - (void)dealloc
@@ -172,6 +214,25 @@
         _singleTap.numberOfTouchesRequired = 1;
     }
     return _singleTap;
+}
+
+- (ALiImageBrowserTopToolBar *)topToolBar
+{
+    if (_topToolBar == nil) {
+        _topToolBar = [[ALiImageBrowserTopToolBar alloc] init];
+        [self.view addSubview:_topToolBar];
+    }
+    return _topToolBar;
+}
+
+
+- (ALiImageBrowserBottomToolBar *)bottomToolBar
+{
+    if (_bottomToolBar == nil) {
+        _bottomToolBar = [[ALiImageBrowserBottomToolBar alloc] init];
+        [self.view addSubview:_bottomToolBar];
+    }
+    return _bottomToolBar;
 }
 
 @end
