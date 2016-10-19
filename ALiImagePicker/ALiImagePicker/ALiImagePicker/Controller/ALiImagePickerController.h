@@ -12,4 +12,6 @@
 
 @property (nonatomic, strong, readonly) NSMutableArray *selectAssets;
 
+@property (nonatomic, copy) void (^photoChooseBlock)(NSArray *selectAssets);
+
 @end

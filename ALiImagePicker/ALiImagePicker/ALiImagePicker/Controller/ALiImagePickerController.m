@@ -185,6 +185,7 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
     
     ALiImageBrowserController *browserVc = [[ALiImageBrowserController alloc] init];
     browserVc.asset = asset;
+    browserVc.photoChooseBlock = self.photoChooseBlock;
     [self.navigationController pushViewController:browserVc animated:YES];
 }
 

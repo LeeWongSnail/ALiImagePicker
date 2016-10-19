@@ -72,6 +72,9 @@
 
 - (void)back
 {
+//    if (self.photoChooseBlock) {
+//        self.photoChooseBlock(self)
+//    }
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
