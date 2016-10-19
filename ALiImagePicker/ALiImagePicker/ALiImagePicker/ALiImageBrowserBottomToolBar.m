@@ -10,7 +10,6 @@
 
 @interface ALiImageBrowserBottomToolBar ()
 
-@property (nonatomic, strong) UIVisualEffectView *effectView;
 
 @end
 
@@ -20,27 +19,30 @@
 {
     if (self = [super initWithFrame:frame]) {
         [self buildUI];
-        self.backgroundColor = [UIColor redColor];
+        self.backgroundColor = [UIColor grayColor];
     }
     return self;
 }
 
 - (void)buildUI
 {
-    self.effectView.frame = self.bounds;
     
-    self.fullImageBtn.size = CGSizeMake(120, 32);
-    [self.fullImageBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 15, 0, 0)];
-    self.fullImageBtn.originX = 15;
-    self.fullImageBtn.originY = 15;
+    self.fullImageBtn.size = CGSizeMake(20,20);
+    self.fullImageBtn.originX = 10;
+    self.fullImageBtn.originY = 25;
+    
+    CGFloat x = CGRectGetMaxX(self.fullImageBtn.frame) + 10 + 40;
+    self.fullTitleButton.size = CGSizeMake(120, 32);
+    self.fullTitleButton.center = CGPointMake(x, self.fullImageBtn.center.y);
+    
     
     self.sendBtn.size = CGSizeMake(50, 30);
-    self.sendBtn.originY = self.fullImageBtn.originY;
-    self.sendBtn.originX = SCREEN_W - 15 - 50;
+    x = SCREEN_W - 15 - 25;
+    self.sendBtn.center = CGPointMake(x, self.fullImageBtn.center.y);
 
     self.selectedCountBtn.size = CGSizeMake(30, 30);
-    self.selectedCountBtn.originY = self.sendBtn.originY;
-    self.selectedCountBtn.originX = self.sendBtn.originX - 5 - 30;
+    x = self.sendBtn.originX - 5 - 15;
+    self.selectedCountBtn.center = CGPointMake(x, self.fullImageBtn.center.y);
 }
 
 #pragma mark - Lazy Load
@@ -51,15 +53,23 @@
         _fullImageBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_fullImageBtn setImage:[UIImage imageNamed:@"fullimage_normal"] forState:UIControlStateNormal];
         [_fullImageBtn setImage:[UIImage imageNamed:@"fullimage_selected"] forState:UIControlStateSelected];
-        [_fullImageBtn setTitle:@"fullImage" forState:UIControlStateNormal];
-        [_fullImageBtn setTitleColor:[UIColor greenColor] forState:UIControlStateSelected];
-        [_fullImageBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        _fullImageBtn.titleLabel.font = [UIFont systemFontOfSize:15];
-        [self.effectView addSubview:_fullImageBtn];
+        [self addSubview:_fullImageBtn];
     }
     return _fullImageBtn;
 }
 
+- (UIButton *)fullTitleButton
+{
+    if (_fullTitleButton == nil) {
+        _fullTitleButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_fullTitleButton setTitle:@"Full Image" forState:UIControlStateNormal];
+        [_fullTitleButton setTitleColor:[UIColor greenColor] forState:UIControlStateSelected];
+        [_fullTitleButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        _fullTitleButton.titleLabel.font = [UIFont systemFontOfSize:13];
+        [self addSubview:_fullTitleButton];
+    }
+    return _fullTitleButton;
+}
 
 - (UIButton *)selectedCountBtn
 {
@@ -68,7 +78,7 @@
         [_selectedCountBtn setImage:[UIImage imageNamed:@"sendcount"] forState:UIControlStateSelected];
         [_selectedCountBtn setTitle:@"" forState:UIControlStateNormal];
         [_selectedCountBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [self.effectView addSubview:_selectedCountBtn];
+        [self addSubview:_selectedCountBtn];
     }
     return _selectedCountBtn;
 }
@@ -83,20 +93,9 @@
         [_sendBtn setTitle:@"Send" forState:UIControlStateNormal];
         [_sendBtn setTitleColor:[UIColor greenColor] forState:UIControlStateSelected];
         [_sendBtn setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
-        [self.effectView addSubview:_sendBtn];
+        [self addSubview:_sendBtn];
     }
     return _sendBtn;
-}
-
-- (UIVisualEffectView *)effectView
-{
-    if (_effectView == nil) {
-        UIBlurEffect *effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight];
-        _effectView = [[UIVisualEffectView alloc] initWithEffect:effect];
-        [self addSubview:_effectView];
-        
-    }
-    return _effectView;
 }
 
 @end

@@ -9,7 +9,7 @@
 #import "ALiImageBrowserTopToolBar.h"
 
 @interface ALiImageBrowserTopToolBar ()
-@property (nonatomic, strong) UIVisualEffectView *effectView;
+
 @end
 
 @implementation ALiImageBrowserTopToolBar
@@ -18,15 +18,13 @@
 {
     if (self = [super initWithFrame:frame]) {
         [self buildUI];
-        self.backgroundColor = [UIColor redColor];
+        self.backgroundColor = [UIColor grayColor];
     }
     return self;
 }
 
 - (void)buildUI
 {
-    
-    self.effectView.frame = self.bounds;
     
     self.backBtn.originY = 15;
     self.backBtn.originX = 15;
@@ -45,7 +43,7 @@
     if (_backBtn == nil) {
         _backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_backBtn setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
-        [self.effectView addSubview:_backBtn];
+        [self addSubview:_backBtn];
     }
     
     return _backBtn;
@@ -57,20 +55,9 @@
         _selectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_selectBtn setImage:[UIImage imageNamed:@"selected_normal"] forState:UIControlStateNormal];
         [_selectBtn setImage:[UIImage imageNamed:@"selected_selected"] forState:UIControlStateSelected];
-        [self.effectView addSubview:_selectBtn];
+        [self addSubview:_selectBtn];
     }
     return _selectBtn;
-}
-
-- (UIVisualEffectView *)effectView
-{
-    if (_effectView == nil) {
-        UIBlurEffect *effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
-        _effectView = [[UIVisualEffectView alloc] initWithEffect:effect];
-        [self addSubview:_effectView];
-        
-    }
-    return _effectView;
 }
 
 @end

@@ -46,13 +46,22 @@
 //点击选中图片
 - (void)selectImageAction:(UIButton *)button
 {
-
+    [self.topToolBar.selectBtn setSelected:!self.topToolBar.selectBtn.isSelected];
+    [self fullImageBtnAction:button];
 }
 
 //点击原图
 - (void)fullImageBtnAction:(UIButton *)button
 {
+    [self.bottomToolBar.fullImageBtn setSelected:!self.bottomToolBar.fullImageBtn.isSelected];
+    [self.bottomToolBar.fullTitleButton setSelected:!self.bottomToolBar.fullTitleButton.isSelected];
+    //显示这张图片的信息
+    if (button.isSelected) {
+        [self.bottomToolBar.fullTitleButton setTitle:@"Full Image(2.3M)" forState:UIControlStateSelected];
+    } else {
+        [self.bottomToolBar.fullTitleButton setTitle:@"Full Image" forState:UIControlStateSelected];
 
+    }
 }
 
 //点击发送
@@ -61,14 +70,20 @@
     
 }
 
+- (void)back
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 - (void)configToolBarEventHandler
 {
-    [self.topToolBar.backBtn addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
+    [self.topToolBar.backBtn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     
     [self.topToolBar.selectBtn addTarget:self action:@selector(selectImageAction:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.bottomToolBar.fullImageBtn addTarget:self action:@selector(fullImageBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.bottomToolBar.fullTitleButton addTarget:self action:@selector(fullImageBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.bottomToolBar.sendBtn addTarget:self action:@selector(sendImage:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -81,7 +96,7 @@
 {
     self.scrollView.frame = self.view.bounds;
     self.view.backgroundColor = [UIColor blackColor];
-    [self.view addGestureRecognizer:self.singleTap];
+//    [self.view addGestureRecognizer:self.singleTap];
     
     self.topToolBar.frame = CGRectMake(0, 0, SCREEN_W, 64);
     
@@ -221,6 +236,7 @@
     if (_topToolBar == nil) {
         _topToolBar = [[ALiImageBrowserTopToolBar alloc] init];
         [self.view addSubview:_topToolBar];
+        [self.view bringSubviewToFront:_topToolBar];
     }
     return _topToolBar;
 }
@@ -231,6 +247,7 @@
     if (_bottomToolBar == nil) {
         _bottomToolBar = [[ALiImageBrowserBottomToolBar alloc] init];
         [self.view addSubview:_bottomToolBar];
+        [self.view bringSubviewToFront:_bottomToolBar];
     }
     return _bottomToolBar;
 }

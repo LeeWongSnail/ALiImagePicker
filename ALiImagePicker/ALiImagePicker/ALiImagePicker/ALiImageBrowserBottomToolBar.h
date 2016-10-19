@@ -16,4 +16,6 @@
 
 @property (nonatomic, strong) UIButton *sendBtn;
 
+@property (nonatomic, strong) UIButton *fullTitleButton;
+
 @end
