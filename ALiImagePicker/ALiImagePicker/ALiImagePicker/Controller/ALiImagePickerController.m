@@ -181,11 +181,12 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     //看大图
-    ALiAsset *asset = self.assets[indexPath.item];
-    
     ALiImageBrowserController *browserVc = [[ALiImageBrowserController alloc] init];
-    browserVc.asset = asset;
     browserVc.photoChooseBlock = self.photoChooseBlock;
+    browserVc.allAssets = [NSMutableArray arrayWithArray:self.assets];
+    browserVc.selectedAsset = self.selectAssets;
+    browserVc.curIndex = indexPath.item;
+    
     [self.navigationController pushViewController:browserVc animated:YES];
 }
 

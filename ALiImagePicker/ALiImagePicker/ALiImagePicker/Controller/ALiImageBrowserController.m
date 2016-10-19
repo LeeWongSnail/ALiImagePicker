@@ -7,252 +7,138 @@
 //
 
 #import "ALiImageBrowserController.h"
-#import "ALiImageBrowserTopToolBar.h"
-#import "ALiImageBrowserBottomToolBar.h"
-#import "ALiAsset.h"
+#import "ALiSingleImageController.h"
 
-@interface ALiImageBrowserController () <UIScrollViewDelegate>
+@interface ALiImageBrowserController () <UIPageViewControllerDelegate,UIPageViewControllerDataSource>
 
-@property (nonatomic,strong) UIScrollView *scrollView;
-@property (nonatomic,strong) UIImageView *imageView;
+@property (nonatomic, strong) UIPageViewController *pageViewController;
 
-@property (nonatomic,strong) UITapGestureRecognizer *singleTap;
-
-@property (nonatomic, strong) ALiImageBrowserTopToolBar *topToolBar;
-
-@property (nonatomic, strong) ALiImageBrowserBottomToolBar *bottomToolBar;
+@property (nonatomic, assign) NSInteger currentIndex;
 
 @end
 
 @implementation ALiImageBrowserController
 
-#pragma mark - Custom Method
-
-- (void)setAsset:(ALiAsset *)asset
-{
-    _asset = asset;
-    
-    CGSize imageSize = CGSizeMake(asset.asset.pixelWidth, asset.asset.pixelHeight);
-    
-    [[PHImageManager defaultManager] requestImageForAsset:asset.asset targetSize:imageSize contentMode:PHImageContentModeAspectFit options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-        NSLog(@"%@",info);
-        self.imageView.center = self.view.center;
-        self.scrollView.contentSize = imageSize;
-        self.imageView.size = CGSizeMake(asset.asset.pixelWidth, asset.asset.pixelHeight);
-        [self setCenterImage:result];
-    }];
-}
-
-//点击选中图片
-- (void)selectImageAction:(UIButton *)button
-{
-    [self.topToolBar.selectBtn setSelected:!self.topToolBar.selectBtn.isSelected];
-    [self fullImageBtnAction:button];
-}
-
-//点击原图
-- (void)fullImageBtnAction:(UIButton *)button
-{
-    [self.bottomToolBar.fullImageBtn setSelected:!self.bottomToolBar.fullImageBtn.isSelected];
-    [self.bottomToolBar.fullTitleButton setSelected:!self.bottomToolBar.fullTitleButton.isSelected];
-    //显示这张图片的信息
-    if (button.isSelected) {
-        [self.bottomToolBar.fullTitleButton setTitle:@"Full Image(2.3M)" forState:UIControlStateSelected];
-    } else {
-        [self.bottomToolBar.fullTitleButton setTitle:@"Full Image" forState:UIControlStateSelected];
-
-    }
-}
-
-//点击发送
-- (void)sendImage:(UIButton *)button
-{
-    
-}
-
-- (void)back
-{
-//    if (self.photoChooseBlock) {
-//        self.photoChooseBlock(self)
-//    }
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)configToolBarEventHandler
-{
-    [self.topToolBar.backBtn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.topToolBar.selectBtn addTarget:self action:@selector(selectImageAction:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.bottomToolBar.fullImageBtn addTarget:self action:@selector(fullImageBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.bottomToolBar.fullTitleButton addTarget:self action:@selector(fullImageBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.bottomToolBar.sendBtn addTarget:self action:@selector(sendImage:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.bottomToolBar.selectedCountBtn addTarget:self action:@selector(sendImage:) forControlEvents:UIControlEventTouchUpInside];
-}
-
 #pragma mark - Load View
 
-- (void)buildUI
+- (void)initPageViewController
 {
-    self.scrollView.frame = self.view.bounds;
-    self.view.backgroundColor = [UIColor blackColor];
-//    [self.view addGestureRecognizer:self.singleTap];
-    
-    self.topToolBar.frame = CGRectMake(0, 0, SCREEN_W, 64);
-    
-    self.bottomToolBar.frame = CGRectMake(0, SCREEN_H-64, SCREEN_W, 64);
-    
-    [self configToolBarEventHandler];
-}
+    CGRect rect = [UIScreen mainScreen].bounds;
+    self.pageViewController.view.frame = CGRectMake(0, 0, rect.size.width + 20, rect.size.height);
+    ALiSingleImageController *initialViewController = [self viewControllerAtIndex:self.currentIndex];
+    NSArray *viewControllers = nil;
+    if (initialViewController) {
+        viewControllers = [NSArray arrayWithObject:initialViewController];
+    } else {
+        viewControllers = [NSArray array];
+    }
+    [self.pageViewController setViewControllers:viewControllers
+                                      direction:UIPageViewControllerNavigationDirectionForward
+                                       animated:NO
+                                     completion:nil];
 
+}
 
 #pragma mark - Life Cycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self buildUI];
+    [self initPageViewController];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated{
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
     [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:YES];
+    [self setNeedsStatusBarAppearanceUpdate];
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
+- (void)viewWillDisappear:(BOOL)animated{
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
     [super viewWillDisappear:animated];
-    [self.navigationController setNavigationBarHidden:NO];
+    [self setNeedsStatusBarAppearanceUpdate];
 }
 
-- (BOOL)prefersStatusBarHidden
-{
-    return YES;
-}
+#pragma mark - Private Method
 
-- (void)dealloc
-{
-    NSLog(@"%s",__func__);
-}
-
-
-- (void)handleSingleTap:(UITapGestureRecognizer *)recognizer{
+- (NSUInteger)getCount{
     
-//    if ([self.delegate respondsToSelector:@selector(imageScrollViewTap:)]) {
-//        [self.delegate imageScrollViewTap:self];
+    return self.allAssets.count;
+}
+
+- (id)contentAtIndex:(NSUInteger) index{
+    
+    return self.allAssets[index];
+}
+
+- (ALiSingleImageController *)viewControllerAtIndex:(NSUInteger)index {
+    if (([self getCount] == 0) || (index >= [self getCount])) {
+        return nil;
+    }
+    ALiSingleImageController *dataViewController = [[ALiSingleImageController alloc] init];
+//    id<ArtImageItemProtocol> item = [self contentAtIndex: index];
+//    dataViewController.imageItem = [item getBigImage];
+//    if ([item respondsToSelector:@selector(getThumbImage)]) {
+//        dataViewController.imageThumbItem = [item getThumbImage];
 //    }
+//    dataViewController.delegate = self;
+    dataViewController.view.tag = index;
+    dataViewController.view.backgroundColor = [UIColor clearColor] ;
+    return dataViewController;
 }
 
-
-- (void)setCenterImage:(UIImage *)aImage
-{
-    CGSize boundsSize = self.view.bounds.size;// self.scrollView.bounds.size;
-    CGSize aspectSize = [self aspectImage:self.asset];
-    self.imageView.bounds = (CGRect) {{0.f, 0.f}, aspectSize};
-    self.imageView.center = CGPointMake(boundsSize.width/2., boundsSize.height/2.);
-    [self.scrollView addSubview:self.imageView];
-    self.imageView.image = aImage;
-    //保证新的图片按照原来放大比例
-    self.scrollView.zoomScale = 1.0;
-    self.scrollView.contentSize = [self aspectImage:self.asset];
+- (NSUInteger)indexOfViewController:(ALiSingleImageController *)viewController {
+    return viewController.view.tag;
 }
 
-- (CGSize)aspectImage:(ALiAsset *)imageInfo
-{
-    CGSize imageSize = CGSizeMake(imageInfo.asset.pixelWidth, imageInfo.asset.pixelHeight);
-    CGFloat width = CGRectGetWidth(self.view.frame);
-    CGFloat height = CGRectGetHeight(self.view.frame);
-    CGSize aspectSize = CGSizeZero;
-    if (imageSize.width/width > imageSize.height / height) {
-        aspectSize = CGSizeMake(width, width * imageSize.height / imageSize.width);
-    } else {
-        aspectSize = CGSizeMake(height * imageSize.width / imageSize.height, height);
+#pragma mark - UIPageViewControllerDelegate,UIPageViewControllerDataSource
+
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController {
+    NSUInteger index = [self indexOfViewController:(ALiSingleImageController *)viewController];
+    if ((index == 0) || (index == NSNotFound)) {
+        return nil;
     }
-    return aspectSize;
+    index--;
+    UIViewController * vc = [self viewControllerAtIndex:index];
+    vc.view.backgroundColor = [UIColor clearColor];
+    return vc;
 }
 
-- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
-{
-    return self.imageView;
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController {
+    NSUInteger index = [self indexOfViewController:(ALiSingleImageController *)viewController];
+    if (index == NSNotFound) {
+        return nil;
+    }
+    index++;
+    if (index == [self getCount]) {
+        return nil;
+    }
+    UIViewController *vc = [self viewControllerAtIndex:index];
+    vc.view.backgroundColor = [UIColor clearColor] ;
+    return vc ;
 }
 
-
-- (void)scrollViewDidZoom:(UIScrollView *)scrollView
-{
-    CGSize boundsSize = scrollView.bounds.size;
-    CGRect imgFrame = self.imageView.frame;
-    CGSize contentSize = scrollView.contentSize;
-    CGPoint centerPoint = CGPointMake(contentSize.width/2, contentSize.height/2);
-    // center horizontally
-    if (imgFrame.size.width <= boundsSize.width)
-    {
-        centerPoint.x = boundsSize.width/2;
+#pragma mark -UIPageViewControllerDelegate
+- (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed {
+    if (completed) {
+        self.currentIndex = [self indexOfViewController:(ALiSingleImageController *)[self.pageViewController.viewControllers objectAtIndex:0]];
+        //        self.pageLabel.text = [NSString stringWithFormat:@"%@ / %@", @(self.currentIndex + 1), @([self getCount])];
     }
-    // center vertically
-    if (imgFrame.size.height <= boundsSize.height)
-    {
-        centerPoint.y = boundsSize.height/2;
-    }
-    self.imageView.center = centerPoint;
 }
 
 #pragma mark - Lazy Load
 
-- (UIImageView *)imageView
-{
-    if (_imageView == nil) {
-        _imageView = [[UIImageView alloc] init];
-        _imageView.contentMode = UIViewContentModeScaleAspectFit;
-        _imageView.userInteractionEnabled = YES;
+- (UIPageViewController *)pageViewController{
+    if (!_pageViewController) {
+        
+        NSDictionary *options =[NSDictionary dictionaryWithObject:[NSNumber numberWithInteger:UIPageViewControllerSpineLocationMin] forKey: UIPageViewControllerOptionSpineLocationKey];
+        _pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options: options];
+        _pageViewController.dataSource = self;
+        _pageViewController.delegate = self;
+        [self addChildViewController:_pageViewController];
+        [self.view addSubview:[_pageViewController view]];
     }
-    return _imageView;
-}
-
--(UIScrollView *)scrollView
-{
-    if (_scrollView == nil) {
-        _scrollView = [[UIScrollView alloc] init];
-        _scrollView.maximumZoomScale = 2.0;
-        _scrollView.minimumZoomScale = 0.5;
-        _scrollView.delegate = self;
-        [self.view addSubview:_scrollView];
-    }
-    return _scrollView;
-}
-
-- (UITapGestureRecognizer *)singleTap
-{
-    if (!_singleTap) {
-        _singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
-        _singleTap.numberOfTapsRequired = 1;
-        _singleTap.numberOfTouchesRequired = 1;
-    }
-    return _singleTap;
-}
-
-- (ALiImageBrowserTopToolBar *)topToolBar
-{
-    if (_topToolBar == nil) {
-        _topToolBar = [[ALiImageBrowserTopToolBar alloc] init];
-        [self.view addSubview:_topToolBar];
-        [self.view bringSubviewToFront:_topToolBar];
-    }
-    return _topToolBar;
-}
-
-
-- (ALiImageBrowserBottomToolBar *)bottomToolBar
-{
-    if (_bottomToolBar == nil) {
-        _bottomToolBar = [[ALiImageBrowserBottomToolBar alloc] init];
-        [self.view addSubview:_bottomToolBar];
-        [self.view bringSubviewToFront:_bottomToolBar];
-    }
-    return _bottomToolBar;
+    return _pageViewController;
 }
 
 @end
