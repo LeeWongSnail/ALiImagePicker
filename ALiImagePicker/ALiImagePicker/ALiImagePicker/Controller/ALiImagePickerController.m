@@ -110,6 +110,25 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void)addSelectAssets:(ALiAsset *)asset
+{
+    if ([self.selectAssets containsObject:asset]) {
+        [self.selectAssets removeObject:asset];
+    } else {
+        [self.selectAssets addObject:asset];
+    }
+    if (self.selectAssets.count == 0) {
+        self.bottomBar.previewBtn.enabled = NO;
+        self.bottomBar.sendBtn.enabled = NO;
+        self.bottomBar.selectedCountBtn.hidden = YES;
+    } else {
+        self.bottomBar.previewBtn.enabled = YES;
+        self.bottomBar.sendBtn.enabled = YES;
+        self.bottomBar.selectedCountBtn.hidden = NO;
+        [self.bottomBar.selectedCountBtn setTitle:[NSString stringWithFormat:@"%tu",self.selectAssets.count] forState:UIControlStateNormal];
+    }
+}
+
 #pragma mark - Load Data
 
 - (void)fetchImagesInLibary
@@ -136,6 +155,7 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
 
 - (void)buildUI
 {
+    self.selectAssets = [NSMutableArray array];
     self.collectionView.frame = CGRectMake(0, 0, SCREEN_W, SCREEN_H - kBottomBarHeight);
     self.bottomBar.frame = CGRectMake(0, SCREEN_H - kBottomBarHeight, SCREEN_W, kBottomBarHeight);
     [self setUpProperties];
@@ -162,8 +182,6 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
     [self buildUI];
     [self fetchImagesInLibary];
     [self fetchPhotoLibaryCategory];
-    
-    [self addObserver:self.selectAssets forKeyPath:@"count" options:(NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew) context:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -173,13 +191,7 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
 
 - (void)dealloc
 {
-    [self removeObserver:self.selectAssets forKeyPath:@"count"];
-}
 
-#pragma mark key value observer
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
-{
-    NSLog(@"%@,%@",object,change);
 }
 
 #pragma mark - UICollectionViewDelegate,UICollectionViewDataSource
@@ -230,11 +242,8 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
 
 - (void)imageDidSelect:(ALiAsset *)asset select:(BOOL)isSelect
 {
-    if (isSelect) {
-        [self.selectAssets addObject:asset];
-    } else {
-        [self.selectAssets removeObject:asset];
-    }
+    
+    [self addSelectAssets:asset];
 }
 
 - (void)imageDidTapped:(ALiAsset *)asset select:(BOOL)isSelect

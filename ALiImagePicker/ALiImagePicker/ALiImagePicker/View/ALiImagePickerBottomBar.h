@@ -10,6 +10,9 @@
 
 @interface ALiImagePickerBottomBar : UICollectionReusableView
 
+@property (nonatomic, strong) UIButton *previewBtn;
 
+@property (nonatomic, strong) UIButton *sendBtn;
+@property (nonatomic, strong) UIButton *selectedCountBtn;
 
 @end

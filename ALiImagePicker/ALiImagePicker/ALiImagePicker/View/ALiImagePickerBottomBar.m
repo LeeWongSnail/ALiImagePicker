@@ -10,9 +10,6 @@
 
 @interface ALiImagePickerBottomBar ()
 
-@property (nonatomic, strong) UIButton *previewBtn;
-
-@property (nonatomic, strong) UIButton *sendBtn;
 
 @end
 
@@ -34,6 +31,10 @@
     CGFloat x = SCREEN_W - 50 - 10;
     self.sendBtn.frame = CGRectMake(x, self.previewBtn.originY, 50, 30);
     self.sendBtn.enabled = NO;
+    
+    self.selectedCountBtn.size = CGSizeMake(25, 25);
+    x = self.sendBtn.originX - 5 - 15;
+    self.selectedCountBtn.center = CGPointMake(x, self.sendBtn.center.y);
 }
 
 #pragma mark - Lazy Load
@@ -63,6 +64,17 @@
         [self addSubview:_previewBtn];
     }
     return _previewBtn;
+}
+
+- (UIButton *)selectedCountBtn
+{
+    if (_selectedCountBtn == nil) {
+        _selectedCountBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_selectedCountBtn setBackgroundImage:[UIImage imageNamed:@"sendcount"] forState:UIControlStateNormal];
+        [_selectedCountBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [self addSubview:_selectedCountBtn];
+    }
+    return _selectedCountBtn;
 }
 
 @end
