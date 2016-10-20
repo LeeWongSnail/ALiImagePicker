@@ -110,7 +110,7 @@
 {
     CGRect rect = [UIScreen mainScreen].bounds;
     self.pageViewController.view.frame = CGRectMake(0, 0, rect.size.width + 20, rect.size.height);
-    ALiSingleImageController *initialViewController = [self viewControllerAtIndex:self.currentIndex];
+    ALiSingleImageController *initialViewController = [self viewControllerAtIndex:self.curIndex];
     NSArray *viewControllers = nil;
     if (initialViewController) {
         viewControllers = [NSArray arrayWithObject:initialViewController];
@@ -121,7 +121,6 @@
                                       direction:UIPageViewControllerNavigationDirectionForward
                                        animated:NO
                                      completion:nil];
-
 }
 
 - (void)buildUI
@@ -143,6 +142,7 @@
     if (self.selectedAsset == nil) {
         self.selectedAsset = [NSMutableArray array];
     }
+    self.currentIndex = self.curIndex;
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -218,7 +218,11 @@
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed {
     if (completed) {
         self.currentIndex = [self indexOfViewController:(ALiSingleImageController *)[self.pageViewController.viewControllers objectAtIndex:0]];
-        //        self.pageLabel.text = [NSString stringWithFormat:@"%@ / %@", @(self.currentIndex + 1), @([self getCount])];
+        ALiAsset *asset = [self.allAssets objectAtIndex:self.currentIndex];
+        if ([self.selectedAsset containsObject:asset]) {
+            //设置为选中状态
+            [self selectImageAction:self.topToolBar.selectBtn];
+        }
     }
 }
 

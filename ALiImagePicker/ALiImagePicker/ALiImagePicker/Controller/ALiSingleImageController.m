@@ -29,9 +29,9 @@
     CGSize imageSize = CGSizeMake(asset.asset.pixelWidth, asset.asset.pixelHeight);
     
     [[PHImageManager defaultManager] requestImageForAsset:asset.asset targetSize:imageSize contentMode:PHImageContentModeAspectFit options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-        NSLog(@"%@",info);
+//        NSLog(@"%@",info);
         self.imageView.center = self.view.center;
-        self.scrollView.contentSize = imageSize;
+//        self.scrollView.contentSize = imageSize;
         self.imageView.size = CGSizeMake(asset.asset.pixelWidth, asset.asset.pixelHeight);
         [self setCenterImage:result];
     }];

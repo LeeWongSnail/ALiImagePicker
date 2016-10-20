@@ -129,6 +129,24 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
     }
 }
 
+- (void)previewSelectAsset
+{
+    //看大图
+    ALiImageBrowserController *browserVc = [[ALiImageBrowserController alloc] init];
+    browserVc.photoChooseBlock = self.photoChooseBlock;
+    browserVc.allAssets = self.selectAssets;
+    browserVc.selectedAsset = self.selectAssets;
+    browserVc.curIndex = 0;
+    [self.navigationController pushViewController:browserVc animated:YES];
+}
+
+- (void)sendSelectAsset
+{
+    if (self.photoChooseBlock) {
+        self.photoChooseBlock(self.selectAssets);
+    }
+}
+
 #pragma mark - Load Data
 
 - (void)fetchImagesInLibary
@@ -158,6 +176,8 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
     self.selectAssets = [NSMutableArray array];
     self.collectionView.frame = CGRectMake(0, 0, SCREEN_W, SCREEN_H - kBottomBarHeight);
     self.bottomBar.frame = CGRectMake(0, SCREEN_H - kBottomBarHeight, SCREEN_W, kBottomBarHeight);
+    [self.bottomBar.previewBtn addTarget:self action:@selector(previewSelectAsset) forControlEvents:UIControlEventTouchUpInside];
+    [self.bottomBar.sendBtn addTarget:self action:@selector(sendSelectAsset) forControlEvents:UIControlEventTouchUpInside];
     [self setUpProperties];
 }
 
@@ -250,7 +270,17 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
 {
     //看大图
     ALiImageBrowserController *browserVc = [[ALiImageBrowserController alloc] init];
-    browserVc.photoChooseBlock = self.photoChooseBlock;
+    WEAKSELF(weakSelf);
+    browserVc.photoChooseBlock = ^(NSArray *assets){
+        [assets enumerateObjectsUsingBlock:^(ALiAsset *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [weakSelf addSelectAssets:obj];
+        }];
+        if (weakSelf.photoChooseBlock) {
+            weakSelf.photoChooseBlock(weakSelf.selectAssets);
+        }
+    };
+    
+    
     browserVc.allAssets = [NSMutableArray arrayWithArray:self.assets];
     browserVc.selectedAsset = self.selectAssets;
     browserVc.curIndex = [self.assets indexOfObject:asset];
