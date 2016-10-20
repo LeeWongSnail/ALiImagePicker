@@ -21,16 +21,19 @@
 - (instancetype)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
-        
+        [self buildUI];
+        self.backgroundColor = [UIColor whiteColor];
     }
     return self;
 }
 
 - (void)buildUI
 {
-    self.previewBtn.frame = CGRectMake(10, 15, 80, 30);
+    self.previewBtn.frame = CGRectMake(10, 8, 60, 30);
+    self.previewBtn.enabled = NO;
     CGFloat x = SCREEN_W - 50 - 10;
-    self.previewBtn.frame = CGRectMake(x, self.previewBtn.originY, 50, 30);
+    self.sendBtn.frame = CGRectMake(x, self.previewBtn.originY, 50, 30);
+    self.sendBtn.enabled = NO;
 }
 
 #pragma mark - Lazy Load
@@ -40,8 +43,9 @@
     if (_sendBtn == nil) {
         _sendBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_sendBtn setTitle:@"Send" forState:UIControlStateNormal];
-        [_sendBtn setTitleColor:[UIColor greenColor] forState:UIControlStateSelected];
-        [_sendBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        _sendBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+        [_sendBtn setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
+        [_sendBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateDisabled];
         [self addSubview:_sendBtn];
     }
     return _sendBtn;
@@ -53,7 +57,9 @@
     if (_previewBtn == nil) {
         _previewBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_previewBtn setTitle:@"Preview" forState:UIControlStateNormal];
-        [_previewBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        _previewBtn.titleLabel.font = [UIFont systemFontOfSize:15.];
+        [_previewBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [_previewBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateDisabled];
         [self addSubview:_previewBtn];
     }
     return _previewBtn;

@@ -86,7 +86,7 @@
     //    if (self.photoChooseBlock) {
     //        self.photoChooseBlock(self)
     //    }
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)configToolBarEventHandler

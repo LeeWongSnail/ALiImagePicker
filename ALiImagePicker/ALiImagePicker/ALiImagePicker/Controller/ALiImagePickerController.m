@@ -9,10 +9,13 @@
 #import "ALiImagePickerController.h"
 #import "ALiImageBrowserController.h"
 #import "ALiImagePickerBottomBar.h"
+#import "ALiImagePickerFooterView.h"
 #import "ALiImagePickerService.h"
 #import "ALiAssetGroupsView.h"
 #import "UIButton+ALi.h"
 #import "ALiImageCell.h"
+
+#define kBottomBarHeight  44.
 
 static  NSString *kArtImagePickerCellIdentifier = @"ALiImageCell";
 static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
@@ -24,6 +27,7 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
 @property (nonatomic, strong) UICollectionViewFlowLayout *layout;
 @property (nonatomic, strong) ALiAssetGroupsView *assetGroupView;
 @property (nonatomic, strong) ALiImagePickerBottomBar *bottomBar;
+@property (nonatomic, strong) ALiImagePickerFooterView *footerView;
 @property (nonatomic, strong) UIView *overlayView;
 @property (nonatomic, strong) UIButton *touchButton;
 @property (nonatomic, strong) UIButton *titleButton;
@@ -101,6 +105,11 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
     [self.titleButton setTitle:collection.localizedTitle forState:UIControlStateNormal];
 }
 
+- (void)back
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 #pragma mark - Load Data
 
 - (void)fetchImagesInLibary
@@ -127,7 +136,8 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
 
 - (void)buildUI
 {
-    self.collectionView.frame = self.view.bounds;
+    self.collectionView.frame = CGRectMake(0, 0, SCREEN_W, SCREEN_H - kBottomBarHeight);
+    self.bottomBar.frame = CGRectMake(0, SCREEN_H - kBottomBarHeight, SCREEN_W, kBottomBarHeight);
     [self setUpProperties];
 }
 
@@ -139,6 +149,8 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
                         @(PHAssetCollectionSubtypeAlbumMyPhotoStream),  //我的照片流
                         @(PHAssetCollectionSubtypeAlbumRegular)];       //自建相册
     self.navigationItem.titleView = self.titleButton;
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(back)];
 }
 
 #pragma mark - Life Cycle
@@ -150,11 +162,24 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
     [self buildUI];
     [self fetchImagesInLibary];
     [self fetchPhotoLibaryCategory];
+    
+    [self addObserver:self.selectAssets forKeyPath:@"count" options:(NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew) context:nil];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)dealloc
+{
+    [self removeObserver:self.selectAssets forKeyPath:@"count"];
+}
+
+#pragma mark key value observer
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
+{
+    NSLog(@"%@,%@",object,change);
 }
 
 #pragma mark - UICollectionViewDelegate,UICollectionViewDataSource
@@ -188,7 +213,7 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
     UICollectionReusableView *reusableView = nil;
     
     if ([kind isEqualToString:UICollectionElementKindSectionFooter]) {
-        self.bottomBar = (ALiImagePickerBottomBar *)[collectionView dequeueReusableSupplementaryViewOfKind:kind
+        self.footerView = (ALiImagePickerFooterView *)[collectionView dequeueReusableSupplementaryViewOfKind:kind
                                                                                 withReuseIdentifier:kArtAssetsFooterViewIdentifier
                                                                                        forIndexPath:indexPath];
 //        self.bottomBar.delegate=self;
@@ -231,7 +256,7 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
         _collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:self.layout];
         _collectionView.backgroundColor = [UIColor clearColor];
         [_collectionView registerClass:[ALiImageCell class] forCellWithReuseIdentifier:kArtImagePickerCellIdentifier];
-        [_collectionView registerClass:[ALiImagePickerBottomBar class]
+        [_collectionView registerClass:[ALiImagePickerFooterView class]
             forSupplementaryViewOfKind:UICollectionElementKindSectionFooter
                    withReuseIdentifier:kArtAssetsFooterViewIdentifier];
         _collectionView.delegate = self;
@@ -254,6 +279,7 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
         _layout.itemSize = CGSizeMake(kSizeThumbnailCollectionView, kSizeThumbnailCollectionView);
         _layout.sectionInset = UIEdgeInsetsMake(2, 2, 2, 2);
         _layout.scrollDirection = UICollectionViewScrollDirectionVertical;
+      _layout.footerReferenceSize = CGSizeMake(SCREEN_W, 44);  //设置footer大小
     }
     return _layout;
 }
@@ -306,6 +332,15 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
         [_titleButton addTarget:self action:@selector(assetsGroupDidSelected) forControlEvents:UIControlEventTouchUpInside];
     }
     return _titleButton;
+}
+
+- (ALiImagePickerBottomBar *)bottomBar
+{
+    if (_bottomBar == nil) {
+        _bottomBar = [[ALiImagePickerBottomBar alloc] init];
+        [self.view addSubview:_bottomBar];
+    }
+    return _bottomBar;
 }
 
 @end
