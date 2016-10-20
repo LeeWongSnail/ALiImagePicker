@@ -11,13 +11,7 @@
 
 @interface ALiSingleImageController : UIViewController
 
-@property (nonatomic, strong) NSMutableArray *selectedAsset;
-
-@property (nonatomic, assign) NSInteger curIndex;
-
 @property (nonatomic, strong) ALiAsset *asset;
-
-@property (nonatomic, strong) NSMutableArray *allAssets;
 
 @property (nonatomic, copy) void (^photoChooseBlock)(NSArray *selectAssets);
 

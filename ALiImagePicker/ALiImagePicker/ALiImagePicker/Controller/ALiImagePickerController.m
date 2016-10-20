@@ -8,7 +8,7 @@
 
 #import "ALiImagePickerController.h"
 #import "ALiImageBrowserController.h"
-#import "ALiImagePickFooterView.h"
+#import "ALiImagePickerBottomBar.h"
 #import "ALiImagePickerService.h"
 #import "ALiAssetGroupsView.h"
 #import "UIButton+ALi.h"
@@ -23,6 +23,7 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) UICollectionViewFlowLayout *layout;
 @property (nonatomic, strong) ALiAssetGroupsView *assetGroupView;
+@property (nonatomic, strong) ALiImagePickerBottomBar *bottomBar;
 @property (nonatomic, strong) UIView *overlayView;
 @property (nonatomic, strong) UIButton *touchButton;
 @property (nonatomic, strong) UIButton *titleButton;
@@ -180,15 +181,25 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    //看大图
-    ALiImageBrowserController *browserVc = [[ALiImageBrowserController alloc] init];
-    browserVc.photoChooseBlock = self.photoChooseBlock;
-    browserVc.allAssets = [NSMutableArray arrayWithArray:self.assets];
-    browserVc.selectedAsset = self.selectAssets;
-    browserVc.curIndex = indexPath.item;
-    
-    [self.navigationController pushViewController:browserVc animated:YES];
+
 }
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+    UICollectionReusableView *reusableView = nil;
+    
+    if ([kind isEqualToString:UICollectionElementKindSectionFooter]) {
+        self.bottomBar = (ALiImagePickerBottomBar *)[collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                                                                withReuseIdentifier:kArtAssetsFooterViewIdentifier
+                                                                                       forIndexPath:indexPath];
+//        self.bottomBar.delegate=self;
+//        [self.header configHeaderView:self.courseware];
+        reusableView = self.bottomBar;
+    } else if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
+    }
+    
+    return reusableView;
+}
+
 
 #pragma mark - ALiImageCellDelegate
 
@@ -201,6 +212,17 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
     }
 }
 
+- (void)imageDidTapped:(ALiAsset *)asset select:(BOOL)isSelect
+{
+    //看大图
+    ALiImageBrowserController *browserVc = [[ALiImageBrowserController alloc] init];
+    browserVc.photoChooseBlock = self.photoChooseBlock;
+    browserVc.allAssets = [NSMutableArray arrayWithArray:self.assets];
+    browserVc.selectedAsset = self.selectAssets;
+    browserVc.curIndex = [self.assets indexOfObject:asset];
+    [self.navigationController pushViewController:browserVc animated:YES];
+}
+
 #pragma mark - Lazy Load
 
 - (UICollectionView *)collectionView
@@ -209,7 +231,7 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
         _collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:self.layout];
         _collectionView.backgroundColor = [UIColor clearColor];
         [_collectionView registerClass:[ALiImageCell class] forCellWithReuseIdentifier:kArtImagePickerCellIdentifier];
-        [_collectionView registerClass:[ALiImagePickFooterView class]
+        [_collectionView registerClass:[ALiImagePickerBottomBar class]
             forSupplementaryViewOfKind:UICollectionElementKindSectionFooter
                    withReuseIdentifier:kArtAssetsFooterViewIdentifier];
         _collectionView.delegate = self;

@@ -7,19 +7,15 @@
 //
 
 #import "ALiSingleImageController.h"
-#import "ALiImageBrowserTopToolBar.h"
-#import "ALiImageBrowserBottomToolBar.h"
 #import "ALiAsset.h"
 
-@interface ALiSingleImageController ()
+@interface ALiSingleImageController () <UIScrollViewDelegate>
+
 @property (nonatomic,strong) UIScrollView *scrollView;
 @property (nonatomic,strong) UIImageView *imageView;
 
 @property (nonatomic,strong) UITapGestureRecognizer *singleTap;
 
-@property (nonatomic, strong) ALiImageBrowserTopToolBar *topToolBar;
-
-@property (nonatomic, strong) ALiImageBrowserBottomToolBar *bottomToolBar;
 @end
 
 @implementation ALiSingleImageController
@@ -41,69 +37,15 @@
     }];
 }
 
-//点击选中图片
-- (void)selectImageAction:(UIButton *)button
-{
-    [self.topToolBar.selectBtn setSelected:!self.topToolBar.selectBtn.isSelected];
-    [self fullImageBtnAction:button];
-}
 
-//点击原图
-- (void)fullImageBtnAction:(UIButton *)button
-{
-    [self.bottomToolBar.fullImageBtn setSelected:!self.bottomToolBar.fullImageBtn.isSelected];
-    [self.bottomToolBar.fullTitleButton setSelected:!self.bottomToolBar.fullTitleButton.isSelected];
-    //显示这张图片的信息
-    if (button.isSelected) {
-        [self.bottomToolBar.fullTitleButton setTitle:@"Full Image(2.3M)" forState:UIControlStateSelected];
-    } else {
-        [self.bottomToolBar.fullTitleButton setTitle:@"Full Image" forState:UIControlStateSelected];
-        
-    }
-}
-
-//点击发送
-- (void)sendImage:(UIButton *)button
-{
-    
-}
-
-- (void)back
-{
-    //    if (self.photoChooseBlock) {
-    //        self.photoChooseBlock(self)
-    //    }
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)configToolBarEventHandler
-{
-    [self.topToolBar.backBtn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.topToolBar.selectBtn addTarget:self action:@selector(selectImageAction:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.bottomToolBar.fullImageBtn addTarget:self action:@selector(fullImageBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.bottomToolBar.fullTitleButton addTarget:self action:@selector(fullImageBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.bottomToolBar.sendBtn addTarget:self action:@selector(sendImage:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.bottomToolBar.selectedCountBtn addTarget:self action:@selector(sendImage:) forControlEvents:UIControlEventTouchUpInside];
-}
 
 #pragma mark - Load View
 
 - (void)buildUI
 {
     self.scrollView.frame = self.view.bounds;
-    self.view.backgroundColor = [UIColor blackColor];
+    self.view.backgroundColor = [UIColor whiteColor];
     //    [self.view addGestureRecognizer:self.singleTap];
-    
-    self.topToolBar.frame = CGRectMake(0, 0, SCREEN_W, 64);
-    
-    self.bottomToolBar.frame = CGRectMake(0, SCREEN_H-64, SCREEN_W, 64);
-    
-    [self configToolBarEventHandler];
 }
 
 
@@ -118,13 +60,11 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [self.navigationController setNavigationBarHidden:NO];
 }
 
 - (BOOL)prefersStatusBarHidden
@@ -230,27 +170,6 @@
         _singleTap.numberOfTouchesRequired = 1;
     }
     return _singleTap;
-}
-
-- (ALiImageBrowserTopToolBar *)topToolBar
-{
-    if (_topToolBar == nil) {
-        _topToolBar = [[ALiImageBrowserTopToolBar alloc] init];
-        [self.view addSubview:_topToolBar];
-        [self.view bringSubviewToFront:_topToolBar];
-    }
-    return _topToolBar;
-}
-
-
-- (ALiImageBrowserBottomToolBar *)bottomToolBar
-{
-    if (_bottomToolBar == nil) {
-        _bottomToolBar = [[ALiImageBrowserBottomToolBar alloc] init];
-        [self.view addSubview:_bottomToolBar];
-        [self.view bringSubviewToFront:_bottomToolBar];
-    }
-    return _bottomToolBar;
 }
 
 

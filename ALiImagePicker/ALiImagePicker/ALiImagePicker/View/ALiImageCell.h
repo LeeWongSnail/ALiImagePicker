@@ -13,6 +13,8 @@
 
 - (void)imageDidSelect:(ALiAsset *)asset select:(BOOL)isSelect;
 
+- (void)imageDidTapped:(ALiAsset *)asset select:(BOOL)isSelect;
+
 @end
 
 @interface ALiImageCell : UICollectionViewCell

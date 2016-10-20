@@ -20,6 +20,10 @@
     UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:imagePicker];
     [self.navigationController presentViewController:navi animated:YES completion:nil];
     
+    imagePicker.photoChooseBlock = ^(NSArray *assets){
+        NSLog(@"%@",assets);
+    };
+    
 }
 
 - (IBAction)openVideoLibary:(UIButton *)sender {

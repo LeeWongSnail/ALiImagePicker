@@ -57,6 +57,13 @@
     }
 }
 
+- (void)tapImage
+{
+    if ([self.delegate respondsToSelector:@selector(imageDidTapped:select:)]) {
+        [self.delegate imageDidTapped:self.asset select:self.checkBtn.isSelected];
+    }
+}
+
 #pragma mark - Lazy Load
 
 - (UIImageView *)imageView
@@ -64,6 +71,8 @@
     if (_imageView == nil) {
         _imageView = [[UIImageView alloc] init];
         _imageView.contentMode = UIViewContentModeScaleAspectFill;
+        _imageView.userInteractionEnabled = YES;
+        [_imageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImage)]];
         _imageView.clipsToBounds = YES;
         [self addSubview:_imageView];
     }
