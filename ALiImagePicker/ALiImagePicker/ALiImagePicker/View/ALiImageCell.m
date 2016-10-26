@@ -40,13 +40,15 @@
 }
 
 
-- (void)configImageCell:(ALiAsset *)asset
+- (void)configImageCell:(ALiAsset *)asset 
 {
     WEAKSELF(weakSelf);
     self.asset = asset;
     [[ALiImagePickerService shared] ali_fetchImageForAsset:asset completion:^(UIImage *image, NSDictionary *info) {
         [weakSelf.imageView setImage:image];
     }];
+    
+    [self.checkBtn setSelected:asset.isSelected];
 }
 
 - (void)checkBtnDidClick

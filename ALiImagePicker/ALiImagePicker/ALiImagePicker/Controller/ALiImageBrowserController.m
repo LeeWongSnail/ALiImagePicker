@@ -38,9 +38,9 @@
 {
     ALiAsset *asset = self.allAssets[self.currentIndex];
     
-    if (asset.sendFullImage && aButton.isSelected) {
-        [self.bottomToolBar.fullImageBtn setSelected:aButton.isSelected];
-        [self configFullImageButton:aButton];
+    if (asset.isFullImage && aButton.isSelected) {
+//        [self.bottomToolBar.fullImageBtn setSelected:aButton.isSelected];
+//        [self configFullImageButton:aButton];
     }
     
     if (![self.selectedAsset containsObject:asset]) {
@@ -50,9 +50,9 @@
     }
     
     if (self.selectedAsset.count > 0) {
-        [self.bottomToolBar.selectedCountBtn setTitle:[NSString stringWithFormat:@"%tu",self.selectedAsset.count] forState:UIControlStateSelected];
+//        [self.bottomToolBar.selectedCountBtn setTitle:[NSString stringWithFormat:@"%tu",self.selectedAsset.count] forState:UIControlStateSelected];
     } else {
-        [self.bottomToolBar.selectedCountBtn setTitle:@"" forState:UIControlStateNormal];
+//        [self.bottomToolBar.selectedCountBtn setTitle:@"" forState:UIControlStateNormal];
     }
 }
 
@@ -64,12 +64,12 @@
      ALiAsset *asset = self.allAssets[self.currentIndex];
     
     if (aButton.isSelected) {
-        asset.sendFullImage = YES;
+        asset.fullImage = YES;
     } else {
-        asset.sendFullImage = NO;
+        asset.fullImage = NO;
     }
     
-    if (![self.selectedAsset containsObject:asset] && asset.sendFullImage) {
+    if (![self.selectedAsset containsObject:asset] && asset.fullImage) {
         [self configSelectButton:aButton];
     } else {
         [self configFullImageButton:aButton];
@@ -99,7 +99,7 @@
 - (void)back
 {
         if (self.photoChooseBlock) {
-            self.photoChooseBlock(self.selectedAsset);
+            self.photoChooseBlock([self.selectedAsset copy]);
         }
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -110,13 +110,13 @@
     
     [self.topToolBar.selectBtn addTarget:self action:@selector(selectImageDidClick:) forControlEvents:UIControlEventTouchUpInside];
     
-    [self.bottomToolBar.fullImageBtn addTarget:self action:@selector(fullImageDidClick:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.bottomToolBar.fullTitleButton addTarget:self action:@selector(fullImageDidClick:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.bottomToolBar.sendBtn addTarget:self action:@selector(sendImage:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.bottomToolBar.selectedCountBtn addTarget:self action:@selector(sendImage:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.bottomToolBar.fullImageBtn addTarget:self action:@selector(fullImageDidClick:) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    [self.bottomToolBar.fullTitleButton addTarget:self action:@selector(fullImageDidClick:) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    [self.bottomToolBar.sendBtn addTarget:self action:@selector(sendImage:) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    [self.bottomToolBar.selectedCountBtn addTarget:self action:@selector(sendImage:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 #pragma mark - Load View
@@ -142,7 +142,7 @@
 {
     self.topToolBar.frame = CGRectMake(0, 0, SCREEN_W, 64);
     
-    self.bottomToolBar.frame = CGRectMake(0, SCREEN_H-64, SCREEN_W, 64);
+//    self.bottomToolBar.frame = CGRectMake(0, SCREEN_H-64, SCREEN_W, 64);
     
     [self initPageViewController];
     [self configToolBarEventHandler];
@@ -197,14 +197,14 @@
     
     //显示这张图片是否被选中的状态
     if ([self.selectedAsset containsObject:asset]) {
-        if (asset.sendFullImage) {
-            [self.bottomToolBar.fullImageBtn setSelected:YES];
+        if (asset.fullImage) {
+//            [self.bottomToolBar.fullImageBtn setSelected:YES];
             [self configFullImageButton:self.bottomToolBar.fullImageBtn];
         }
         [self.topToolBar.selectBtn setSelected:YES];
         [self configSelectButton:self.topToolBar.selectBtn];
     }else {
-        [self.bottomToolBar.fullImageBtn setSelected:NO];
+//        [self.bottomToolBar.fullImageBtn setSelected:NO];
         [self.topToolBar.selectBtn setSelected:NO];
     }
     

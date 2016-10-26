@@ -112,7 +112,7 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
 
 - (void)addSelectAssets:(ALiAsset *)asset
 {
-    if ([self.selectAssets containsObject:asset]) {
+    if (asset.isSelected) {
         [self.selectAssets removeObject:asset];
     } else {
         [self.selectAssets addObject:asset];
@@ -136,12 +136,7 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
     
     WEAKSELF(weakSelf);
     browserVc.photoChooseBlock = ^(NSArray *assets){
-        [assets enumerateObjectsUsingBlock:^(ALiAsset *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            [weakSelf addSelectAssets:obj];
-        }];
-        if (weakSelf.photoChooseBlock) {
-            weakSelf.photoChooseBlock(weakSelf.selectAssets);
-        }
+        weakSelf.selectAssets = [assets mutableCopy];
     };
     
     browserVc.allAssets = self.selectAssets;
@@ -222,7 +217,7 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
 
 - (void)dealloc
 {
-
+    NSLog(@"%s",__func__);
 }
 
 #pragma mark - UICollectionViewDelegate,UICollectionViewDataSource
@@ -259,8 +254,6 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
         self.footerView = (ALiImagePickerFooterView *)[collectionView dequeueReusableSupplementaryViewOfKind:kind
                                                                                 withReuseIdentifier:kArtAssetsFooterViewIdentifier
                                                                                        forIndexPath:indexPath];
-//        self.bottomBar.delegate=self;
-//        [self.header configHeaderView:self.courseware];
         reusableView = self.bottomBar;
     } else if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
     }
@@ -285,7 +278,6 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
         weakSelf.selectAssets = [assets mutableCopy];
         [weakSelf.collectionView reloadData];
     };
-    
     
     browserVc.allAssets = [NSMutableArray arrayWithArray:self.assets];
     browserVc.selectedAsset = self.selectAssets;
