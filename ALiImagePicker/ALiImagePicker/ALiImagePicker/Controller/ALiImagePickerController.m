@@ -133,7 +133,17 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
 {
     //看大图
     ALiImageBrowserController *browserVc = [[ALiImageBrowserController alloc] init];
-    browserVc.photoChooseBlock = self.photoChooseBlock;
+    
+    WEAKSELF(weakSelf);
+    browserVc.photoChooseBlock = ^(NSArray *assets){
+        [assets enumerateObjectsUsingBlock:^(ALiAsset *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [weakSelf addSelectAssets:obj];
+        }];
+        if (weakSelf.photoChooseBlock) {
+            weakSelf.photoChooseBlock(weakSelf.selectAssets);
+        }
+    };
+    
     browserVc.allAssets = self.selectAssets;
     browserVc.selectedAsset = self.selectAssets;
     browserVc.curIndex = 0;
@@ -145,6 +155,7 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
     if (self.photoChooseBlock) {
         self.photoChooseBlock(self.selectAssets);
     }
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Load Data

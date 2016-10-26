@@ -19,7 +19,8 @@
 {
     if (self = [super initWithFrame:frame]) {
         [self buildUI];
-        self.backgroundColor = [UIColor grayColor];
+        self.backgroundColor = [UIColor blackColor];
+        self.alpha = 0.7;
     }
     return self;
 }

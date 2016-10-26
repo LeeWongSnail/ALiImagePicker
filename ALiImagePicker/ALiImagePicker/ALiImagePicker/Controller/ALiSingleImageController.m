@@ -28,12 +28,13 @@
     
     CGSize imageSize = CGSizeMake(asset.asset.pixelWidth, asset.asset.pixelHeight);
     
+    WEAKSELF(weakSelf);
     [[PHImageManager defaultManager] requestImageForAsset:asset.asset targetSize:imageSize contentMode:PHImageContentModeAspectFit options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
 //        NSLog(@"%@",info);
-        self.imageView.center = self.view.center;
+        weakSelf.imageView.center = weakSelf.view.center;
 //        self.scrollView.contentSize = imageSize;
-        self.imageView.size = CGSizeMake(asset.asset.pixelWidth, asset.asset.pixelHeight);
-        [self setCenterImage:result];
+        weakSelf.imageView.size = CGSizeMake(asset.asset.pixelWidth, asset.asset.pixelHeight);
+        [weakSelf setCenterImage:result];
     }];
 }
 

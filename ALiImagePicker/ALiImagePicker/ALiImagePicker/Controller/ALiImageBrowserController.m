@@ -25,6 +25,10 @@
 
 @implementation ALiImageBrowserController
 
+    
+    
+    
+    
 //点击选中图片
 - (void)selectImageAction:(UIButton *)button
 {
@@ -79,6 +83,7 @@
     if (self.photoChooseBlock) {
         self.photoChooseBlock([self.selectedAsset copy]);
     }
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)back
@@ -155,6 +160,11 @@
     [self.navigationController setNavigationBarHidden:NO];
 }
 
+- (void)dealloc
+{
+    NSLog(@"%s",__func__);
+}
+
 #pragma mark - Private Method
 
 - (NSUInteger)getCount{
@@ -174,8 +184,11 @@
     ALiSingleImageController *dataViewController = [[ALiSingleImageController alloc] init];
     dataViewController.asset = self.allAssets[index];
     
+    //显示这张图片是否被选中的状态
     if ([self.selectedAsset containsObject:self.allAssets[index]]) {
         [self selectImageAction:self.topToolBar.selectBtn];
+    }else {
+        
     }
     
     dataViewController.view.tag = index;
@@ -218,11 +231,6 @@
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed {
     if (completed) {
         self.currentIndex = [self indexOfViewController:(ALiSingleImageController *)[self.pageViewController.viewControllers objectAtIndex:0]];
-        ALiAsset *asset = [self.allAssets objectAtIndex:self.currentIndex];
-        if ([self.selectedAsset containsObject:asset]) {
-            //设置为选中状态
-            [self selectImageAction:self.topToolBar.selectBtn];
-        }
     }
 }
 
