@@ -12,7 +12,6 @@
 @interface ALiImagePickerService ()
 {
     CGSize imageSize;
-    EALiImageContentMode contentMode;
 }
 
 
@@ -35,19 +34,14 @@
 {
     if (self = [super init]) {
         imageSize = CGSizeMake(70, 70);
-        contentMode = EALiImageContentModeDefault;
     }
     return self;
 }
 
-
-
-
-- (void)ali_fetchImageGroupWithTypes:(NSArray *)aTypes completion:(void (^)(PHFetchResult *))aCompletion
+- (void)fetchImageGroupWithTypes:(NSArray *)aTypes completion:(void (^)(PHFetchResult *))aCompletion
 {
     PHFetchOptions *option = [[PHFetchOptions alloc] init];
     option.includeAssetSourceTypes = PHAssetSourceTypeUserLibrary;
-//    option.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
     
     PHFetchResult *result = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:PHAssetCollectionSubtypeAny options:option];
     
@@ -56,12 +50,12 @@
     }
 }
 
-- (NSArray *)ali_fectchAssetsWithMediaType:(EALiPickerResourceType)aType
+- (NSArray *)fectchAssetsWithMediaType:(EALiPickerResourceType)aType
 {
-   return [self ali_fetchAssetsWithMediaType:aType options:nil];
+   return [self fetchAssetsWithMediaType:aType options:nil];
 }
 
-- (NSArray *)ali_fetchAssetsWithMediaType:(EALiPickerResourceType)aType options:(PHFetchOptions *)aOptions
+- (NSArray *)fetchAssetsWithMediaType:(EALiPickerResourceType)aType options:(PHFetchOptions *)aOptions
 {
     PHFetchResult *result = [PHAsset fetchAssetsWithMediaType:[@(aType) integerValue] options:aOptions];
     
@@ -76,16 +70,16 @@
     return [assets copy];
 }
 
-
-- (void)ali_fetchImageForAsset:(ALiAsset *)asset completion:(void (^)(UIImage *image,NSDictionary *info))aCompletion
+- (void)startCachingImagesForAssets:(NSArray<ALiAsset *> *)assets
 {
-    [self ali_fetchImageForAsset:asset targetSize:imageSize contentMode:contentMode options:nil completion:aCompletion];
+     PHImageRequestOptions *imageRequestOptions = [[PHImageRequestOptions alloc] init];
+    [self startCachingImagesForAssets:assets targetSize:CGSizeMake(SCREEN_W, SCREEN_H) contentMode:PHImageContentModeAspectFill options:imageRequestOptions];
 }
 
 
-- (void)ali_fetchImageForAsset:(ALiAsset *)asset targetSize:(CGSize)aSize contentMode:(EALiImageContentMode)aType options:(PHImageRequestOptions *)options completion:(void (^)(UIImage *image,NSDictionary *info))aCompletion
+- (void)startCachingImagesForAssets:(NSArray<ALiAsset *> *)assets targetSize:(CGSize)targetSize contentMode:(PHImageContentMode)contentMode options:(PHImageRequestOptions *)options
 {
-    [[PHImageManager defaultManager] requestImageForAsset:asset.asset targetSize:aSize contentMode:[@(aType) integerValue] options:options resultHandler:aCompletion];
+//    [[PHCachingImageManager defaultManager] startCachingImagesForAssets:assets targetSize:targetSize contentMode:contentMode options:options];
 }
 
 @end

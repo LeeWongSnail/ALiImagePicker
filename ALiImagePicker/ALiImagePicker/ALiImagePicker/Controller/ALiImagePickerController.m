@@ -157,7 +157,7 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
 
 - (void)fetchImagesInLibary
 {
-   self.assets = [[ALiImagePickerService shared] ali_fectchAssetsWithMediaType:EALiPickerResourceTypeImage];
+   self.assets = [[ALiImagePickerService shared] fectchAssetsWithMediaType:EALiPickerResourceTypeImage];
     [self.collectionView reloadData];
 }
 
@@ -165,7 +165,7 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
 {
     //获取某一组的内容
     WEAKSELF(weakSelf);
-    [[ALiImagePickerService shared] ali_fetchImageGroupWithTypes:self.groupTypes completion:^(PHFetchResult *result) {
+    [[ALiImagePickerService shared] fetchImageGroupWithTypes:self.groupTypes completion:^(PHFetchResult *result) {
         if (result.count > 0) {
             weakSelf.assetGroupView.assetsGroups = result;
             weakSelf.titleButton.enabled = YES;

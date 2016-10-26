@@ -25,15 +25,15 @@
 - (void)setAsset:(ALiAsset *)asset
 {
     _asset = asset;
-    CGSize imageSize = CGSizeMake(asset.asset.pixelWidth, asset.asset.pixelHeight);
-    
     WEAKSELF(weakSelf);
-    [[PHImageManager defaultManager] requestImageForAsset:asset.asset targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeAspectFit options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [weakSelf.imageView setImage:result];
-            [weakSelf updateConstrain:imageSize];
-        });
+    [asset fetchPreviewImageWithCompletion:^(UIImage *image, NSDictionary *info) {
+    [weakSelf.imageView setImage:image];
+    [weakSelf updateConstrain:image.size];
+    } withProgressHandler:^(double progress, NSError * _Nullable error, BOOL * _Nonnull stop, NSDictionary * _Nullable info) {
+        NSLog(@"%f",progress);
     }];
+    
+    
 }
 
 - (void)updateConstrain:(CGSize)imageSize

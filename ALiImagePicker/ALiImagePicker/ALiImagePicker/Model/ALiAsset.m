@@ -116,7 +116,15 @@
     __block UIImage *resultImage;
 
         PHImageRequestOptions *imageRequestOptions = [[PHImageRequestOptions alloc] init];
-        imageRequestOptions.synchronous = YES;
+        //resizeMode设置为PHImageRequestOptionsResizeModeExact 则返回图像必须和目标大小相匹配，并且图像质量也为高质量图像，而设置为 PHImageRequestOptionsResizeModeFast 则请求的效率更高，但返回的图像可能和目标大小不一样并且质量较低。
+//        synchronous: Bool // 请求是同步还是异步的，默认是异步（false）。
+//        deliveryMode: PHImageRequestOptionsDeliveryMode // 图片质量，默认是 PHImageRequestOptionsDeliveryModeOpportunistic，在同步请求时会回调一次，在异步请求时会回调多次。另两个参数则只会回调一次。
+//        networkAccessAllowed: Bool // 是否允许网络请求（如果需要从iCloud下载图片），默认是不允许（false）
+    //        imageRequestOptions.networkAccessAllowed = YES;
+    //        imageRequestOptions.deliveryMode = PHImageRequestOptionsDeliveryModeOpportunistic;
+    //        imageRequestOptions.synchronous = YES;
+//        imageRequestOptions.resizeMode = PHImageRequestOptionsResizeModeFast;
+        imageRequestOptions.version = PHImageRequestOptionsVersionCurrent;
         [[PHImageManager defaultManager]  requestImageForAsset:self.asset
                                                   targetSize:CGSizeMake(SCREEN_W, SCREEN_H)
                                                  contentMode:PHImageContentModeAspectFill

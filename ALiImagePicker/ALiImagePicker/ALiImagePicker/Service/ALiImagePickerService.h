@@ -27,19 +27,53 @@ typedef NS_ENUM(NSInteger, EALiImageContentMode) {
 + (instancetype)shared;
 
 
+/**
+ 获取某一种类型的所有资源
+
+ @param aType EALiPickerResourceType  图片 视频和音频
+
+ @return 返回这种类型的所有结果
+ */
+- (NSArray *)fectchAssetsWithMediaType:(EALiPickerResourceType)aType;
+
+
+/**
+ 获取某一种类型的 符合一定筛选条件的资源
+ 
+ @param aType    EALiPickerResourceType  图片 视频和音频
+ @param aOptions 筛选条件
+ 
+ @return 符合筛选条件的资源集合
+ */
+- (NSArray *)fetchAssetsWithMediaType:(EALiPickerResourceType)aType options:(PHFetchOptions *)aOptions;
 
 
 
+/**
+ 获取相册中的分组
+
+ @param aTypes      需要获取的类型集合
+ @param aCompletion 获取分组完成的回调
+ */
+- (void)fetchImageGroupWithTypes:(NSArray *)aTypes completion:(void (^)(PHFetchResult *result))aCompletion;
 
 
+/**
+ 开始缓存图片(使用默认的一些配置)
 
-- (NSArray *)ali_fectchAssetsWithMediaType:(EALiPickerResourceType)aType;
+ @param assets 需要缓存的内容
+ */
+- (void)startCachingImagesForAssets:(NSArray<ALiAsset *> *)assets;
 
-- (NSArray *)ali_fetchAssetsWithMediaType:(EALiPickerResourceType)aType options:(PHFetchOptions *)aOptions;
 
-- (void)ali_fetchImageForAsset:(ALiAsset *)asset completion:(void (^)(UIImage *image,NSDictionary *info))aCompletion;
+/**
+ 开始缓存图片(使用自定义的一些配置)
 
-- (void)ali_fetchImageForAsset:(ALiAsset *)asset targetSize:(CGSize)aSize contentMode:(EALiImageContentMode)aType options:(PHImageRequestOptions *)options completion:(void (^)(UIImage *image,NSDictionary *info))aCompletion;
+ @param assets      图片自选
+ @param targetSize  图片尺寸
+ @param contentMode 图片展示方式
+ @param options     图片的一些筛选条件，可能会影响到要展示图片的质量
+ */
+- (void)startCachingImagesForAssets:(NSArray<ALiAsset *> *)assets targetSize:(CGSize)targetSize contentMode:(PHImageContentMode)contentMode options:(nullable PHImageRequestOptions *)options;
 
-- (void)ali_fetchImageGroupWithTypes:(NSArray *)aTypes completion:(void (^)(PHFetchResult *result))aCompletion;
 @end
