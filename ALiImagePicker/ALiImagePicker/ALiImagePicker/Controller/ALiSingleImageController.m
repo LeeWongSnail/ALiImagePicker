@@ -25,7 +25,6 @@
 - (void)setAsset:(ALiAsset *)asset
 {
     _asset = asset;
-    
     CGSize imageSize = CGSizeMake(asset.asset.pixelWidth, asset.asset.pixelHeight);
     
     WEAKSELF(weakSelf);

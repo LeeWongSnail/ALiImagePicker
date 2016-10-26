@@ -41,6 +41,8 @@
 }
 
 
+
+
 - (void)ali_fetchImageGroupWithTypes:(NSArray *)aTypes completion:(void (^)(PHFetchResult *))aCompletion
 {
     PHFetchOptions *option = [[PHFetchOptions alloc] init];
