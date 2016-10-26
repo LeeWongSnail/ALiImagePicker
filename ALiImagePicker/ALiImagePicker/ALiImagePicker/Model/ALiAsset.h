@@ -11,5 +11,6 @@
 @interface ALiAsset : NSObject
 
 @property (nonatomic, strong) PHAsset *asset;
+@property (nonatomic, assign) BOOL sendFullImage;   //是否选择的原图
 
 @end

@@ -273,7 +273,6 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
 
 - (void)imageDidSelect:(ALiAsset *)asset select:(BOOL)isSelect
 {
-    
     [self addSelectAssets:asset];
 }
 
@@ -283,12 +282,8 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
     ALiImageBrowserController *browserVc = [[ALiImageBrowserController alloc] init];
     WEAKSELF(weakSelf);
     browserVc.photoChooseBlock = ^(NSArray *assets){
-        [assets enumerateObjectsUsingBlock:^(ALiAsset *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            [weakSelf addSelectAssets:obj];
-        }];
-        if (weakSelf.photoChooseBlock) {
-            weakSelf.photoChooseBlock(weakSelf.selectAssets);
-        }
+        weakSelf.selectAssets = [assets mutableCopy];
+        [weakSelf.collectionView reloadData];
     };
     
     

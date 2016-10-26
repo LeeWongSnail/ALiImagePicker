@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EB04E1F91DC0635700448F5E /* 在线课堂 - 汇智网.webarchive in Resources */ = {isa = PBXBuildFile; fileRef = EB04E1F81DC0635700448F5E /* 在线课堂 - 汇智网.webarchive */; };
 		EB34DAC81DB775870015F9C3 /* UIButton+ALi.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34DAC51DB775870015F9C3 /* UIButton+ALi.m */; };
 		EB34DAC91DB775870015F9C3 /* UIView+ALi.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34DAC71DB775870015F9C3 /* UIView+ALi.m */; };
 		EB34DAE31DB775930015F9C3 /* ALiImageBrowserController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34DACD1DB775920015F9C3 /* ALiImageBrowserController.m */; };
@@ -50,6 +51,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EB04E1F81DC0635700448F5E /* 在线课堂 - 汇智网.webarchive */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = "在线课堂 - 汇智网.webarchive"; sourceTree = "<group>"; };
 		EB34DAC41DB775870015F9C3 /* UIButton+ALi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+ALi.h"; sourceTree = "<group>"; };
 		EB34DAC51DB775870015F9C3 /* UIButton+ALi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+ALi.m"; sourceTree = "<group>"; };
 		EB34DAC61DB775870015F9C3 /* UIView+ALi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+ALi.h"; sourceTree = "<group>"; };
@@ -242,6 +244,7 @@
 				EB3F5D161DB0B7BF0026673D /* Info.plist */,
 				EB3F5D061DB0B7BF0026673D /* main.m */,
 				EBC8151F1DB217270096BFFF /* ALiImagePicker-Prefix.pch */,
+				EB04E1F81DC0635700448F5E /* 在线课堂 - 汇智网.webarchive */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -382,6 +385,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EB3F5D151DB0B7BF0026673D /* LaunchScreen.storyboard in Resources */,
+				EB04E1F91DC0635700448F5E /* 在线课堂 - 汇智网.webarchive in Resources */,
 				EB3F5D121DB0B7BF0026673D /* Assets.xcassets in Resources */,
 				EB3F5D101DB0B7BF0026673D /* Main.storyboard in Resources */,
 			);
