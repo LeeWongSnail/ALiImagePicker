@@ -42,7 +42,6 @@
 
 - (void)configImageCell:(ALiAsset *)asset 
 {
-    WEAKSELF(weakSelf);
     self.asset = asset;
     [self.imageView setImage:[asset thumbnailWithSize:self.bounds.size]];
     
@@ -52,6 +51,7 @@
 - (void)checkBtnDidClick
 {
     [self.checkBtn setSelected:!self.checkBtn.isSelected];
+    self.asset.selected = self.checkBtn.isSelected;
     if ([self.delegate respondsToSelector:@selector(imageDidSelect:select:)]) {
         [self.delegate imageDidSelect:self.asset select:self.checkBtn.isSelected];
     }

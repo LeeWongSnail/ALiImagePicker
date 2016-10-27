@@ -113,9 +113,9 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
 - (void)addSelectAssets:(ALiAsset *)asset
 {
     if (asset.isSelected) {
-        [self.selectAssets removeObject:asset];
-    } else {
         [self.selectAssets addObject:asset];
+    } else {
+        [self.selectAssets removeObject:asset];
     }
     if (self.selectAssets.count == 0) {
         self.bottomBar.previewBtn.enabled = NO;

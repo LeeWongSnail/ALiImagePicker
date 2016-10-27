@@ -30,30 +30,14 @@
 - (void)selectImageDidClick:(UIButton *)aButton
 {
     [aButton setSelected:!aButton.isSelected];
-    [self configSelectButton:aButton];
-}
-
-
-- (void)configSelectButton:(UIButton *)aButton
-{
     ALiAsset *asset = self.allAssets[self.currentIndex];
-    
-    if (asset.isFullImage && aButton.isSelected) {
-//        [self.bottomToolBar.fullImageBtn setSelected:aButton.isSelected];
-//        [self configFullImageButton:aButton];
-    }
-    
-    if (![self.selectedAsset containsObject:asset]) {
+    asset.selected = !asset.isSelected;
+    if (asset.selected) {
         [self.selectedAsset addObject:asset];
     } else {
         [self.selectedAsset removeObject:asset];
     }
     
-    if (self.selectedAsset.count > 0) {
-//        [self.bottomToolBar.selectedCountBtn setTitle:[NSString stringWithFormat:@"%tu",self.selectedAsset.count] forState:UIControlStateSelected];
-    } else {
-//        [self.bottomToolBar.selectedCountBtn setTitle:@"" forState:UIControlStateNormal];
-    }
 }
 
 #pragma mark - 点击FullImage
@@ -61,31 +45,22 @@
 - (void)fullImageDidClick:(UIButton *)aButton
 {
     [aButton setSelected:!aButton.isSelected];
-     ALiAsset *asset = self.allAssets[self.currentIndex];
-    
-    if (aButton.isSelected) {
-        asset.fullImage = YES;
-    } else {
-        asset.fullImage = NO;
-    }
-    
-    if (![self.selectedAsset containsObject:asset] && asset.fullImage) {
-        [self configSelectButton:aButton];
-    } else {
-        [self configFullImageButton:aButton];
-    }
-    
-}
-
-- (void)configFullImageButton:(UIButton *)aButton
-{
-    [self.bottomToolBar.fullTitleButton setSelected:aButton.isSelected];
-    if (aButton.isSelected) {
+    ALiAsset *asset = self.allAssets[self.currentIndex];
+    asset.fullImage = !asset.isFullImage;
+    [self.bottomToolBar.fullTitleButton setSelected:!asset.isFullImage];
+    if (asset.isFullImage) {
         [self.bottomToolBar.fullTitleButton setTitle:@"Full Image(2.3M)" forState:UIControlStateSelected];
     } else {
         [self.bottomToolBar.fullTitleButton setTitle:@"Full Image" forState:UIControlStateSelected];
     }
+    if (!asset.isSelected) {
+        asset.selected = asset.isFullImage;
+        [self.topToolBar.selectBtn setSelected:asset.isSelected];
+        [self.selectedAsset addObject:asset];
+    }
 }
+
+
 
 //点击发送
 - (void)sendImage:(UIButton *)button
@@ -110,16 +85,27 @@
     
     [self.topToolBar.selectBtn addTarget:self action:@selector(selectImageDidClick:) forControlEvents:UIControlEventTouchUpInside];
     
-//    [self.bottomToolBar.fullImageBtn addTarget:self action:@selector(fullImageDidClick:) forControlEvents:UIControlEventTouchUpInside];
-//    
-//    [self.bottomToolBar.fullTitleButton addTarget:self action:@selector(fullImageDidClick:) forControlEvents:UIControlEventTouchUpInside];
-//    
-//    [self.bottomToolBar.sendBtn addTarget:self action:@selector(sendImage:) forControlEvents:UIControlEventTouchUpInside];
-//    
-//    [self.bottomToolBar.selectedCountBtn addTarget:self action:@selector(sendImage:) forControlEvents:UIControlEventTouchUpInside];
+    [self.bottomToolBar.fullImageBtn addTarget:self action:@selector(fullImageDidClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.bottomToolBar.fullTitleButton addTarget:self action:@selector(fullImageDidClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.bottomToolBar.sendBtn addTarget:self action:@selector(sendImage:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.bottomToolBar.selectedCountBtn addTarget:self action:@selector(sendImage:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 #pragma mark - Load View
+
+- (void)configCurrentPageToolUI:(ALiAsset *)asset
+{
+    [self.topToolBar.selectBtn setSelected:asset.isSelected];
+    [self.bottomToolBar.fullImageBtn setSelected:asset.isFullImage];
+    if (asset.isFullImage) {
+        [self.bottomToolBar.fullTitleButton setTitle:@"Full Image(2.3M)" forState:UIControlStateSelected];
+    } else {
+        [self.bottomToolBar.fullTitleButton setTitle:@"Full Image" forState:UIControlStateSelected];
+    }
+}
 
 - (void)initPageViewController
 {
@@ -141,7 +127,8 @@
 - (void)buildUI
 {
     self.topToolBar.frame = CGRectMake(0, 0, SCREEN_W, 64);
-    self.view.backgroundColor = [UIColor blackColor];    
+    self.bottomToolBar.frame = CGRectMake(0, SCREEN_H-64, SCREEN_W, 64);
+    self.view.backgroundColor = [UIColor blackColor];
     [self initPageViewController];
     [self configToolBarEventHandler];
 }
@@ -192,19 +179,7 @@
     ALiSingleImageController *dataViewController = [[ALiSingleImageController alloc] init];
     ALiAsset *asset = self.allAssets[index];
     dataViewController.asset = asset;
-    
-    //显示这张图片是否被选中的状态
-    if ([self.selectedAsset containsObject:asset]) {
-        if (asset.fullImage) {
-//            [self.bottomToolBar.fullImageBtn setSelected:YES];
-            [self configFullImageButton:self.bottomToolBar.fullImageBtn];
-        }
-        [self.topToolBar.selectBtn setSelected:YES];
-        [self configSelectButton:self.topToolBar.selectBtn];
-    }else {
-//        [self.bottomToolBar.fullImageBtn setSelected:NO];
-        [self.topToolBar.selectBtn setSelected:NO];
-    }
+    [self configCurrentPageToolUI:asset];
     
     dataViewController.view.tag = index;
     dataViewController.view.backgroundColor = [UIColor clearColor] ;
