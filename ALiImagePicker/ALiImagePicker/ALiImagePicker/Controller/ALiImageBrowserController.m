@@ -141,9 +141,7 @@
 - (void)buildUI
 {
     self.topToolBar.frame = CGRectMake(0, 0, SCREEN_W, 64);
-    
-//    self.bottomToolBar.frame = CGRectMake(0, SCREEN_H-64, SCREEN_W, 64);
-    
+    self.view.backgroundColor = [UIColor blackColor];    
     [self initPageViewController];
     [self configToolBarEventHandler];
 }
