@@ -10,4 +10,6 @@
 
 @interface ALiImagePickerFooterView : UICollectionReusableView
 
+- (void)configFooterViewImageCount:(NSInteger)imageCount videoCount:(NSInteger)videoCount updateTime:(NSString *)aTime;
+
 @end

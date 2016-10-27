@@ -158,6 +158,7 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
 - (void)fetchImagesInLibary
 {
    self.assets = [[ALiImagePickerService shared] fectchAssetsWithMediaType:EALiPickerResourceTypeImage];
+    
     [self.collectionView reloadData];
 }
 
@@ -253,8 +254,9 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
     if ([kind isEqualToString:UICollectionElementKindSectionFooter]) {
         self.footerView = (ALiImagePickerFooterView *)[collectionView dequeueReusableSupplementaryViewOfKind:kind
                                                                                 withReuseIdentifier:kArtAssetsFooterViewIdentifier
-                                                                                       forIndexPath:indexPath];
-        reusableView = self.bottomBar;
+                                                                                    forIndexPath:indexPath];
+        [self.footerView configFooterViewImageCount:self.assets.count videoCount:0 updateTime:nil];
+        reusableView = self.footerView;
     } else if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
     }
     
@@ -316,7 +318,7 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
         _layout.itemSize = CGSizeMake(kSizeThumbnailCollectionView, kSizeThumbnailCollectionView);
         _layout.sectionInset = UIEdgeInsetsMake(2, 2, 2, 2);
         _layout.scrollDirection = UICollectionViewScrollDirectionVertical;
-      _layout.footerReferenceSize = CGSizeMake(SCREEN_W, 44);  //设置footer大小
+      _layout.footerReferenceSize = CGSizeMake(SCREEN_W, 65);  //设置footer大小
     }
     return _layout;
 }
