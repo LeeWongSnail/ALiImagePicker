@@ -31,11 +31,12 @@
     self.fullImageBtn.size = CGSizeMake(20,20);
     self.fullImageBtn.originX = 10;
     self.fullImageBtn.originY = 25;
+    self.fullImageBtn.hidden = YES;
     
     CGFloat x = CGRectGetMaxX(self.fullImageBtn.frame) + 10 + 40;
     self.fullTitleButton.size = CGSizeMake(120, 32);
     self.fullTitleButton.center = CGPointMake(x, self.fullImageBtn.center.y);
-    
+    self.fullTitleButton.hidden = YES;
     
     self.sendBtn.size = CGSizeMake(50, 30);
     x = SCREEN_W - 15 - 25;

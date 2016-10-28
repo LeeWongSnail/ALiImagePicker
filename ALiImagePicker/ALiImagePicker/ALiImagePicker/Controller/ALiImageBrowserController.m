@@ -42,23 +42,23 @@
 
 #pragma mark - 点击FullImage
 
-- (void)fullImageDidClick:(UIButton *)aButton
-{
-    [aButton setSelected:!aButton.isSelected];
-    ALiAsset *asset = self.allAssets[self.currentIndex];
-    asset.fullImage = !asset.isFullImage;
-    [self.bottomToolBar.fullTitleButton setSelected:!asset.isFullImage];
-    if (asset.isFullImage) {
-        [self.bottomToolBar.fullTitleButton setTitle:@"Full Image(2.3M)" forState:UIControlStateSelected];
-    } else {
-        [self.bottomToolBar.fullTitleButton setTitle:@"Full Image" forState:UIControlStateSelected];
-    }
-    if (!asset.isSelected) {
-        asset.selected = asset.isFullImage;
-        [self.topToolBar.selectBtn setSelected:asset.isSelected];
-        [self.selectedAsset addObject:asset];
-    }
-}
+//- (void)fullImageDidClick:(UIButton *)aButton
+//{
+//    [aButton setSelected:!aButton.isSelected];
+//    ALiAsset *asset = self.allAssets[self.currentIndex];
+//    asset.fullImage = !asset.isFullImage;
+//    [self.bottomToolBar.fullTitleButton setSelected:!asset.isFullImage];
+//    if (asset.isFullImage) {
+//        [self.bottomToolBar.fullTitleButton setTitle:@"Full Image(2.3M)" forState:UIControlStateSelected];
+//    } else {
+//        [self.bottomToolBar.fullTitleButton setTitle:@"Full Image" forState:UIControlStateSelected];
+//    }
+//    if (!asset.isSelected) {
+//        asset.selected = asset.isFullImage;
+//        [self.topToolBar.selectBtn setSelected:asset.isSelected];
+//        [self.selectedAsset addObject:asset];
+//    }
+//}
 
 
 
@@ -85,9 +85,9 @@
     
     [self.topToolBar.selectBtn addTarget:self action:@selector(selectImageDidClick:) forControlEvents:UIControlEventTouchUpInside];
     
-    [self.bottomToolBar.fullImageBtn addTarget:self action:@selector(fullImageDidClick:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.bottomToolBar.fullImageBtn addTarget:self action:@selector(fullImageDidClick:) forControlEvents:UIControlEventTouchUpInside];
     
-    [self.bottomToolBar.fullTitleButton addTarget:self action:@selector(fullImageDidClick:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.bottomToolBar.fullTitleButton addTarget:self action:@selector(fullImageDidClick:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.bottomToolBar.sendBtn addTarget:self action:@selector(sendImage:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -99,12 +99,6 @@
 - (void)configCurrentPageToolUI:(ALiAsset *)asset
 {
     [self.topToolBar.selectBtn setSelected:asset.isSelected];
-    [self.bottomToolBar.fullImageBtn setSelected:asset.isFullImage];
-    if (asset.isFullImage) {
-        [self.bottomToolBar.fullTitleButton setTitle:@"Full Image(2.3M)" forState:UIControlStateSelected];
-    } else {
-        [self.bottomToolBar.fullTitleButton setTitle:@"Full Image" forState:UIControlStateSelected];
-    }
 }
 
 - (void)initPageViewController
