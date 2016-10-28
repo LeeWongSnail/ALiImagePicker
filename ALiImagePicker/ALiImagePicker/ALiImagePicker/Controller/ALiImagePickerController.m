@@ -157,7 +157,7 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
 
 - (void)fetchImagesInLibary
 {
-   self.assets = [[ALiImagePickerService shared] fectchAssetsWithMediaType:EALiPickerResourceTypeImage];
+   self.assets = [[ALiImagePickerService shared] fectchAssetsWithMediaType:self.sourceType];
     
     [self.collectionView reloadData];
 }
@@ -255,7 +255,11 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
         self.footerView = (ALiImagePickerFooterView *)[collectionView dequeueReusableSupplementaryViewOfKind:kind
                                                                                 withReuseIdentifier:kArtAssetsFooterViewIdentifier
                                                                                     forIndexPath:indexPath];
-        [self.footerView configFooterViewImageCount:self.assets.count videoCount:0 updateTime:nil];
+        if (self.sourceType == EALiPickerResourceTypeImage) {
+            [self.footerView configFooterViewImageCount:0 videoCount:self.assets.count updateTime:nil];
+        } else {
+            [self.footerView configFooterViewImageCount:self.assets.count videoCount:0 updateTime:nil];
+        }
         reusableView = self.footerView;
     } else if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
     }
@@ -278,6 +282,7 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
     WEAKSELF(weakSelf);
     browserVc.photoChooseBlock = ^(NSArray *assets){
         weakSelf.selectAssets = [assets mutableCopy];
+        [weakSelf.bottomBar.selectedCountBtn setTitle:[NSString stringWithFormat:@"%tu",weakSelf.selectAssets.count] forState:UIControlStateNormal];
         [weakSelf.collectionView reloadData];
     };
     

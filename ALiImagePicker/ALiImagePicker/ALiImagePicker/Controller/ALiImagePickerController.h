@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ALiConfig.h"
+
 
 @interface ALiImagePickerController : UIViewController
 
-@property (nonatomic, strong, readonly) NSMutableArray *selectAssets;
+@property (nonatomic, assign) EALiPickerResourceType sourceType;
 
 @property (nonatomic, copy) void (^photoChooseBlock)(NSArray *selectAssets);
 

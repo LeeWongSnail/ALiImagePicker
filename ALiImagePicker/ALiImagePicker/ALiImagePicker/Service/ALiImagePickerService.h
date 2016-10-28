@@ -7,28 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ALiConfig.h"
 @class ALiAsset;
-
-typedef NS_ENUM(NSInteger, EALiPickerResourceType){
-    EALiPickerResourceTypeUnknown = 0,
-    EALiPickerResourceTypeImage   = 1,
-    EALiPickerResourceTypeVideo   = 2,
-    EALiPickerResourceTypeAudio   = 3,
-};
-
-typedef NS_ENUM(NSInteger, EALiImageContentMode) {
-    EALiImageContentModeAspectFit = 0,
-    EALiImageContentModeAspectFill = 1,
-    EALiImageContentModeDefault = PHImageContentModeAspectFit
-};
 
 @interface ALiImagePickerService : NSObject
 
 + (instancetype)shared;
 
-
 /**
- 获取某一种类型的所有资源
+ 获取某一种类型的所b有资源
 
  @param aType EALiPickerResourceType  图片 视频和音频
 

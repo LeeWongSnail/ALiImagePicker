@@ -17,6 +17,7 @@
 
 - (IBAction)openPhotoLibary:(UIButton *)sender {
     ALiImagePickerController *imagePicker = [[ALiImagePickerController alloc] init];
+    imagePicker.sourceType = EALiPickerResourceTypeImage;
     UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:imagePicker];
     [self.navigationController presentViewController:navi animated:YES completion:nil];
     
@@ -28,6 +29,7 @@
 
 - (IBAction)openVideoLibary:(UIButton *)sender {
     ALiImagePickerController *imagePicker = [[ALiImagePickerController alloc] init];
+    imagePicker.sourceType = EALiPickerResourceTypeVideo;
     UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:imagePicker];
     [self.navigationController presentViewController:navi animated:YES completion:nil];
 }

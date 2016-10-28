@@ -27,15 +27,22 @@
 
 - (void)buildUI
 {
-    self.tipLabel.center = CGPointMake(self.center.x, 5);
+    self.tipLabel.center = CGPointMake(SCREEN_W/2., 15);
     self.tipLabel.size = CGSizeMake(SCREEN_W, 25);
-    self.updateTimeLabel.center = CGPointMake(self.center.x , CGRectGetMaxY(self.tipLabel.frame) + 5);
+    self.updateTimeLabel.center = CGPointMake(SCREEN_W/2. , CGRectGetMaxY(self.tipLabel.frame) + 5);
     self.updateTimeLabel.size = CGSizeMake(SCREEN_W, 25);
 }
 
 - (void)configFooterViewImageCount:(NSInteger)imageCount videoCount:(NSInteger)videoCount updateTime:(NSString *)aTime
 {
-    self.tipLabel.text = [NSString stringWithFormat:@"%ld张照片,%ld个视频",(long)imageCount,(long)videoCount];
+    NSMutableString *str = [NSMutableString string];
+    if (imageCount > 0) {
+        [str appendString:[NSString stringWithFormat:@"%tu张照片",(long)imageCount]];
+    }
+    if (videoCount > 0) {
+        [str appendString:[NSString stringWithFormat:@"%tu个视频",(long)videoCount]];
+    }
+    self.tipLabel.text = [str copy];
     self.updateTimeLabel.text = @"刚刚";
 }
 
@@ -44,6 +51,7 @@
 {
     if (_tipLabel == nil) {
         _tipLabel = [[UILabel alloc] init];
+        _tipLabel.textAlignment = NSTextAlignmentCenter;
         [self addSubview:_tipLabel];
     }
     return _tipLabel;
@@ -53,6 +61,7 @@
 {
     if (_updateTimeLabel == nil) {
         _updateTimeLabel = [[UILabel alloc] init];
+        _updateTimeLabel.textAlignment = NSTextAlignmentCenter;
         [self addSubview:_updateTimeLabel];
     }
     return _updateTimeLabel;
