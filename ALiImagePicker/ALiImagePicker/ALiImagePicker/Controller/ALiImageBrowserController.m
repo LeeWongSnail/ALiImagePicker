@@ -179,7 +179,6 @@
     ALiSingleImageController *dataViewController = [[ALiSingleImageController alloc] init];
     ALiAsset *asset = self.allAssets[index];
     dataViewController.asset = asset;
-    [self configCurrentPageToolUI:asset];
     
     dataViewController.view.tag = index;
     dataViewController.view.backgroundColor = [UIColor clearColor] ;
@@ -221,6 +220,8 @@
 - (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed {
     if (completed) {
         self.currentIndex = [self indexOfViewController:(ALiSingleImageController *)[self.pageViewController.viewControllers objectAtIndex:0]];
+        ALiAsset *asset = self.allAssets[self.currentIndex];
+        [self configCurrentPageToolUI:asset];
     }
 }
 
