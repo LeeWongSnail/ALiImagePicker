@@ -22,7 +22,6 @@
 		EBE1103F1DC44FE800000D5B /* ALiImagePickerService.m in Sources */ = {isa = PBXBuildFile; fileRef = EBE1103D1DC44FE800000D5B /* ALiImagePickerService.m */; };
 		EBE110571DC4500100000D5B /* ALiImageBrowserController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBE110421DC4500100000D5B /* ALiImageBrowserController.m */; };
 		EBE110581DC4500100000D5B /* ALiSingleImageController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBE110441DC4500100000D5B /* ALiSingleImageController.m */; };
-		EBE110591DC4500100000D5B /* ALiAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = EBE110471DC4500100000D5B /* ALiAsset.m */; };
 		EBE1105A1DC4500100000D5B /* ALiAssetGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EBE1104A1DC4500100000D5B /* ALiAssetGroupCell.m */; };
 		EBE1105B1DC4500100000D5B /* ALiAssetGroupsView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBE1104C1DC4500100000D5B /* ALiAssetGroupsView.m */; };
 		EBE1105C1DC4500100000D5B /* ALiImageBrowserBottomToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = EBE1104E1DC4500100000D5B /* ALiImageBrowserBottomToolBar.m */; };
@@ -30,6 +29,7 @@
 		EBE1105E1DC4500100000D5B /* ALiImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EBE110521DC4500100000D5B /* ALiImageCell.m */; };
 		EBE1105F1DC4500100000D5B /* ALiImagePickerBottomBar.m in Sources */ = {isa = PBXBuildFile; fileRef = EBE110541DC4500100000D5B /* ALiImagePickerBottomBar.m */; };
 		EBE110601DC4500100000D5B /* ALiImagePickerFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBE110561DC4500100000D5B /* ALiImagePickerFooterView.m */; };
+		EBE110631DC450F100000D5B /* ALiAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = EBE110621DC450F100000D5B /* ALiAsset.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,8 +81,6 @@
 		EBE110421DC4500100000D5B /* ALiImageBrowserController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALiImageBrowserController.m; sourceTree = "<group>"; };
 		EBE110431DC4500100000D5B /* ALiSingleImageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALiSingleImageController.h; sourceTree = "<group>"; };
 		EBE110441DC4500100000D5B /* ALiSingleImageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALiSingleImageController.m; sourceTree = "<group>"; };
-		EBE110461DC4500100000D5B /* ALiAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALiAsset.h; sourceTree = "<group>"; };
-		EBE110471DC4500100000D5B /* ALiAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALiAsset.m; sourceTree = "<group>"; };
 		EBE110491DC4500100000D5B /* ALiAssetGroupCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALiAssetGroupCell.h; sourceTree = "<group>"; };
 		EBE1104A1DC4500100000D5B /* ALiAssetGroupCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALiAssetGroupCell.m; sourceTree = "<group>"; };
 		EBE1104B1DC4500100000D5B /* ALiAssetGroupsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALiAssetGroupsView.h; sourceTree = "<group>"; };
@@ -97,6 +95,8 @@
 		EBE110541DC4500100000D5B /* ALiImagePickerBottomBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALiImagePickerBottomBar.m; sourceTree = "<group>"; };
 		EBE110551DC4500100000D5B /* ALiImagePickerFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALiImagePickerFooterView.h; sourceTree = "<group>"; };
 		EBE110561DC4500100000D5B /* ALiImagePickerFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALiImagePickerFooterView.m; sourceTree = "<group>"; };
+		EBE110611DC450F100000D5B /* ALiAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALiAsset.h; sourceTree = "<group>"; };
+		EBE110621DC450F100000D5B /* ALiAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALiAsset.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +140,8 @@
 			isa = PBXGroup;
 			children = (
 				EBE110391DC44FE800000D5B /* ALiConfig.h */,
+				EBE110611DC450F100000D5B /* ALiAsset.h */,
+				EBE110621DC450F100000D5B /* ALiAsset.m */,
 				EBE1103A1DC44FE800000D5B /* ALiImagePickerController.h */,
 				EBE1103B1DC44FE800000D5B /* ALiImagePickerController.m */,
 				EBE1103C1DC44FE800000D5B /* ALiImagePickerService.h */,
@@ -175,7 +177,6 @@
 				EB34DAC31DB775870015F9C3 /* Category */,
 				EB34DACA1DB775920015F9C3 /* ALiImagePicker */,
 				EBE110401DC4500100000D5B /* Controller */,
-				EBE110451DC4500100000D5B /* Model */,
 				EBE110481DC4500100000D5B /* View */,
 				EB3F5D051DB0B7BF0026673D /* Supporting Files */,
 			);
@@ -234,15 +235,6 @@
 				EBE110441DC4500100000D5B /* ALiSingleImageController.m */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		EBE110451DC4500100000D5B /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				EBE110461DC4500100000D5B /* ALiAsset.h */,
-				EBE110471DC4500100000D5B /* ALiAsset.m */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		EBE110481DC4500100000D5B /* View */ = {
@@ -405,9 +397,9 @@
 				EBE1105B1DC4500100000D5B /* ALiAssetGroupsView.m in Sources */,
 				EBE1105D1DC4500100000D5B /* ALiImageBrowserTopToolBar.m in Sources */,
 				EB34DAC81DB775870015F9C3 /* UIButton+ALi.m in Sources */,
-				EBE110591DC4500100000D5B /* ALiAsset.m in Sources */,
 				EBE1103F1DC44FE800000D5B /* ALiImagePickerService.m in Sources */,
 				EBE1105F1DC4500100000D5B /* ALiImagePickerBottomBar.m in Sources */,
+				EBE110631DC450F100000D5B /* ALiAsset.m in Sources */,
 				EBE1105A1DC4500100000D5B /* ALiAssetGroupCell.m in Sources */,
 				EB3F5D0D1DB0B7BF0026673D /* ViewController.m in Sources */,
 				EBE1105C1DC4500100000D5B /* ALiImageBrowserBottomToolBar.m in Sources */,
