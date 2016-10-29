@@ -166,7 +166,7 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
 {
     //获取某一组的内容
     WEAKSELF(weakSelf);
-    [[ALiImagePickerService shared] fetchImageGroupWithTypes:self.groupTypes completion:^(PHFetchResult *result) {
+    [[ALiImagePickerService shared] fetchImageGroupWithTypes:self.sourceType completion:^(PHFetchResult *result) {
         if (result.count > 0) {
             weakSelf.assetGroupView.assetsGroups = result;
             weakSelf.titleButton.enabled = YES;

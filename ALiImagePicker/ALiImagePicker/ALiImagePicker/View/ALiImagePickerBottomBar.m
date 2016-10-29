@@ -35,6 +35,7 @@
     self.selectedCountBtn.size = CGSizeMake(25, 25);
     x = self.sendBtn.originX - 5 - 15;
     self.selectedCountBtn.center = CGPointMake(x, self.sendBtn.center.y);
+    self.selectedCountBtn.hidden = YES;
 }
 
 #pragma mark - Lazy Load

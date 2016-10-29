@@ -38,13 +38,19 @@
     return self;
 }
 
-- (void)fetchImageGroupWithTypes:(NSArray *)aTypes completion:(void (^)(PHFetchResult *))aCompletion
+- (void)fetchImageGroupWithTypes:(EALiPickerResourceType)sourceType completion:(void (^)(PHFetchResult *result))aCompletion;
 {
     PHFetchOptions *option = [[PHFetchOptions alloc] init];
     option.includeAssetSourceTypes = PHAssetSourceTypeUserLibrary;
     
-    PHFetchResult *result = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:PHAssetCollectionSubtypeAny options:option];
+    PHAssetCollectionSubtype subType = 0;
+    if (sourceType == EALiPickerResourceTypeImage) {
+        subType = PHAssetCollectionSubtypeSmartAlbumUserLibrary|PHAssetCollectionSubtypeSmartAlbumRecentlyAdded|PHAssetCollectionSubtypeSmartAlbumSelfPortraits|PHAssetCollectionSubtypeSmartAlbumScreenshots|PHAssetCollectionSubtypeSmartAlbumFavorites|PHAssetCollectionSubtypeSmartAlbumPanoramas;
+    } else if (sourceType == EALiPickerResourceTypeVideo){
+        subType = PHAssetCollectionSubtypeSmartAlbumVideos|PHAssetCollectionSubtypeSmartAlbumSlomoVideos|PHAssetCollectionSubtypeSmartAlbumTimelapses;
+    }
     
+    PHFetchResult *result = [PHAssetCollection fetchAssetCollectionsWithType:(PHAssetCollectionTypeSmartAlbum) subtype:subType options:option];
     if (aCompletion) {
         aCompletion(result);
     }

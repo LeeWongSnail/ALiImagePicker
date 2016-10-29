@@ -39,10 +39,10 @@
 /**
  获取相册中的分组
 
- @param aTypes      需要获取的类型集合
+ @param sourceType      需要获取的类型集合
  @param aCompletion 获取分组完成的回调
  */
-- (void)fetchImageGroupWithTypes:(NSArray *)aTypes completion:(void (^)(PHFetchResult *result))aCompletion;
+- (void)fetchImageGroupWithTypes:(EALiPickerResourceType)sourceType completion:(void (^)(PHFetchResult *result))aCompletion;
 
 
 /**

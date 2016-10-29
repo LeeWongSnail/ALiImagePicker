@@ -27,10 +27,9 @@
 
 - (void)buildUI
 {
-    self.tipLabel.center = CGPointMake(SCREEN_W/2., 15);
-    self.tipLabel.size = CGSizeMake(SCREEN_W, 25);
-    self.updateTimeLabel.center = CGPointMake(SCREEN_W/2. , CGRectGetMaxY(self.tipLabel.frame) + 5);
-    self.updateTimeLabel.size = CGSizeMake(SCREEN_W, 25);
+    self.tipLabel.frame = CGRectMake(SCREEN_W/2. - 25, 15, SCREEN_W, 25);
+    CGFloat y = CGRectGetMaxY(self.tipLabel.frame);
+    self.updateTimeLabel.frame = CGRectMake(SCREEN_W/2. - 25, y, SCREEN_W, 25);
 }
 
 - (void)configFooterViewImageCount:(NSInteger)imageCount videoCount:(NSInteger)videoCount updateTime:(NSString *)aTime
@@ -51,7 +50,6 @@
 {
     if (_tipLabel == nil) {
         _tipLabel = [[UILabel alloc] init];
-        _tipLabel.textAlignment = NSTextAlignmentCenter;
         [self addSubview:_tipLabel];
     }
     return _tipLabel;
@@ -61,7 +59,6 @@
 {
     if (_updateTimeLabel == nil) {
         _updateTimeLabel = [[UILabel alloc] init];
-        _updateTimeLabel.textAlignment = NSTextAlignmentCenter;
         [self addSubview:_updateTimeLabel];
     }
     return _updateTimeLabel;

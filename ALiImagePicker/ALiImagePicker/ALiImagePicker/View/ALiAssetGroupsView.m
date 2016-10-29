@@ -30,8 +30,6 @@ static CGFloat kHeightAssetsGroupCell = 70.0;
     return self;
 }
 
-
-
 - (void)setAssetsGroups:(PHFetchResult *)assetsGroups
 {
     NSMutableArray *arrM = [NSMutableArray array];
