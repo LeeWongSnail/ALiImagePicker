@@ -41,6 +41,22 @@
     
 }
 
+//如果需要获取任何图片相关的信息可以使用这个方法
+//UIImage *displaySizeImage;
+//NSURL *fullSizeImageURL;
+//fullSizeImageOrientation; // EXIF value
+
+- (void)getImageInfo
+{
+    PHContentEditingInputRequestOptions *options = [[PHContentEditingInputRequestOptions alloc] init];
+     [self.asset requestContentEditingInputWithOptions:options completionHandler:^(PHContentEditingInput *contentEditingInput, NSDictionary *info) {
+        
+        CIImage *fullImage = [CIImage imageWithContentsOfURL:contentEditingInput.fullSizeImageURL];
+        NSLog(@"%@",contentEditingInput.fullSizeImageURL);//get url
+        NSLog(@"%@", fullImage.properties.description);//get {TIFF}, {Exif}
+    }];
+}
+
 - (void)fetchOriginImageWithCompletion:(void (^)(UIImage *, NSDictionary *))completion withProgressHandler:(PHAssetImageProgressHandler)phProgressHandler
 {
     if (_orignImage) {
@@ -72,15 +88,23 @@
     }
     __block UIImage *resultImage;
 
-        PHImageRequestOptions *phImageRequestOptions = [[PHImageRequestOptions alloc] init];
-        phImageRequestOptions.resizeMode = PHImageRequestOptionsResizeModeExact;
-        // 在 PHImageManager 中，targetSize 等 size 都是使用 px 作为单位，因此需要对targetSize 中对传入的 Size 进行处理，宽高各自乘以 ScreenScale，从而得到正确的图片
-        [[PHImageManager defaultManager] requestImageForAsset:self.asset
-                                                  targetSize:CGSizeMake(size.width * screenScale, size.height * screenScale)
-                                                 contentMode:PHImageContentModeAspectFill options:phImageRequestOptions
-                                               resultHandler:^(UIImage *result, NSDictionary *info) {
+    PHImageRequestOptions *phImageRequestOptions = [[PHImageRequestOptions alloc] init];
+    phImageRequestOptions.resizeMode = PHImageRequestOptionsResizeModeExact;
+    phImageRequestOptions.synchronous = YES;
+    // 在 PHImageManager 中，targetSize 等 size 都是使用 px 作为单位，因此需要对targetSize 中对传入的 Size 进行处理，宽高各自乘以 ScreenScale，从而得到正确的图片
+    CGSize imageSize = CGSizeMake(size.width * screenScale * 5, size.height * screenScale * 5);
+    [[PHImageManager defaultManager] requestImageForAsset:self.asset
+                                              targetSize:imageSize
+                                             contentMode:PHImageContentModeAspectFit options:phImageRequestOptions
+                                           resultHandler:^(UIImage *result, NSDictionary *info) {
+                                               if ([[info valueForKey:@"PHImageResultIsDegradedKey"]integerValue]==0){
+                                                   // Do something with the FULL SIZED image
                                                    resultImage = result;
-                                               }];
+                                               } else {
+                                                   // Do something with the regraded image
+                                                   resultImage = result;
+                                               }
+                                           }];
        _thumbImage = resultImage;
     return resultImage;
 }
