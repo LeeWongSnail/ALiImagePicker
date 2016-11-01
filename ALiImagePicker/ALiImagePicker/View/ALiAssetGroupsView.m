@@ -30,16 +30,9 @@ static CGFloat kHeightAssetsGroupCell = 70.0;
     return self;
 }
 
-- (void)setAssetsGroups:(PHFetchResult *)assetsGroups
+- (void)setAssetsGroups:(NSArray *)assetsGroups
 {
-    NSMutableArray *arrM = [NSMutableArray array];
-    [assetsGroups enumerateObjectsUsingBlock:^(PHAssetCollection *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        PHFetchResult<PHAsset *> *assets = [PHAsset fetchAssetsInAssetCollection:obj options:nil];
-        if (assets.count > 0) {
-            [arrM addObject:obj];
-        }
-    }];
-    _assetsGroups = [arrM copy];
+    _assetsGroups = assetsGroups;
     [self.tableView reloadData];
 }
 
@@ -53,8 +46,7 @@ static CGFloat kHeightAssetsGroupCell = 70.0;
 {
 
     ALiAssetGroupCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ALiAssetGroupCell"];
-    PHAssetCollection *assetsGroup = self.assetsGroups[indexPath.row];
-    cell.assetsGroup = assetsGroup;
+    cell.assetsGroup = self.assetsGroups[indexPath.row];
     return cell;
 }
 
@@ -70,7 +62,7 @@ static CGFloat kHeightAssetsGroupCell = 70.0;
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     _selectedIndexPath = indexPath;
     [self.tableView reloadData];
-    PHAssetCollection *collection = self.assetsGroups[indexPath.row];
+    NSDictionary *collection = self.assetsGroups[indexPath.row];
     if (self.groupSelectedBlock) {
         self.groupSelectedBlock(collection);
     }

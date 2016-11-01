@@ -34,7 +34,6 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
 
 //Data
 @property (nonatomic, strong) NSArray *assets;
-@property (nonatomic, strong) NSArray *groupTypes;
 
 @property (nonatomic, strong) NSMutableArray *selectAssets;
 
@@ -85,24 +84,22 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
     [self showAssetsGroupView];
 }
 
-- (void)groupViewDidSelected:(PHAssetCollection *)collection
+- (void)groupViewDidSelected:(NSDictionary *)collection
 {
     // 获得某个相簿中的所有PHAsset对象
-    PHFetchResult<PHAsset *> *assets = [PHAsset fetchAssetsInAssetCollection:collection options:nil];
-    NSMutableArray *arrM = [NSMutableArray arrayWithCapacity:assets.count];
-    [assets enumerateObjectsUsingBlock:^(PHAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        ALiAsset *asset = [[ALiAsset alloc] init];
-        asset.asset = obj;
-        [arrM addObject:asset];
+    WEAKSELF(weakSelf);
+    [[ALiImagePickerService shared] fetchAssetsWithMediaType:EALiPickerResourceTypeImage groupTitle:collection[kPHTitle] completion:^(NSString *title, NSArray *assets) {
+        weakSelf.assets = assets;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            //先收起
+            [weakSelf hideAssetsGroupView];
+            //在更新数据
+            [weakSelf.collectionView reloadData];
+            
+            //更新标题
+            [weakSelf.titleButton setTitle:title forState:UIControlStateNormal];            
+        });
     }];
-    self.assets = [arrM copy];
-    //先收起
-    [self hideAssetsGroupView];
-    //在更新数据
-    [self.collectionView reloadData];
-    
-    //更新标题
-    [self.titleButton setTitle:collection.localizedTitle forState:UIControlStateNormal];
 }
 
 - (void)back
@@ -157,23 +154,29 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
 
 - (void)fetchImagesInLibary
 {
-   self.assets = [[ALiImagePickerService shared] fectchAssetsWithMediaType:self.sourceType];
-    
-    [self.collectionView reloadData];
+    WEAKSELF(weakSelf);
+    [[ALiImagePickerService shared] fectchAssetsWithMediaType:EALiPickerResourceTypeImage completion:^(NSString *title,NSArray *assets) {
+        weakSelf.assets = assets;
+        [weakSelf.titleButton setTitle:title forState:UIControlStateNormal];
+        [weakSelf.collectionView reloadData];
+    }];
 }
 
 - (void)fetchPhotoLibaryCategory
 {
     //获取某一组的内容
     WEAKSELF(weakSelf);
-    [[ALiImagePickerService shared] fetchImageGroupWithTypes:self.sourceType completion:^(PHFetchResult *result) {
-        if (result.count > 0) {
-            weakSelf.assetGroupView.assetsGroups = result;
+    [[ALiImagePickerService shared] fetchImageGroupWithTypes:self.sourceType completion:^(NSArray *arr) {
+        if (arr.count > 0) {
+            weakSelf.assetGroupView.assetsGroups = arr;
             weakSelf.titleButton.enabled = YES;
         } else {
             weakSelf.titleButton.enabled = NO;
         }
+        [weakSelf.collectionView reloadData];
     }];
+    
+    
 }
 
 #pragma mark - Load View
@@ -191,10 +194,6 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
 
 - (void)setUpProperties
 {
-    self.groupTypes = @[@(PHAssetCollectionSubtypeSmartAlbumUserLibrary),  //相机胶卷
-                        @(PHAssetCollectionSubtypeAlbumImported),      //照片图库
-                        @(PHAssetCollectionSubtypeAlbumMyPhotoStream),  //我的照片流
-                        @(PHAssetCollectionSubtypeAlbumRegular)];       //自建相册
     self.navigationItem.titleView = self.titleButton;
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(back)];
@@ -335,7 +334,7 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
         _assetGroupView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         [_assetGroupView.touchButton addTarget:self action:@selector(hideAssetsGroupView) forControlEvents:UIControlEventTouchUpInside];
         WEAKSELF(weakSelf);
-        _assetGroupView.groupSelectedBlock = ^(PHAssetCollection *collection){
+        _assetGroupView.groupSelectedBlock = ^(NSDictionary *collection){
             [weakSelf groupViewDidSelected:collection];
         };
         [self.view addSubview:_assetGroupView];

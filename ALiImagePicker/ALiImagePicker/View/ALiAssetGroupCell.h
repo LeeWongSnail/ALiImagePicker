@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import <AssetsLibrary/AssetsLibrary.h>
+#import "ALiConfig.h"
 
 @interface ALiAssetGroupCell : UITableViewCell
 
-@property (nonatomic, strong) PHAssetCollection *assetsGroup;
+@property (nonatomic, strong) NSDictionary *assetsGroup;
 @property (nonatomic, assign) BOOL   isSelected;
 
 @end

@@ -21,6 +21,10 @@ typedef NS_ENUM(NSInteger, EALiImageContentMode) {
     EALiImageContentModeDefault = PHImageContentModeAspectFit
 };
 
+static const NSString *kPHImage = @"PHImage";
+static const NSString *kPHTitle = @"PHTitle";
+static const NSString *kPHCount = @"PHCount";
+
 
 @interface ALiConfig : NSObject
 

@@ -8,6 +8,8 @@
 
 #import "ALiAssetGroupCell.h"
 #import "UIView+ALi.h"
+#import "ALiAsset.h"
+
 @interface ALiAssetGroupCell()
 
 @property (nonatomic, strong) UIImageView *thumbnailView;
@@ -50,23 +52,13 @@
 
 #pragma makr - setter
 
-- (void)setAssetsGroup:(PHAssetCollection *)assetsGroup
+- (void)setAssetsGroup:(NSDictionary *)assetsGroup
 {
     _assetsGroup = assetsGroup;
-    
-    PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
-    // 同步获得图片, 只会返回1张图片
-    options.synchronous = YES;
-    
-    // 获得某个相簿中的所有PHAsset对象
-    PHFetchResult<PHAsset *> *assets = [PHAsset fetchAssetsInAssetCollection:assetsGroup options:nil];
-    
-    [[PHImageManager defaultManager] requestImageForAsset:assets.firstObject targetSize:CGSizeMake(70, 74) contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-        [self.imageView setImage:result];
-    }];
-    
-    self.assetsNameLabel.text = assetsGroup.localizedTitle;
-    self.assetsCountLabel.text = [NSString stringWithFormat:@"%tu",assets.count];
+    ALiAsset *asset = assetsGroup[kPHImage];
+    [self.thumbnailView setImage:[asset thumbnailWithSize:CGSizeMake(60, 60)]];
+    self.assetsNameLabel.text = assetsGroup[kPHTitle];
+    self.assetsCountLabel.text = [NSString stringWithFormat:@"%ld",[assetsGroup[kPHCount] longValue]];
 }
 
 

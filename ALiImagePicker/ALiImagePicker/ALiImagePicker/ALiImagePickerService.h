@@ -6,33 +6,35 @@
 //  Copyright © 2016年 LeeWong. All rights reserved.
 //
 
+
 #import <Foundation/Foundation.h>
 #import "ALiConfig.h"
 @class ALiAsset;
 
+
 @interface ALiImagePickerService : NSObject
 
-+ (instancetype)shared;
-
-/**
- 获取某一种类型的所b有资源
-
- @param aType EALiPickerResourceType  图片 视频和音频
-
- @return 返回这种类型的所有结果
- */
-- (NSArray *)fectchAssetsWithMediaType:(EALiPickerResourceType)aType;
++ (nonnull instancetype)shared;
 
 
 /**
- 获取某一种类型的 符合一定筛选条件的资源
- 
- @param aType    EALiPickerResourceType  图片 视频和音频
- @param aOptions 筛选条件
- 
- @return 符合筛选条件的资源集合
+ 获取某个分组的所有图片或者所有分组
+
+ @param aType       资源来兴
+ @param aCompletion 完成之后的回调
  */
-- (NSArray *)fetchAssetsWithMediaType:(EALiPickerResourceType)aType options:(PHFetchOptions *)aOptions;
+- (void)fectchAssetsWithMediaType:(EALiPickerResourceType)aType completion:(void (^)(NSString *title,NSArray *assets))aCompletion;
+
+
+
+/**
+ 获取指定分组的资源
+
+ @param aType       获取的资源来兴
+ @param aTitle      制定分组的标题
+ @param aCompletion 完成的回调
+ */
+- (void)fetchAssetsWithMediaType:(EALiPickerResourceType)aType groupTitle:(NSString *)aTitle completion:(void (^)(NSString *title,NSArray *assets))aCompletion;
 
 
 
@@ -42,7 +44,7 @@
  @param sourceType      需要获取的类型集合
  @param aCompletion 获取分组完成的回调
  */
-- (void)fetchImageGroupWithTypes:(EALiPickerResourceType)sourceType completion:(void (^)(PHFetchResult *result))aCompletion;
+- (void)fetchImageGroupWithTypes:(EALiPickerResourceType)sourceType completion:(void (^)(NSArray *info))aCompletion;
 
 
 /**
@@ -61,6 +63,7 @@
  @param contentMode 图片展示方式
  @param options     图片的一些筛选条件，可能会影响到要展示图片的质量
  */
-- (void)startCachingImagesForAssets:(NSArray<ALiAsset *> *)assets targetSize:(CGSize)targetSize contentMode:(PHImageContentMode)contentMode options:(nullable PHImageRequestOptions *)options;
+- (void)startCachingImagesForAssets:(NSArray<ALiAsset  *>  * )assets targetSize:(CGSize)targetSize contentMode:(PHImageContentMode)contentMode options:(nullable PHImageRequestOptions *)options;
+
 
 @end

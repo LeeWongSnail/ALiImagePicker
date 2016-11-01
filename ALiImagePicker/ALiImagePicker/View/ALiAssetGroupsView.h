@@ -16,10 +16,10 @@
 
 @property (nonatomic, strong) UIButton *touchButton;
 @property (nonatomic, assign) NSInteger indexAssetsGroup;
-@property (nonatomic, strong) PHFetchResult *assetsGroups;
+@property (nonatomic, strong) NSArray *assetsGroups;
 @property (nonatomic, strong) NSMutableDictionary *selectedAssetCount;
 
-@property (nonatomic, copy) void (^groupSelectedBlock)(PHAssetCollection *collection);
+@property (nonatomic, copy) void (^groupSelectedBlock)(NSDictionary *collection);
 
 @end
 
