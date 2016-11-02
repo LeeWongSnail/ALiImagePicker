@@ -37,30 +37,42 @@
     } else {
         [self.selectedAsset removeObject:asset];
     }
-    
+    [self configSelectCountBtn:asset.isSelected];
 }
 
 #pragma mark - 点击FullImage
 
-//- (void)fullImageDidClick:(UIButton *)aButton
-//{
-//    [aButton setSelected:!aButton.isSelected];
-//    ALiAsset *asset = self.allAssets[self.currentIndex];
-//    asset.fullImage = !asset.isFullImage;
-//    [self.bottomToolBar.fullTitleButton setSelected:!asset.isFullImage];
-//    if (asset.isFullImage) {
-//        [self.bottomToolBar.fullTitleButton setTitle:@"Full Image(2.3M)" forState:UIControlStateSelected];
-//    } else {
-//        [self.bottomToolBar.fullTitleButton setTitle:@"Full Image" forState:UIControlStateSelected];
-//    }
-//    if (!asset.isSelected) {
-//        asset.selected = asset.isFullImage;
-//        [self.topToolBar.selectBtn setSelected:asset.isSelected];
-//        [self.selectedAsset addObject:asset];
-//    }
-//}
+- (void)fullImageDidClick:(UIButton *)aButton
+{
+    [aButton setSelected:!aButton.isSelected];
+    ALiAsset *asset = self.allAssets[self.currentIndex];
+    asset.fullImage = !asset.isFullImage;
+    [self.bottomToolBar.fullTitleButton setSelected:asset.isFullImage];
+    if (asset.isFullImage) {
+        [self.bottomToolBar.fullTitleButton setTitle:[NSString stringWithFormat:@"Full Image(%.2lfM)",asset.imageSize] forState:UIControlStateSelected];
+    } else {
+        [self.bottomToolBar.fullTitleButton setTitle:@"Full Image" forState:UIControlStateNormal];
+    }
+    if (!asset.isSelected) {
+        asset.selected = asset.isFullImage;
+        [self.topToolBar.selectBtn setSelected:asset.isSelected];
+        [self.selectedAsset addObject:asset];
+    }
+    [self configSelectCountBtn:asset.isSelected];
+}
 
-
+- (void)configSelectCountBtn:(BOOL)isAdd
+{
+    NSInteger count = [[self.bottomToolBar.selectedCountBtn currentTitle] integerValue] + (isAdd? 1 : -1);
+    if (count > 0) {
+        [self.bottomToolBar.selectedCountBtn setSelected:YES];
+        [self.bottomToolBar.selectedCountBtn setTitle:[NSString stringWithFormat:@"%tu",count] forState:UIControlStateSelected];
+        self.bottomToolBar.selectedCountBtn.hidden = NO;
+    } else {
+        [self.bottomToolBar.selectedCountBtn setSelected:NO];
+        self.bottomToolBar.selectedCountBtn.hidden = YES;
+    }
+}
 
 //点击发送
 - (void)sendImage:(UIButton *)button
@@ -85,9 +97,9 @@
     
     [self.topToolBar.selectBtn addTarget:self action:@selector(selectImageDidClick:) forControlEvents:UIControlEventTouchUpInside];
     
-//    [self.bottomToolBar.fullImageBtn addTarget:self action:@selector(fullImageDidClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.bottomToolBar.fullImageBtn addTarget:self action:@selector(fullImageDidClick:) forControlEvents:UIControlEventTouchUpInside];
     
-//    [self.bottomToolBar.fullTitleButton addTarget:self action:@selector(fullImageDidClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.bottomToolBar.fullTitleButton addTarget:self action:@selector(fullImageDidClick:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.bottomToolBar.sendBtn addTarget:self action:@selector(sendImage:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -99,6 +111,8 @@
 - (void)configCurrentPageToolUI:(ALiAsset *)asset
 {
     [self.topToolBar.selectBtn setSelected:asset.isSelected];
+    [self.bottomToolBar.fullTitleButton setSelected:asset.isFullImage];
+    [self.bottomToolBar.fullImageBtn setSelected:asset.isFullImage];
 }
 
 - (void)initPageViewController
@@ -125,6 +139,8 @@
     self.view.backgroundColor = [UIColor blackColor];
     [self initPageViewController];
     [self configToolBarEventHandler];
+    self.topToolBar.pageLabel.text = [NSString stringWithFormat:@"%tu/%tu",self.curIndex,self.allAssets.count];
+
 }
 
 #pragma mark - Life Cycle
@@ -216,6 +232,7 @@
         self.currentIndex = [self indexOfViewController:(ALiSingleImageController *)[self.pageViewController.viewControllers objectAtIndex:0]];
         ALiAsset *asset = self.allAssets[self.currentIndex];
         [self configCurrentPageToolUI:asset];
+        self.topToolBar.pageLabel.text = [NSString stringWithFormat:@"%tu/%tu",self.currentIndex,self.allAssets.count];
     }
 }
 

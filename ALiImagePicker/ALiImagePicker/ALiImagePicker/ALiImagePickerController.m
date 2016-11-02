@@ -281,6 +281,13 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
     WEAKSELF(weakSelf);
     browserVc.photoChooseBlock = ^(NSArray *assets){
         weakSelf.selectAssets = [assets mutableCopy];
+        if (weakSelf.selectAssets.count > 0) {
+            weakSelf.bottomBar.previewBtn.enabled = YES;
+            weakSelf.bottomBar.sendBtn.enabled = YES;
+        } else {
+            weakSelf.bottomBar.previewBtn.enabled = NO;
+            weakSelf.bottomBar.sendBtn.enabled = NO;
+        }
         [weakSelf.bottomBar.selectedCountBtn setTitle:[NSString stringWithFormat:@"%tu",weakSelf.selectAssets.count] forState:UIControlStateNormal];
         [weakSelf.collectionView reloadData];
     };

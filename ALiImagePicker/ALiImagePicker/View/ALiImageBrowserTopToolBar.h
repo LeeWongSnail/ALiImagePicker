@@ -14,4 +14,6 @@
 
 @property (nonatomic, strong) UIButton *selectBtn;
 
+@property (nonatomic, strong) UILabel *pageLabel;
+
 @end

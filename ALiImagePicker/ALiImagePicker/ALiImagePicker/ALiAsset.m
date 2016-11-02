@@ -15,9 +15,16 @@
 @property (nonatomic, strong) UIImage *orignImage;
 @property (nonatomic, strong) UIImage *thumbImage;
 @property (nonatomic, strong) UIImage *previewImage;
+@property (nonatomic, assign) CGFloat imageSize;
+
 @end
 
 @implementation ALiAsset
+
+- (void)setAsset:(PHAsset *)asset
+{
+    _asset = asset;
+}
 
 - (UIImage *)orignImage
 {
@@ -46,14 +53,25 @@
 //NSURL *fullSizeImageURL;
 //fullSizeImageOrientation; // EXIF value
 
+- (CGFloat)imageSize
+{
+    if (_imageSize == 0) {
+        [self getImageInfo];
+    }
+    return _imageSize;
+}
+
 - (void)getImageInfo
 {
     PHContentEditingInputRequestOptions *options = [[PHContentEditingInputRequestOptions alloc] init];
      [self.asset requestContentEditingInputWithOptions:options completionHandler:^(PHContentEditingInput *contentEditingInput, NSDictionary *info) {
         
-        CIImage *fullImage = [CIImage imageWithContentsOfURL:contentEditingInput.fullSizeImageURL];
-        NSLog(@"%@",contentEditingInput.fullSizeImageURL);//get url
-        NSLog(@"%@", fullImage.properties.description);//get {TIFF}, {Exif}
+//        CIImage *fullImage = [CIImage imageWithContentsOfURL:contentEditingInput.fullSizeImageURL];
+//        NSLog(@"%@",contentEditingInput.fullSizeImageURL);//get url
+//        NSLog(@"%@", fullImage.properties.description);//get {TIFF}, {Exif}
+         
+         long long fileSize = [ALiAsset fileSizeAtPath:contentEditingInput.fullSizeImageURL.path];
+         self.imageSize = fileSize/1000000.;
     }];
 }
 
@@ -92,10 +110,11 @@
     phImageRequestOptions.resizeMode = PHImageRequestOptionsResizeModeExact;
     phImageRequestOptions.synchronous = YES;
     // 在 PHImageManager 中，targetSize 等 size 都是使用 px 作为单位，因此需要对targetSize 中对传入的 Size 进行处理，宽高各自乘以 ScreenScale，从而得到正确的图片
-    CGSize imageSize = CGSizeMake(size.width * screenScale * 5, size.height * screenScale * 5);
+    
+    CGSize imageSize = CGSizeMake(size.width * screenScale, size.height * screenScale);
     [[PHImageManager defaultManager] requestImageForAsset:self.asset
                                               targetSize:imageSize
-                                             contentMode:PHImageContentModeAspectFit options:phImageRequestOptions
+                                             contentMode:PHImageContentModeAspectFill options:phImageRequestOptions
                                            resultHandler:^(UIImage *result, NSDictionary *info) {
                                                if ([[info valueForKey:@"PHImageResultIsDegradedKey"]integerValue]==0){
                                                    // Do something with the FULL SIZED image
@@ -184,4 +203,13 @@
     }
 }
 
+
+#pragma mark - Private Method
++ (long long) fileSizeAtPath:(NSString*) filePath{
+    NSFileManager* manager = [NSFileManager defaultManager];
+    if ([manager fileExistsAtPath:filePath]){
+        return [[manager attributesOfItemAtPath:filePath error:nil] fileSize];
+    }
+    return 0;
+}
 @end

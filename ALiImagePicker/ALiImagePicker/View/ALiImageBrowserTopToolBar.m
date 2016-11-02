@@ -35,6 +35,9 @@
     self.selectBtn.originY = self.backBtn.originY;
     self.selectBtn.originX = SCREEN_W - 30 - 15;
     
+    self.pageLabel.center = CGPointMake(SCREEN_W/2., 30);
+    self.pageLabel.size = CGSizeMake(100, 30);
+    
 }
 
 #pragma mark - Lazy Load
@@ -59,6 +62,17 @@
         [self addSubview:_selectBtn];
     }
     return _selectBtn;
+}
+
+- (UILabel *)pageLabel
+{
+    if (_pageLabel == nil) {
+        _pageLabel = [[UILabel alloc] init];
+        _pageLabel.font = [UIFont systemFontOfSize:15.];
+        _pageLabel.textColor = [UIColor whiteColor];
+        [self addSubview:_pageLabel];
+    }
+    return _pageLabel;
 }
 
 @end
