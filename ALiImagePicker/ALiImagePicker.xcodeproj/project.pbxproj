@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EB2655C51DCADE1800B4E052 /* ALiAssetTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB2655C41DCADE1800B4E052 /* ALiAssetTitleView.m */; };
+		EB2655D21DCAE3E200B4E052 /* NSString+ALi.m in Sources */ = {isa = PBXBuildFile; fileRef = EB2655D11DCAE3E200B4E052 /* NSString+ALi.m */; };
 		EB34DAC81DB775870015F9C3 /* UIButton+ALi.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34DAC51DB775870015F9C3 /* UIButton+ALi.m */; };
 		EB34DAC91DB775870015F9C3 /* UIView+ALi.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34DAC71DB775870015F9C3 /* UIView+ALi.m */; };
 		EB3F5D071DB0B7BF0026673D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EB3F5D061DB0B7BF0026673D /* main.m */; };
@@ -50,6 +52,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EB2655C31DCADE1800B4E052 /* ALiAssetTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALiAssetTitleView.h; sourceTree = "<group>"; };
+		EB2655C41DCADE1800B4E052 /* ALiAssetTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALiAssetTitleView.m; sourceTree = "<group>"; };
+		EB2655D01DCAE3E200B4E052 /* NSString+ALi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+ALi.h"; sourceTree = "<group>"; };
+		EB2655D11DCAE3E200B4E052 /* NSString+ALi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+ALi.m"; sourceTree = "<group>"; };
 		EB34DAC41DB775870015F9C3 /* UIButton+ALi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+ALi.h"; sourceTree = "<group>"; };
 		EB34DAC51DB775870015F9C3 /* UIButton+ALi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+ALi.m"; sourceTree = "<group>"; };
 		EB34DAC61DB775870015F9C3 /* UIView+ALi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+ALi.h"; sourceTree = "<group>"; };
@@ -132,6 +138,8 @@
 				EB34DAC51DB775870015F9C3 /* UIButton+ALi.m */,
 				EB34DAC61DB775870015F9C3 /* UIView+ALi.h */,
 				EB34DAC71DB775870015F9C3 /* UIView+ALi.m */,
+				EB2655D01DCAE3E200B4E052 /* NSString+ALi.h */,
+				EB2655D11DCAE3E200B4E052 /* NSString+ALi.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -254,6 +262,8 @@
 				EBE110541DC4500100000D5B /* ALiImagePickerBottomBar.m */,
 				EBE110551DC4500100000D5B /* ALiImagePickerFooterView.h */,
 				EBE110561DC4500100000D5B /* ALiImagePickerFooterView.m */,
+				EB2655C31DCADE1800B4E052 /* ALiAssetTitleView.h */,
+				EB2655C41DCADE1800B4E052 /* ALiAssetTitleView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -395,8 +405,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				EBE1105B1DC4500100000D5B /* ALiAssetGroupsView.m in Sources */,
+				EB2655D21DCAE3E200B4E052 /* NSString+ALi.m in Sources */,
 				EBE1105D1DC4500100000D5B /* ALiImageBrowserTopToolBar.m in Sources */,
 				EB34DAC81DB775870015F9C3 /* UIButton+ALi.m in Sources */,
+				EB2655C51DCADE1800B4E052 /* ALiAssetTitleView.m in Sources */,
 				EBE1103F1DC44FE800000D5B /* ALiImagePickerService.m in Sources */,
 				EBE1105F1DC4500100000D5B /* ALiImagePickerBottomBar.m in Sources */,
 				EBE110631DC450F100000D5B /* ALiAsset.m in Sources */,

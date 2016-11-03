@@ -139,7 +139,7 @@
     self.view.backgroundColor = [UIColor blackColor];
     [self initPageViewController];
     [self configToolBarEventHandler];
-    self.topToolBar.pageLabel.text = [NSString stringWithFormat:@"%tu/%tu",self.curIndex,self.allAssets.count];
+    self.topToolBar.pageLabel.text = [NSString stringWithFormat:@"%tu/%tu",self.curIndex+1,self.allAssets.count];
     if (self.selectedAsset.count > 0) {
         [self.bottomToolBar.selectedCountBtn setSelected:YES];
         [self.bottomToolBar.selectedCountBtn setTitle:[NSString stringWithFormat:@"%tu",self.selectedAsset.count] forState:UIControlStateSelected];
@@ -238,7 +238,7 @@
         self.currentIndex = [self indexOfViewController:(ALiSingleImageController *)[self.pageViewController.viewControllers objectAtIndex:0]];
         ALiAsset *asset = self.allAssets[self.currentIndex];
         [self configCurrentPageToolUI:asset];
-        self.topToolBar.pageLabel.text = [NSString stringWithFormat:@"%tu/%tu",self.currentIndex,self.allAssets.count];
+        self.topToolBar.pageLabel.text = [NSString stringWithFormat:@"%tu/%tu",self.currentIndex+1,self.allAssets.count];
     }
 }
 

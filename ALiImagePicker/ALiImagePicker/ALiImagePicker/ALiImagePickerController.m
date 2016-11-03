@@ -12,6 +12,7 @@
 #import "ALiImagePickerFooterView.h"
 #import "ALiImagePickerService.h"
 #import "ALiAssetGroupsView.h"
+#import "ALiAssetTitleView.h"
 #import "UIButton+ALi.h"
 #import "ALiImageCell.h"
 
@@ -28,6 +29,7 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
 @property (nonatomic, strong) ALiAssetGroupsView *assetGroupView;
 @property (nonatomic, strong) ALiImagePickerBottomBar *bottomBar;
 @property (nonatomic, strong) ALiImagePickerFooterView *footerView;
+@property (nonatomic, strong) ALiAssetTitleView *groupTitleView;
 @property (nonatomic, strong) UIView *overlayView;
 @property (nonatomic, strong) UIButton *touchButton;
 @property (nonatomic, strong) UIButton *titleButton;
@@ -194,7 +196,7 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
 
 - (void)setUpProperties
 {
-    self.navigationItem.titleView = self.titleButton;
+    self.navigationItem.titleView = self.groupTitleView;
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(back)];
 }
@@ -375,18 +377,12 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
     return _touchButton;
 }
 
-- (UIButton *)titleButton{
-    if (!_titleButton) {
-        _titleButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _titleButton.frame = CGRectMake(0, 0, 120, 30);
-        [_titleButton setImage:[UIImage imageNamed:@"imagepicker_navigationbar_arrow_down"] forState:UIControlStateNormal];
-        [_titleButton setImage:[UIImage imageNamed:@"imagepicker_navigationbar_arrow_up"] forState:UIControlStateSelected];
-        [_titleButton setTitle:@"所有照片" forState:UIControlStateNormal];
-        [_titleButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [_titleButton adjustImagePosition:EArtButtonImagePositionRight spacing:5];
-        [_titleButton addTarget:self action:@selector(assetsGroupDidSelected) forControlEvents:UIControlEventTouchUpInside];
+- (ALiAssetTitleView *)groupTitleView
+{
+    if (_groupTitleView == nil) {
+        _groupTitleView = [[ALiAssetTitleView alloc] init];
     }
-    return _titleButton;
+    return _groupTitleView;
 }
 
 - (ALiImagePickerBottomBar *)bottomBar
