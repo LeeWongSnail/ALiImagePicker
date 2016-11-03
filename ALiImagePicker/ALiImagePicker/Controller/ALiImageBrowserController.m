@@ -140,7 +140,13 @@
     [self initPageViewController];
     [self configToolBarEventHandler];
     self.topToolBar.pageLabel.text = [NSString stringWithFormat:@"%tu/%tu",self.curIndex,self.allAssets.count];
-
+    if (self.selectedAsset.count > 0) {
+        [self.bottomToolBar.selectedCountBtn setSelected:YES];
+        [self.bottomToolBar.selectedCountBtn setTitle:[NSString stringWithFormat:@"%tu",self.selectedAsset.count] forState:UIControlStateSelected];
+        self.bottomToolBar.sendBtn.enabled = YES;
+    } else {
+        self.bottomToolBar.sendBtn.enabled = NO;
+    }
 }
 
 #pragma mark - Life Cycle

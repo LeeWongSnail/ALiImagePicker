@@ -284,9 +284,14 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
         if (weakSelf.selectAssets.count > 0) {
             weakSelf.bottomBar.previewBtn.enabled = YES;
             weakSelf.bottomBar.sendBtn.enabled = YES;
+            [weakSelf.bottomBar.selectedCountBtn setSelected:YES];
+            weakSelf.bottomBar.selectedCountBtn.hidden = NO;
+            [weakSelf.bottomBar.selectedCountBtn setTitle:[NSString stringWithFormat:@"%tu",weakSelf.selectAssets.count] forState:UIControlStateSelected];
         } else {
             weakSelf.bottomBar.previewBtn.enabled = NO;
             weakSelf.bottomBar.sendBtn.enabled = NO;
+            [weakSelf.bottomBar.selectedCountBtn setSelected:NO];
+            weakSelf.bottomBar.selectedCountBtn.hidden = YES;
         }
         [weakSelf.bottomBar.selectedCountBtn setTitle:[NSString stringWithFormat:@"%tu",weakSelf.selectAssets.count] forState:UIControlStateNormal];
         [weakSelf.collectionView reloadData];

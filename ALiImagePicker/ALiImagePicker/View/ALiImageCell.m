@@ -83,8 +83,10 @@
 {
     if (_checkBtn == nil) {
         _checkBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_checkBtn setImage:[UIImage imageNamed:@"imagepicker_photo_check_default"] forState:UIControlStateNormal];
-        [_checkBtn setImage:[UIImage imageNamed:@"imagepicker_photo_check_selected"] forState:UIControlStateSelected];
+        UIImage  *img = [UIImage imageNamed:@"photo_check_default"];
+        UIImage  *imgH = [UIImage imageNamed:@"photo_check_selected"];
+        [_checkBtn setImage:img forState:UIControlStateNormal];
+        [_checkBtn setImage:imgH forState:UIControlStateSelected];
         [self.imageView addSubview:_checkBtn];
         [_checkBtn addTarget:self action:@selector(checkBtnDidClick) forControlEvents:UIControlEventTouchUpInside];
         _checkBtn.size = CGSizeMake(20, 20);
