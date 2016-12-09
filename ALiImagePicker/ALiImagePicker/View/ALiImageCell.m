@@ -16,6 +16,8 @@
 
 @property (nonatomic, strong) UIButton *checkBtn;
 
+@property (nonatomic, strong) UIButton *takePhotoBtn;
+
 @property (nonatomic, strong) ALiAsset *asset;
 
 @end
@@ -34,18 +36,30 @@
 
 - (void)buildUI
 {
+    self.takePhotoBtn.frame = self.bounds;
     self.imageView.frame = self.bounds;
-    
     self.checkBtn.rightTop = self.imageView.rightTop;
 }
 
 
 - (void)configImageCell:(ALiAsset *)asset 
 {
-    self.asset = asset;
-    [self.imageView setImage:[asset thumbnailWithSize:self.bounds.size]];
+    if ([asset isKindOfClass:[ALiAsset class]]) {
+        self.asset = asset;
+        [self.imageView setImage:[asset thumbnailWithSize:self.bounds.size]];
+        self.imageView.contentMode = UIViewContentModeScaleAspectFill;
+        self.contentView.backgroundColor = [UIColor colorWithRed:236/255. green:236/255. blue:236/255. alpha:1];
+        [self.checkBtn setSelected:asset.isSelected];
+        self.checkBtn.hidden = NO;
+        self.imageView.hidden = NO;
+        self.takePhotoBtn.hidden = YES;
+    } else if ([asset isKindOfClass:[NSString class]] && [(NSString *)asset isEqualToString:@"takephoto"]) {
+        self.asset = asset;
+        self.checkBtn.hidden = YES;
+        self.takePhotoBtn.hidden = NO;
+        self.imageView.hidden = YES;
+    }
     
-    [self.checkBtn setSelected:asset.isSelected];
 }
 
 - (void)checkBtnDidClick
@@ -70,7 +84,6 @@
 {
     if (_imageView == nil) {
         _imageView = [[UIImageView alloc] init];
-        _imageView.contentMode = UIViewContentModeScaleAspectFill;
         _imageView.userInteractionEnabled = YES;
         [_imageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImage)]];
         _imageView.clipsToBounds = YES;
@@ -94,5 +107,17 @@
     return _checkBtn;
 }
 
+
+- (UIButton *)takePhotoBtn
+{
+    if (_takePhotoBtn == nil) {
+        _takePhotoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_takePhotoBtn setImage:[UIImage imageNamed:@"imagepicker_compose_photograph"] forState:UIControlStateNormal];
+        [_takePhotoBtn setBackgroundImage:[UIImage imageNamed:@"imagepicker_compose_photograph_bg"] forState:UIControlStateNormal];
+        [_takePhotoBtn addTarget:self action:@selector(tapImage) forControlEvents:UIControlEventTouchUpInside];
+        [self.contentView addSubview:_takePhotoBtn];
+    }
+    return _takePhotoBtn;
+}
 
 @end

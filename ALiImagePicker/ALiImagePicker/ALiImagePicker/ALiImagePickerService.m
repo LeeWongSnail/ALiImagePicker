@@ -40,7 +40,10 @@
         self.smartAlbums = [NSMutableDictionary dictionary];
         self.videoAlbums = [NSMutableDictionary dictionary];
         [self fetchAllImages];
-//        [self fetchAllVideos];
+        
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
+        
     }
     return self;
 }
@@ -64,6 +67,7 @@
 
 - (void)fectchAssetsWithMediaType:(EALiPickerResourceType)aType  completion:(void (^)(NSString *title,NSArray *assets))aCompletion;
 {
+
    [self fetchAssetsWithMediaType:aType groupTitle:defaultTitle completion:aCompletion];
 }
 
@@ -179,7 +183,14 @@
         
         
     }
-    
-    
 }
+
+- (void)enterForeground:(NSNotification *)noti
+{
+    if (self.smartAlbums.count > 0) {
+        [self fetchAllImages];
+    }
+}
+
+
 @end

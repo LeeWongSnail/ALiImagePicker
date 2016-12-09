@@ -21,7 +21,7 @@
 static  NSString *kArtImagePickerCellIdentifier = @"ALiImageCell";
 static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
 #define kSizeThumbnailCollectionView  ([UIScreen mainScreen].bounds.size.width-10)/4
-@interface ALiImagePickerController () <UICollectionViewDelegate,UICollectionViewDataSource,ALiImageCellDelegate>
+@interface ALiImagePickerController () <UICollectionViewDelegate,UICollectionViewDataSource,ALiImageCellDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
 //UI
 @property (nonatomic, strong) UICollectionView *collectionView;
@@ -92,7 +92,10 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
     // 获得某个相簿中的所有PHAsset对象
     WEAKSELF(weakSelf);
     [[ALiImagePickerService shared] fetchAssetsWithMediaType:EALiPickerResourceTypeImage groupTitle:collection[kPHTitle] completion:^(NSString *title, NSArray *assets) {
-        weakSelf.assets = assets;
+        NSMutableArray *arrM = [NSMutableArray array];
+        [arrM addObject:@"takephoto"];
+        [arrM addObjectsFromArray:assets];
+        weakSelf.assets = [arrM copy];
         dispatch_async(dispatch_get_main_queue(), ^{
             //先收起
             [weakSelf hideAssetsGroupView];
@@ -102,7 +105,7 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
             //更新标题
             weakSelf.groupTitleView.titleButton.text = title;
            CGFloat width = [weakSelf.groupTitleView updateTitleConstraints];
-            self.groupTitleView.frame = CGRectMake(0, 0, width, 40);
+            weakSelf.groupTitleView.frame = CGRectMake(0, 0, width, 40);
         });
     }];
 }
@@ -160,8 +163,11 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
 - (void)fetchImagesInLibary
 {
     WEAKSELF(weakSelf);
-    [[ALiImagePickerService shared] fectchAssetsWithMediaType:EALiPickerResourceTypeImage completion:^(NSString *title,NSArray *assets) {
-        weakSelf.assets = assets;
+    [[ALiImagePickerService shared] fectchAssetsWithMediaType:EALiPickerResourceTypeImage  completion:^(NSString *title,NSArray *assets) {
+        NSMutableArray *arrM = [NSMutableArray array];
+        [arrM addObject:@"takephoto"];
+        [arrM addObjectsFromArray:assets];
+        weakSelf.assets = [arrM copy];
         weakSelf.groupTitleView.titleButton.text = title;
         CGFloat width = [weakSelf.groupTitleView updateTitleConstraints];
         self.groupTitleView.frame = CGRectMake(0, 0, width, 40);
@@ -218,8 +224,8 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     [self buildUI];
-    [self fetchImagesInLibary];
     [self fetchPhotoLibaryCategory];
+    [self fetchImagesInLibary];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -278,6 +284,20 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
     return reusableView;
 }
 
+#pragma mark- UIImagePickerViewController
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
+    
+    [picker dismissViewControllerAnimated:NO completion:^{
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
 
 #pragma mark - ALiImageCellDelegate
 
@@ -288,31 +308,43 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
 
 - (void)imageDidTapped:(ALiAsset *)asset select:(BOOL)isSelect
 {
-    //看大图
-    ALiImageBrowserController *browserVc = [[ALiImageBrowserController alloc] init];
-    WEAKSELF(weakSelf);
-    browserVc.photoChooseBlock = ^(NSArray *assets){
-        weakSelf.selectAssets = [assets mutableCopy];
-        if (weakSelf.selectAssets.count > 0) {
-            weakSelf.bottomBar.previewBtn.enabled = YES;
-            weakSelf.bottomBar.sendBtn.enabled = YES;
-            [weakSelf.bottomBar.selectedCountBtn setSelected:YES];
-            weakSelf.bottomBar.selectedCountBtn.hidden = NO;
-            [weakSelf.bottomBar.selectedCountBtn setTitle:[NSString stringWithFormat:@"%tu",weakSelf.selectAssets.count] forState:UIControlStateSelected];
-        } else {
-            weakSelf.bottomBar.previewBtn.enabled = NO;
-            weakSelf.bottomBar.sendBtn.enabled = NO;
-            [weakSelf.bottomBar.selectedCountBtn setSelected:NO];
-            weakSelf.bottomBar.selectedCountBtn.hidden = YES;
-        }
-        [weakSelf.bottomBar.selectedCountBtn setTitle:[NSString stringWithFormat:@"%tu",weakSelf.selectAssets.count] forState:UIControlStateNormal];
-        [weakSelf.collectionView reloadData];
-    };
+    if ([asset isKindOfClass:[NSString class]]) {
+        //拍照
+        UIImagePickerController *pickerController = [[UIImagePickerController alloc]init];
+        pickerController.allowsEditing = NO;
+        pickerController.delegate = self;
+        pickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+        [self presentViewController:pickerController animated:YES completion:nil];
+        
+    } else if ([asset isKindOfClass:[ALiAsset class]]) {
+        //看大图
+        ALiImageBrowserController *browserVc = [[ALiImageBrowserController alloc] init];
+        WEAKSELF(weakSelf);
+        browserVc.photoChooseBlock = ^(NSArray *assets){
+            weakSelf.selectAssets = [assets mutableCopy];
+            if (weakSelf.selectAssets.count > 0) {
+                weakSelf.bottomBar.previewBtn.enabled = YES;
+                weakSelf.bottomBar.sendBtn.enabled = YES;
+                [weakSelf.bottomBar.selectedCountBtn setSelected:YES];
+                weakSelf.bottomBar.selectedCountBtn.hidden = NO;
+                [weakSelf.bottomBar.selectedCountBtn setTitle:[NSString stringWithFormat:@"%tu",weakSelf.selectAssets.count] forState:UIControlStateSelected];
+            } else {
+                weakSelf.bottomBar.previewBtn.enabled = NO;
+                weakSelf.bottomBar.sendBtn.enabled = NO;
+                [weakSelf.bottomBar.selectedCountBtn setSelected:NO];
+                weakSelf.bottomBar.selectedCountBtn.hidden = YES;
+            }
+            [weakSelf.bottomBar.selectedCountBtn setTitle:[NSString stringWithFormat:@"%tu",weakSelf.selectAssets.count] forState:UIControlStateNormal];
+            [weakSelf.collectionView reloadData];
+        };
+        
+        browserVc.allAssets = [NSMutableArray arrayWithArray:self.assets];
+        browserVc.selectedAsset = self.selectAssets;
+        browserVc.curIndex = [self.assets indexOfObject:asset];
+        [self.navigationController pushViewController:browserVc animated:YES];
+    }
     
-    browserVc.allAssets = [NSMutableArray arrayWithArray:self.assets];
-    browserVc.selectedAsset = self.selectAssets;
-    browserVc.curIndex = [self.assets indexOfObject:asset];
-    [self.navigationController pushViewController:browserVc animated:YES];
+    
 }
 
 #pragma mark - Lazy Load
