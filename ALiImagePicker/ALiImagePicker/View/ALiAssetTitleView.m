@@ -27,19 +27,24 @@
 
 - (void)buildUI
 {
-//    self.titleButton.frame = CGRectMake(0, 0, 120, 30);
-    [self updateTitleConstraints];
+    [self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(eventHandler)]];
 }
 
-- (void)updateTitleConstraints
+- (CGFloat)updateTitleConstraints
 {
-   CGFloat width = [self.titleButton.currentTitle sizeWithFont:[UIFont systemFontOfSize:15.] maxSize:CGSizeMake(200, 30)].width;
-    self.titleButton.center = self.center;
-    self.titleButton.size = CGSizeMake(width, 30);
+    [self.titleButton sizeToFit];
     
-    CGFloat x = CGRectGetMaxX(self.titleButton.frame);
-    self.arrowBtn.frame = CGRectMake(x, self.titleButton.frame.origin.y, 30, 30);
+    CGFloat  width = CGRectGetWidth(self.titleButton.frame)/2 + 2 + CGRectGetWidth(self.arrowBtn.frame) + 15;
+    self.size = CGSizeMake(width * 2, self.frame.size.height);
     
+    self.titleButton.center = CGPointMake(self.frame.size.width / 2, self.frame.size.height / 2);
+    
+    self.arrowBtn.originX = self.titleButton.rightTop.x + 5;
+    self.arrowBtn.center = CGPointMake(self.arrowBtn.center.x, self.titleButton.center.y);
+    
+    self.arrowBtn.transform = CGAffineTransformRotate(self.arrowBtn.transform, M_PI);
+    
+    return CGRectGetMaxX(self.arrowBtn.frame) + 10;
 }
 
 
@@ -50,32 +55,22 @@
     }
 }
 
+
 #pragma mark - Lazy Load
-- (UIButton *)titleButton{
+- (UILabel *)titleButton{
     if (!_titleButton) {
-        _titleButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_titleButton setImage:[UIImage imageNamed:@"imagepicker_navigationbar_arrow_down"] forState:UIControlStateNormal];
-        [_titleButton setImage:[UIImage imageNamed:@"imagepicker_navigationbar_arrow_up"] forState:UIControlStateSelected];
-        [_titleButton setTitle:@"所有照片" forState:UIControlStateNormal];
-        _titleButton.titleLabel.font = [UIFont systemFontOfSize:15.];
-        [_titleButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [_titleButton adjustImagePosition:EArtButtonImagePositionRight spacing:5];
-        [_titleButton addTarget:self action:@selector(eventHandler) forControlEvents:UIControlEventTouchUpInside];
+        _titleButton = [[UILabel alloc] init];
+        _titleButton.text = @"所有照片";
+        _titleButton.font = [UIFont systemFontOfSize:15.];
+        _titleButton.textColor = [UIColor blackColor];
         [self addSubview:_titleButton];
     }
     return _titleButton;
 }
 
-- (UIButton *)arrowBtn{
+- (UIImageView *)arrowBtn{
     if (!_arrowBtn) {
-        _arrowBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _arrowBtn.frame = CGRectMake(0, 0, 120, 30);
-        [_arrowBtn setImage:[UIImage imageNamed:@"imagepicker_navigationbar_arrow_down"] forState:UIControlStateNormal];
-        [_arrowBtn setImage:[UIImage imageNamed:@"imagepicker_navigationbar_arrow_up"] forState:UIControlStateSelected];
-        [_arrowBtn setTitle:@"所有照片" forState:UIControlStateNormal];
-        [_arrowBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [_arrowBtn adjustImagePosition:EArtButtonImagePositionRight spacing:5];
-        [_arrowBtn addTarget:self action:@selector(eventHandler) forControlEvents:UIControlEventTouchUpInside];
+        _arrowBtn = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"imagepicker_navigationbar_arrow_down"]];
         [self addSubview:_arrowBtn];
     }
     return _arrowBtn;

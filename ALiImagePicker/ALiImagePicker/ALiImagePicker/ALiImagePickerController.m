@@ -32,7 +32,6 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
 @property (nonatomic, strong) ALiAssetTitleView *groupTitleView;
 @property (nonatomic, strong) UIView *overlayView;
 @property (nonatomic, strong) UIButton *touchButton;
-@property (nonatomic, strong) UIButton *titleButton;
 
 //Data
 @property (nonatomic, strong) NSArray *assets;
@@ -55,6 +54,7 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
                      animations:^{
                          self.assetGroupView.originY = 0;
                          self.overlayView.alpha = 0.85f;
+                         self.groupTitleView.arrowBtn.transform = CGAffineTransformRotate(self.groupTitleView.arrowBtn.transform, M_PI);
                      }completion:^(BOOL finished) {
                          
                      }];
@@ -66,6 +66,7 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
                      animations:^{
                          self.assetGroupView.originY = -self.assetGroupView.size.height;
                          self.overlayView.alpha = 0.0f;
+                         self.groupTitleView.arrowBtn.transform = CGAffineTransformRotate(self.groupTitleView.arrowBtn.transform, M_PI);
                      }completion:^(BOOL finished) {
                          [_touchButton removeFromSuperview];
                          _touchButton = nil;
@@ -99,7 +100,9 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
             [weakSelf.collectionView reloadData];
             
             //更新标题
-            [weakSelf.titleButton setTitle:title forState:UIControlStateNormal];            
+            weakSelf.groupTitleView.titleButton.text = title;
+           CGFloat width = [weakSelf.groupTitleView updateTitleConstraints];
+            self.groupTitleView.frame = CGRectMake(0, 0, width, 40);
         });
     }];
 }
@@ -159,7 +162,9 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
     WEAKSELF(weakSelf);
     [[ALiImagePickerService shared] fectchAssetsWithMediaType:EALiPickerResourceTypeImage completion:^(NSString *title,NSArray *assets) {
         weakSelf.assets = assets;
-        [weakSelf.titleButton setTitle:title forState:UIControlStateNormal];
+        weakSelf.groupTitleView.titleButton.text = title;
+        CGFloat width = [weakSelf.groupTitleView updateTitleConstraints];
+        self.groupTitleView.frame = CGRectMake(0, 0, width, 40);
         [weakSelf.collectionView reloadData];
     }];
 }
@@ -171,9 +176,9 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
     [[ALiImagePickerService shared] fetchImageGroupWithTypes:self.sourceType completion:^(NSArray *arr) {
         if (arr.count > 0) {
             weakSelf.assetGroupView.assetsGroups = arr;
-            weakSelf.titleButton.enabled = YES;
+            weakSelf.groupTitleView.titleButton.enabled = YES;
         } else {
-            weakSelf.titleButton.enabled = NO;
+            weakSelf.groupTitleView.titleButton.enabled = NO;
         }
         [weakSelf.collectionView reloadData];
     }];
@@ -197,7 +202,12 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
 - (void)setUpProperties
 {
     self.navigationItem.titleView = self.groupTitleView;
-    
+    CGFloat width = [self.groupTitleView updateTitleConstraints];
+    self.groupTitleView.frame = CGRectMake(0, 0, width, 40);
+    WEAKSELF(weakSelf);
+    self.groupTitleView.titleViewDidClick = ^{
+        [weakSelf assetsGroupDidSelected];
+    };
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(back)];
 }
 

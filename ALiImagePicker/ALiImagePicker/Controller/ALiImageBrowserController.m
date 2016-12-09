@@ -118,7 +118,7 @@
 - (void)initPageViewController
 {
     CGRect rect = [UIScreen mainScreen].bounds;
-    self.pageViewController.view.frame = CGRectMake(0, 0, rect.size.width + 20, rect.size.height);
+    self.pageViewController.view.frame = CGRectMake(0, 0, rect.size.width, rect.size.height);
     ALiSingleImageController *initialViewController = [self viewControllerAtIndex:self.curIndex];
     NSArray *viewControllers = nil;
     if (initialViewController) {

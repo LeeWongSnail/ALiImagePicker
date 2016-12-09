@@ -10,10 +10,12 @@
 
 @interface ALiAssetTitleView : UIView
 
-@property (nonatomic, strong) UIButton *titleButton;
+@property (nonatomic, strong) UILabel *titleButton;
 
-@property (nonatomic, strong) UIButton *arrowBtn;
+@property (nonatomic, strong) UIImageView *arrowBtn;
 
 @property (nonatomic, copy) void (^titleViewDidClick)();
+
+- (CGFloat)updateTitleConstraints;
 
 @end

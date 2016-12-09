@@ -27,7 +27,7 @@
 - (void)buildUI
 {
     
-    self.backBtn.originY = 15;
+    self.backBtn.originY = 20;
     self.backBtn.originX = 15;
     self.backBtn.size = CGSizeMake(30, 30);
     
@@ -35,9 +35,9 @@
     self.selectBtn.originY = self.backBtn.originY;
     self.selectBtn.originX = SCREEN_W - 30 - 15;
     
-    self.pageLabel.center = CGPointMake(SCREEN_W/2., 30);
-    self.pageLabel.size = CGSizeMake(100, 30);
-    
+    [self.pageLabel sizeToFit];
+    self.pageLabel.center = CGPointMake(SCREEN_W/2.-40, 20);
+    self.pageLabel.size = CGSizeMake(100, 34);
 }
 
 #pragma mark - Lazy Load
@@ -70,6 +70,7 @@
         _pageLabel = [[UILabel alloc] init];
         _pageLabel.font = [UIFont systemFontOfSize:15.];
         _pageLabel.textColor = [UIColor whiteColor];
+        _pageLabel.textAlignment = NSTextAlignmentCenter;
         [self addSubview:_pageLabel];
     }
     return _pageLabel;
