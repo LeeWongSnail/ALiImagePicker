@@ -171,7 +171,9 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
         weakSelf.groupTitleView.titleButton.text = title;
         CGFloat width = [weakSelf.groupTitleView updateTitleConstraints];
         self.groupTitleView.frame = CGRectMake(0, 0, width, 40);
-        [weakSelf.collectionView reloadData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakSelf.collectionView reloadData];
+        });
     }];
 }
 
@@ -186,10 +188,24 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
         } else {
             weakSelf.groupTitleView.titleButton.enabled = NO;
         }
-        [weakSelf.collectionView reloadData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakSelf.collectionView reloadData];
+        });
     }];
     
     
+}
+
+- (void)askForAuthorize
+{
+    [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+        if (status == PHAuthorizationStatusAuthorized) {
+            [self fetchPhotoLibaryCategory];
+            [self fetchImagesInLibary];
+        }else{
+            NSLog(@"Denied or Restricted");
+        }
+    }];
 }
 
 #pragma mark - Load View
@@ -224,8 +240,7 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     [self buildUI];
-    [self fetchPhotoLibaryCategory];
-    [self fetchImagesInLibary];
+    [self askForAuthorize];
 }
 
 - (void)didReceiveMemoryWarning {

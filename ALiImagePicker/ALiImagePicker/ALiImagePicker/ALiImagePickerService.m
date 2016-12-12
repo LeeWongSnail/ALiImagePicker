@@ -33,6 +33,9 @@
     return photoAlbumManager;
 }
 
+
+
+
 - (instancetype)init
 {
     if (self = [super init]) {
@@ -62,7 +65,9 @@
             [arrM addObject:@{kPHImage:arrT.firstObject,kPHTitle:obj[kPHTitle],kPHCount:obj[kPHCount]}];
         }];
     }
-    aCompletion([arrM copy]);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        aCompletion([arrM copy]);
+    });
 }
 
 - (void)fectchAssetsWithMediaType:(EALiPickerResourceType)aType  completion:(void (^)(NSString *title,NSArray *assets))aCompletion;
@@ -75,10 +80,14 @@
 {
     if (aType == EALiPickerResourceTypeImage) {
         NSDictionary *dict = [self.smartAlbums valueForKey:aTitle];
-        aCompletion(dict[kPHTitle],dict[kPHImage]);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            aCompletion(dict[kPHTitle],dict[kPHImage]);
+        });
     } else if (aType == EALiPickerResourceTypeVideo) {
         NSDictionary *dict = [self.videoAlbums valueForKey:aTitle];
-        aCompletion(dict[kPHTitle],dict[kPHImage]);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            aCompletion(dict[kPHTitle],dict[kPHImage]);
+        });
     }
 }
 
