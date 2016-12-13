@@ -200,12 +200,37 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
 {
     [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
         if (status == PHAuthorizationStatusAuthorized) {
-            [self fetchPhotoLibaryCategory];
-            [self fetchImagesInLibary];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self buildUI];
+                [self fetchPhotoLibaryCategory];
+                [self fetchImagesInLibary];
+            });
         }else{
             NSLog(@"Denied or Restricted");
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self buildRestrictedUI];
+            });
         }
     }];
+}
+
+- (void)openAuthorization
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"相册权限未开启" message:@"相册权限未开启，请在设置中选择当前应用,开启相册功能" preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *open = [UIAlertAction actionWithTitle:@"立即开启" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+    }];
+    
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+    }];
+    
+    [alert addAction:open];
+    [alert addAction:cancel];
+    
+    [self.navigationController presentViewController:alert animated:YES completion:nil];
+    
 }
 
 #pragma mark - Load View
@@ -219,6 +244,22 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
     [self.bottomBar.sendBtn addTarget:self action:@selector(sendSelectAsset) forControlEvents:UIControlEventTouchUpInside];
     [self setUpProperties];
 }
+
+- (void)buildRestrictedUI
+{
+    UIButton *tipBtn  = [UIButton buttonWithType:UIButtonTypeCustom];
+    [tipBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    tipBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+    tipBtn.titleLabel.numberOfLines = 2;
+    tipBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
+    [tipBtn setTitle:@"相册权限未开启，请在设置中选择当前应用,开启相册功能 \n 点击去设置" forState:UIControlStateNormal];
+    tipBtn.frame = CGRectMake(0, (SCREEN_H/2.)-25, SCREEN_W, 50);
+    tipBtn.backgroundColor = [UIColor greenColor];
+    [self.view addSubview:tipBtn];
+    [self.view bringSubviewToFront:tipBtn];
+    [tipBtn addTarget:self action:@selector(openAuthorization) forControlEvents:UIControlEventTouchUpInside];
+}
+
 
 
 - (void)setUpProperties
@@ -239,9 +280,9 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
-    [self buildUI];
     [self askForAuthorize];
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

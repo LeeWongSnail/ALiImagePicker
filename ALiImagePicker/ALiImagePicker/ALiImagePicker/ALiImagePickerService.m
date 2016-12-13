@@ -51,6 +51,7 @@
     return self;
 }
 
+
 - (void)fetchImageGroupWithTypes:(EALiPickerResourceType)sourceType completion:(void (^)(NSArray *info))aCompletion;
 {
     NSMutableArray *arrM = [NSMutableArray array];
