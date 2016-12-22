@@ -139,7 +139,7 @@
     self.view.backgroundColor = [UIColor blackColor];
     [self initPageViewController];
     [self configToolBarEventHandler];
-    self.topToolBar.pageLabel.text = [NSString stringWithFormat:@"%tu/%tu",self.curIndex+1,self.allAssets.count];
+    self.topToolBar.pageLabel.text = [NSString stringWithFormat:@"%tu/%tu",self.curIndex,self.allAssets.count-1];
     if (self.selectedAsset.count > 0) {
         [self.bottomToolBar.selectedCountBtn setSelected:YES];
         [self.bottomToolBar.selectedCountBtn setTitle:[NSString stringWithFormat:@"%tu",self.selectedAsset.count] forState:UIControlStateSelected];
@@ -192,8 +192,12 @@
     if (([self getCount] == 0) || (index >= [self getCount])) {
         return nil;
     }
-    ALiSingleImageController *dataViewController = [[ALiSingleImageController alloc] init];
+    if ([self.allAssets[index] isKindOfClass:[NSString class]]) {
+        //如果是拍照按钮
+        return nil;
+    }
     ALiAsset *asset = self.allAssets[index];
+    ALiSingleImageController *dataViewController = [[ALiSingleImageController alloc] init];
     dataViewController.asset = asset;
     
     dataViewController.view.tag = index;

@@ -396,7 +396,7 @@ static  NSString *kArtAssetsFooterViewIdentifier = @"ALiImagePickFooterView";
         
         browserVc.allAssets = [NSMutableArray arrayWithArray:self.assets];
         browserVc.selectedAsset = self.selectAssets;
-        browserVc.curIndex = [self.assets indexOfObject:asset];
+        browserVc.curIndex = [self.assets indexOfObject:asset];  
         [self.navigationController pushViewController:browserVc animated:YES];
     }
     
